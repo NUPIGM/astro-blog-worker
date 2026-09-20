@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from "astro:content";
+import TagPill from "./TagPill.astro";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="space-y-7">
+  {
+    posts.map((article) => (
+      <article class="group">
+        <a href={`/posts/${article.id}`} class="block">
+          <h2 class="mb-1.5 text-lg font-medium text-gray-900 transition-colors group-hover:text-blue-600">
+            {article.data.title}
+          </h2>
+        </a>
+
+        <div class="mb-2 text-xs text-gray-500">
+          <span>{article.data.description}</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 text-[14px] leading-relaxed text-gray-600">
+          <span>{article.data.pubDate}</span>
+          {article.data.tags?.map((tag) => (
+            <TagPill tag={tag} />
+          ))}
+        </div>
+
+        <div class="mt-6 h-px bg-gray-100" />
+      </article>
+    ))
+  }
+</div>

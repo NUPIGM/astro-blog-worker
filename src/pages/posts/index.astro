@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) =>
+    new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
+);
+const navItems = [
+  { label: "博文", href: "/posts/" },
+  { label: "留言", href: "/guestbook/" },
+  { label: "关于", href: "/about/" },
+];
+---
+
+<BaseLayout
+  title="博文"
+  description="文章列表"
+  navItems={navItems}
+  count={posts.length}
+  tags={["tags"]}
+>
+  <PostList posts={posts} />
+</BaseLayout>

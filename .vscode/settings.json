@@ -1,0 +1,11 @@
+{
+  "tailwindCSS.includeLanguages": {
+    "astro": "html",
+    "mdx": "html"
+  },
+  "tailwindCSS.classAttributes": ["class", "class:list", "className"],
+  "tailwindCSS.experimental.classRegex": [
+    "class:list\\s*=\\s*\\[([^\\]]*)\\]",
+    "class\\s*=\\s*\"([^\"]*)\""
+  ]
+}

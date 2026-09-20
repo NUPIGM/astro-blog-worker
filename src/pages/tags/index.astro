@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = await getCollection("blog");
+const tags: Array<[string, number]> = [
+  ...posts
+    .flatMap((article) => article.data.tags ?? [])
+    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+].sort((a, b) => {
+  return b[1] - a[1];
+});
+console.log(tags);
+
+const navItems = [
+  { label: "博文", href: "/posts/" },
+  { label: "标签", href: "/tags/" },
+];
+---
+
+<BaseLayout
+  title="全部标签 "
+  description="查看博客中的全部标签与对应文章数量"
+  navItems={navItems}
+  count={tags.length}
+  tags={["tags"]}
+>
+  <div class="wrapper">
+    <div class="tags-container max-w-3xl mx-auto py-8">
+      <h1 class="text-3xl font-bold mb-8">全部标签</h1>
+      <div class="flex flex-wrap gap-3">
+        {
+          tags.map(([tagName, count]) => (
+            <a
+              href={`/tags/${encodeURIComponent(tagName)}`}
+              class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
+            >
+              <span>{tagName}</span>
+              <span class="rounded-full bg-gray-200 px-2 py-0.5 text-xs text-gray-600">
+                {count}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

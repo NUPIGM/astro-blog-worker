@@ -1,0 +1,50 @@
+---
+import ChatBubbleLeftIcon from "../svg/ChatBubbleOvalLeftEllipsis.svg";
+import HandThumbUp from "../svg/HandThumbUp.svg";
+
+const { user, msg, likes, createdAt = "刚刚" } = Astro.props;
+---
+
+<article
+  class="w-full max-w-2xl rounded-2xl border border-base-300 bg-base-100 shadow-sm transition-shadow duration-200 hover:shadow-md"
+>
+  <div class="flex items-start gap-4 p-4 sm:p-5">
+    <div class="avatar placeholder">
+      <div
+        class="grid h-11 w-11 place-items-center rounded-full bg-primary text-sm font-bold text-primary-content"
+      >
+        {user.slice(0, 1).toUpperCase()}
+      </div>
+    </div>
+
+    <div class="min-w-0 flex-1">
+      <div class="mb-2 flex items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base font-semibold text-base-content">{user}</h2>
+          <time class="text-xs text-base-content/60">{createdAt}</time>
+        </div>
+      </div>
+
+      <p class="whitespace-pre-wrap text-sm leading-7 text-base-content/80">
+        {msg}
+      </p>
+
+      <div
+        class="mt-4 flex items-center justify-end gap-4 text-base-content/70"
+      >
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full px-2 py-1 transition hover:bg-base-200 hover:text-base-content"
+        >
+          <ChatBubbleLeftIcon class="h-4 w-4" />
+          <span class="text-xs">回复</span>
+        </button>
+
+        <div class="inline-flex items-center gap-2 rounded-full px-2 py-1">
+          <HandThumbUp class="h-4 w-4" />
+          <span class="text-xs font-medium">{likes}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

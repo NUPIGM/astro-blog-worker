@@ -1,0 +1,109 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// A4Paper.astro
+interface Message {
+  name: string;
+  date: string;
+  content: string;
+}
+
+interface Props {
+  title?: string;
+  author?: string;
+  date?: string;
+  companyName?: string;
+  messages?: Message[];
+}
+
+const {
+  title = "留言板",
+  author = "张三",
+  date = "2026-09-17",
+  companyName = "YOUR COMPANY NAME",
+  messages = [
+    {
+      name: "李四",
+      date: "2026-09-16",
+      content: "页面设计很简洁，阅读体验很好，期待后续更多内容！",
+    },
+    {
+      name: "王五",
+      date: "2026-09-15",
+      content: "A4 纸张的布局很有正式感，喜欢这种克制的风格。",
+    },
+    {
+      name: "赵六",
+      date: "2026-09-14",
+      content: "已经收藏了，希望能多更新一些技术相关的文章。",
+    },
+  ],
+} = Astro.props;
+const navItems = [
+  { label: "博文", href: "/posts/" },
+  { label: "标签", href: "/tags/" },
+];
+---
+
+<BaseLayout
+  title="留言 "
+  description="查看博客中的全部标签与对应文章数量"
+  navItems={navItems}
+  count={1}
+  tags={["tags"]}
+>
+  <!-- 留言列表 -->
+  <div class="space-y-8 mb-12">
+    {
+      messages.map((msg) => (
+        <div class="border-b border-gray-100 pb-6 last:border-0">
+          <div class="flex items-baseline justify-between mb-2">
+            <span class="font-medium text-gray-900">{msg.name}</span>
+            <span class="text-xs text-gray-500">{msg.date}</span>
+          </div>
+          <p class="text-[15px] leading-7 text-gray-700">{msg.content}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- 留言表单 -->
+  <div class="mt-10 pt-8 border-t border-gray-200">
+    <h2 class="text-lg font-medium text-gray-900 mb-5">写下你的留言</h2>
+
+    <form
+      class="space-y-5"
+      novalidate
+      onsubmit="preventDefault(); return false;"
+    >
+      <div>
+        <label class="block text-sm text-gray-600 mb-1.5">昵称</label>
+        <input
+          type="text"
+          name="name"
+          required
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          placeholder="请输入你的昵称"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-1.5">留言内容</label>
+        <textarea
+          name="content"
+          required
+          rows="4"
+          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
+          placeholder="说点什么吧..."></textarea>
+      </div>
+
+      <button
+        type="button"
+        onclick="return false;"
+        class="px-6 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors pointer-events-none select-none"
+      >
+        提交留言
+      </button>
+    </form>
+  </div>
+</BaseLayout>
