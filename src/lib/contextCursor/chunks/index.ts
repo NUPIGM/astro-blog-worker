@@ -1,5 +1,5 @@
-export { default as addCursor } from "./addCursor";
-export { default as setStyles } from "./setStyles";
-export { default as getMoveIndex } from "./getMoveIndex";
-export { default as isElHasProperty } from "./isElHasProperty";
-export { default as getStyleProp } from "./getStyleProp";
+export { addCursor } from "./addCursor";
+export { setStyles } from "./setStyles";
+export { getMoveIndex } from "./getMoveIndex";
+export { isElHasProperty } from "./isElHasProperty";
+export { getStyleProp } from "./getStyleProp";

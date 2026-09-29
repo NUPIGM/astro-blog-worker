@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui";
 import scrollbar from "tailwind-scrollbar";
+import typography from "@tailwindcss/typography";
+import scrollbarHide from "tailwind-scrollbar-hide";
+
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -10,18 +13,18 @@ function withOpacity(variableName) {
   };
 }
 
-module.exports = {
+export default {
   darkMode: "class",
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
       colors: {
-        'nvim-bg': '#1c1c1c',
-        'nvim-fg': '#d0d0d0',
-        'nvim-gray': '#4e4e4e',
-        'blue': '#5fafd7',
-        'green': '#87d787',
-        'nvim-statusline': '#303030',
+        "nvim-bg": "#1c1c1c",
+        "nvim-fg": "#d0d0d0",
+        "nvim-gray": "#4e4e4e",
+        blue: "#5fafd7",
+        green: "#87d787",
+        "nvim-statusline": "#303030",
         skin: {
           hue: withOpacity("--color"),
           muted: withOpacity("--muted"),
@@ -29,7 +32,7 @@ module.exports = {
         nvim: {
           blue: withOpacity("--color-nvim-blue"),
           green: withOpacity("--color-nvim-green"),
-        }
+        },
       },
       textColor: {
         skin: {
@@ -40,7 +43,7 @@ module.exports = {
         nvim: {
           green: withOpacity("--color-nvim-green"),
           blue: withOpacity("--color-nvim-blue"),
-        }
+        },
       },
       backgroundColor: {
         skin: {
@@ -66,10 +69,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    daisyui,
-    scrollbar,
-    require('tailwind-scrollbar-hide'),
-  ],
+  plugins: [typography, daisyui, scrollbar, scrollbarHide],
 };

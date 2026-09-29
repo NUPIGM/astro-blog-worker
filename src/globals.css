@@ -234,14 +234,14 @@
   .hover-grad-text {
     @apply text-center text-transparent bg-clip-text transition-all ease-in-out duration-700;
     background-image: linear-gradient(
-            to right,
-            theme("colors.slate.950"),
-            theme("colors.slate.950") 33%,
-            theme("colors.red.500") 66%,
-            theme("colors.orange.400"),
-            theme("colors.yellow.500"),
-            theme("colors.blue.700"),
-            theme("colors.purple.500")
+      to right,
+      theme("colors.slate.950"),
+      theme("colors.slate.950") 33%,
+      theme("colors.red.500") 66%,
+      theme("colors.orange.400"),
+      theme("colors.yellow.500"),
+      theme("colors.blue.700"),
+      theme("colors.purple.500")
     );
     background-size: 300% 100%;
     background-position: top left 100%;
@@ -275,8 +275,13 @@
     }
   }
 
-  .scrollbar-thin::-webkit-scrollbar { height: 10px; }
-  .scrollbar-thumb-gray-800::-webkit-scrollbar-thumb { background-color: #a0aec0; border-radius: 4px; }
+  .scrollbar-thin::-webkit-scrollbar {
+    height: 10px;
+  }
+  .scrollbar-thumb-gray-800::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+    border-radius: 4px;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -293,7 +298,8 @@
   scrollbar-width: thin;
   scrollbar-color: #888 #222;
 }
- /* removed scrollbar */
-html, body {
+/* removed scrollbar */
+html,
+body {
   @apply scrollbar-hide;
 }

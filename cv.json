@@ -53,7 +53,7 @@
       "name": "Advika Innovate",
       "position": "Frontend Developer",
       "location_type": "Remote",
-      "location": "IN",
+      "location": "印度",
       "url": "https://advikainnovate.com/",
       "startDate": "2025-07-01",
       "endDate": null,
@@ -114,7 +114,24 @@
       }
     }
   ],
-  "education": [],
+  "education": [
+    {
+      "institution": "node",
+      "url": "https://dealamaze.in",
+      "area": "string",
+      "studyType": "string",
+      "startDate": "2025-07-01",
+      "endDate": "2025-07-02"
+    },
+    {
+      "institution": "go",
+      "url": "https://dealamaze.in",
+      "area": "string",
+      "studyType": "string",
+      "startDate": "2025-07-01",
+      "endDate": "2025-07-02"
+    }
+  ],
   "certificates": [],
   "skills": [
     {

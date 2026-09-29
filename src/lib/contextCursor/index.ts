@@ -1,8 +1,8 @@
 import { addCursor, setStyles } from "./chunks";
-import contextMode from "./modes/contextMode";
-import propNames from "./propNames";
+import { contextMode } from "./modes/contextMode";
+import { propNames } from "./propNames";
 
-const contextCursor = (props: CProps = {}) => {
+export const contextCursor = (props: CProps = {}) => {
   // Default props
   props = {
     radius: props.radius || 20,
@@ -18,10 +18,8 @@ const contextCursor = (props: CProps = {}) => {
   // Load mode when page is loaded
   window.onload = () => {
     let interactElements = document.querySelectorAll(
-      `[${propNames.dataAttr}]`
+      `[${propNames.dataAttr}]`,
     ) as NodeListOf<Element>;
     contextMode(cCursor, props, interactElements);
   };
 };
-
-export default contextCursor;

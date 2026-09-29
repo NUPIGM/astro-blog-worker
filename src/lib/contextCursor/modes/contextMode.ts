@@ -1,11 +1,11 @@
-import { TweenLite } from "gsap";
+import { gsap } from "gsap";
 import { getMoveIndex, isElHasProperty, getStyleProp } from "../chunks";
-import propNames from "../propNames";
+import { propNames } from "../propNames";
 
-const contextMode = (
+export const contextMode = (
   cursor: HTMLElement,
   props: CProps,
-  interactElements: NodeListOf<Element>
+  interactElements: NodeListOf<Element>,
 ) => {
   const parallaxSpeed = {
     cursor: props.parallaxIndex,
@@ -17,34 +17,37 @@ const contextMode = (
   const moveCursor = (e: MouseEvent) => {
     // If element is not hovered
     if (!isHovered) {
-      TweenLite.to(cursor, props.transitionSpeed, {
+      gsap.to(cursor, {
+        duration: props.transitionSpeed,
         x: e.clientX - props.radius / 2,
         y: e.clientY - props.radius / 2,
       });
       // If eleemnt is hovered
     } else {
       const borderRadius = Number(
-        window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
+        window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any,
       );
       // For "LIFT" mode
       if (isElHasProperty(cursorTarget, propNames.lift)) {
-        TweenLite.to(cursorTarget, props.transitionSpeed, {
+        gsap.to(cursorTarget, {
+          duration: props.transitionSpeed,
           x: getMoveIndex(
             e.clientX,
             cursorTarget.getBoundingClientRect().left,
             cursorTarget.clientWidth,
-            parallaxSpeed.target
+            parallaxSpeed.target,
           ),
           y: getMoveIndex(
             e.clientY,
             cursorTarget.getBoundingClientRect().top,
             cursorTarget.clientHeight,
-            parallaxSpeed.target
+            parallaxSpeed.target,
           ),
           scale: 1.1,
           boxShadow: getStyleProp("--ghost-shadow"),
         });
-        TweenLite.to(cursor, props.transitionSpeed, {
+        gsap.to(cursor, {
+          duration: props.transitionSpeed,
           filter: "blur(8px)",
           x:
             cursorTarget.getBoundingClientRect().left +
@@ -66,7 +69,8 @@ const contextMode = (
         });
         // For default "PARALLAX" mode
       } else {
-        TweenLite.to(cursor, props.transitionSpeed, {
+        gsap.to(cursor, {
+          duration: props.transitionSpeed,
           x:
             cursorTarget.getBoundingClientRect().left -
             (isElHasProperty(cursorTarget, propNames.noPadding)
@@ -105,18 +109,19 @@ const contextMode = (
         });
         // For "NO PARALLAX" property
         if (!isElHasProperty(cursorTarget, propNames.noParallax)) {
-          TweenLite.to(cursorTarget, props.transitionSpeed, {
+          gsap.to(cursorTarget, {
+            duration: props.transitionSpeed,
             x: -getMoveIndex(
               e.clientX,
               cursorTarget.getBoundingClientRect().left,
               cursorTarget.clientWidth,
-              parallaxSpeed.target
+              parallaxSpeed.target,
             ),
             y: -getMoveIndex(
               e.clientY,
               cursorTarget.getBoundingClientRect().top,
               cursorTarget.clientHeight,
-              parallaxSpeed.target
+              parallaxSpeed.target,
             ),
           });
         }
@@ -128,12 +133,13 @@ const contextMode = (
     isHovered = true;
     cursorTarget = e.target as HTMLElement;
     const borderRadius = Number(
-      window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any
+      window.getComputedStyle(cursorTarget).borderRadius.slice(0, -2) as any,
     );
 
     if (isElHasProperty(cursorTarget, propNames.lift)) {
       cursor.classList.add("c-cursor-lift_active");
-      TweenLite.to(cursor, props.transitionSpeed, {
+      gsap.to(cursor, {
+        duration: props.transitionSpeed,
         borderRadius: borderRadius,
         width: cursorTarget.clientWidth,
         height: cursorTarget.clientHeight,
@@ -149,7 +155,8 @@ const contextMode = (
     cursor.classList.remove("c-cursor_active");
     cursor.classList.remove("c-cursor-lift_active");
 
-    TweenLite.to(cursor, props.transitionSpeed, {
+    gsap.to(cursor, {
+      duration: props.transitionSpeed,
       x: e.clientX - props.radius / 2,
       y: e.clientY - props.radius / 2,
       width: props.radius,
@@ -159,7 +166,8 @@ const contextMode = (
       backgroundImage: "none",
       filter: "blur(0px)",
     });
-    TweenLite.to(cursorTarget, props.transitionSpeed, {
+    gsap.to(cursorTarget, {
+      duration: props.transitionSpeed,
       x: 0,
       y: 0,
       scale: 1,
@@ -188,5 +196,3 @@ const contextMode = (
     });
   });
 };
-
-export default contextMode;
