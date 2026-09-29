@@ -1,0 +1,8 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VideoList from "../../components/VideoList.svelte";
+---
+
+<BaseLayout title="Videos" description="Videos page" count={0} tags={["l"]}>
+  <VideoList client:load />
+</BaseLayout>

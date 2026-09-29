@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VideoDetail from "../../components/VideoDetail.svelte";
+
+export async function getStaticPaths() {
+  return [
+    { params: { vod_id: "28356" } },
+    { params: { vod_id: "84684" } },
+    { params: { vod_id: "34973" } },
+  ];
+}
+
+const { vod_id } = Astro.params;
+---
+
+<BaseLayout
+  title={vod_id ? `视频详情 - ${vod_id}` : "视频详情"}
+  description="Video detail page"
+  count={0}
+  tags={["video"]}
+>
+  <VideoDetail client:load vodId={vod_id ?? ""} />
+</BaseLayout>

@@ -2,6 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import FloatingWidget from "../components/FloatingWidget.astro";
+import { fade } from "astro:transitions";
 interface Props {
   title: string;
   description: string;
@@ -18,13 +20,14 @@ const { title, description, navItems, count, tags } = Astro.props;
   </head>
 
   <body
-    class="m-auto max-w-[210mm] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-10"
+    class="m-auto max-w-5xl bg-white not-print:shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-10"
   >
     <Header title={title} navItems={navItems} count={count} tags={tags} />
 
-    <main>
+    <main transition:animate={fade({ duration: "0.4s" })}>
       <slot />
     </main>
     <Footer />
+    <FloatingWidget />
   </body>
 </html>

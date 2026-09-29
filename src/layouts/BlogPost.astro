@@ -20,13 +20,15 @@ const navItems = [
   tags={["tags"]}
 >
   <!-- 版主 -->
-  <main class="flex-1 leading-8">
-    <p class="text-[15px] leading-relaxed text-gray-600 max-w-[90%] mb-6">
+  <main class="flex-1">
+    <p class="text-[15px] text-gray-600 max-w-[90%] mb-6">
       {description}
     </p>
 
     <!-- 插槽：可继续放正文内容 -->
-    <slot />
+    <div class="prose prose-slate max-w-none break-words">
+      <slot />
+    </div>
     <br />
     <br />
     <div

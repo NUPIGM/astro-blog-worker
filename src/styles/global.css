@@ -5,8 +5,21 @@
  */
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @plugin "daisyui" {
   themes: cupcake, dark;
+}
+
+@layer base {
+  .prose {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .prose :where(pre, code, a, table, img, blockquote) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 }
 
 /* 打印专用优化 */
@@ -30,11 +43,5 @@
     padding: 0 !important;
     margin: 0 !important;
     box-shadow: none !important;
-  }
-  /* 确保只打印 main 内容，隐藏其他 */
-  header,
-  footer,
-  .no-print {
-    display: none !important;
   }
 }

@@ -1,0 +1,114 @@
+<div class="fixed bottom-5 right-5 z-50">
+  <div class="flex flex-col items-end gap-3">
+    <a
+      href="mailto:nupi9m@gmail.com"
+      class="glass-button flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-700 no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(59,130,246,0.2)]"
+      aria-label="联系我"
+      title="联系我"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path
+          d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5v-11Z"
+        ></path>
+        <path d="m5 7 7 5 7-5"></path>
+      </svg>
+      <span>邮箱/联系我</span>
+    </a>
+
+    <a
+      href="https://t.me/seekknowledge_com"
+      target="_blank"
+      rel="noreferrer"
+      class="glass-button flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-slate-700 no-underline transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(168,85,247,0.2)]"
+      aria-label="加TG群"
+      title="加TG群"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"></path>
+        <circle cx="9.5" cy="7" r="3.5"></circle>
+        <path d="M18 8v6"></path>
+        <path d="M15 11h6"></path>
+      </svg>
+      <span>加TG群</span>
+    </a>
+
+    <button
+      id="back-to-top"
+      type="button"
+      title="回到顶部"
+      aria-label="回到顶部"
+      class="glass-button flex h-11 w-11 items-center justify-center rounded-full text-slate-700 opacity-70 transition-all duration-300 hover:-translate-y-0.5 hover:opacity-100"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 19V5"></path>
+        <path d="m5 12 7-7 7 7"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .glass-button {
+    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 12px 30px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.48),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.36);
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("back-to-top");
+
+  const updateVisibility = () => {
+    if (!btn) return;
+    const shouldShow = window.scrollY > 300;
+    btn.style.opacity = shouldShow ? "1" : "0.7";
+    btn.style.transform = shouldShow ? "translateY(0)" : "translateY(4px)";
+    btn.style.pointerEvents = shouldShow ? "auto" : "none";
+  };
+
+  btn?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  updateVisibility();
+  window.addEventListener("scroll", updateVisibility, { passive: true });
+</script>

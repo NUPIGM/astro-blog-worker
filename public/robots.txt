@@ -1,0 +1,3 @@
+User-agent: *
+Crawl-delay: 5
+Sitemap: https://www.xn--ci8h.cc.cd/sitemap-0.xml

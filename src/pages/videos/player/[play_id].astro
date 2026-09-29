@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import videoDetailData from "../../../test_data/video_detail.json";
+
+const normalizePlayUrl = (value = "") => {
+  if (!value) return "";
+  const trimmed = value.trim();
+
+  const [maybeLink] = trimmed.split("$");
+  const candidate = maybeLink.includes("http") ? maybeLink : trimmed;
+
+  return candidate.replace(/\s+/g, "").replace(/#.*$/, "");
+};
+
+export async function getStaticPaths() {
+  const list = Array.isArray(videoDetailData?.list) ? videoDetailData.list : [];
+
+  return list.flatMap((item) => {
+    const raw = item.vod_play_url || "";
+    const episodes = raw.split("#").filter(Boolean);
+
+    return episodes.map((_, index) => ({
+      params: { play_id: `${item.vod_id}-${index + 1}` },
+    }));
+  });
+}
+
+const { play_id } = Astro.params;
+const [vodIdRaw, episodeIndexRaw] = (play_id ?? "").split("-");
+const vodId = vodIdRaw ?? "";
+const episodeIndex = Number(episodeIndexRaw ?? 1) || 1;
+
+const detail = Array.isArray(videoDetailData?.list)
+  ? videoDetailData.list.find((item) => String(item.vod_id) === String(vodId))
+  : null;
+
+const parsedEpisodes = (detail?.vod_play_url || "")
+  .split("#")
+  .filter(Boolean)
+  .map((segment, index) => {
+    const [label, ...rest] = segment.split("$");
+    const rawUrl = rest.join("$") || "";
+
+    return {
+      label: label || `第${index + 1}集`,
+      url: normalizePlayUrl(rawUrl),
+    };
+  })
+  .filter((item) => item.url);
+
+const currentEpisode = parsedEpisodes[episodeIndex - 1] ??
+  parsedEpisodes[0] ?? {
+    label: "播放",
+    url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+  };
+const videoUrl =
+  normalizePlayUrl(currentEpisode.url) ||
+  "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
+---
+
+<BaseLayout
+  title="播放器"
+  description="Video player"
+  count={0}
+  tags={["video", "player"]}
+>
+  <div class="mx-auto max-w-5xl px-4 py-8">
+    <div
+      class="rounded-[28px] border border-slate-200 bg-white/80 p-4 shadow-[0_20px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-6"
+    >
+      <div class="mb-5 flex items-center justify-between gap-3">
+        <div>
+          <p
+            class="text-xs font-medium uppercase tracking-[0.2em] text-slate-400"
+          >
+            播放器
+          </p>
+          <h1 class="mt-2 text-2xl font-bold text-slate-800">视频播放</h1>
+        </div>
+        <a
+          href={`/videos/${vodId || "28356"}`}
+          class="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
+        >
+          返回详情
+        </a>
+      </div>
+
+      <div
+        class="overflow-hidden rounded-[24px] border border-slate-200 bg-black shadow-2xl"
+      >
+        <video
+          class="aspect-video w-full bg-black"
+          controls
+          controlsList="nodownload"
+          preload="metadata"
+          playsinline
+          poster="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80"
+        >
+          <source src={videoUrl} type="application/x-mpegURL" />
+          您的浏览器不支持 video 标签。
+        </video>
+      </div>
+
+      <div class="mt-6 grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
+        <div class="rounded-[22px] border border-slate-200 bg-slate-50 p-4">
+          <p class="text-sm text-slate-500">当前资源</p>
+          <h2 class="mt-2 text-lg font-semibold text-slate-800">
+            vod_id: {vodId || "-"}
+          </h2>
+          <p class="mt-2 text-sm text-slate-600">第 {episodeIndex} 集</p>
+        </div>
+
+        <div class="rounded-[22px] border border-slate-200 bg-slate-50 p-4">
+          <p class="text-sm text-slate-500">播放地址</p>
+          <p class="mt-2 break-all text-sm text-slate-700">{videoUrl}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

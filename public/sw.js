@@ -1,7 +1,7 @@
 const CACHE_NAME = "application-v1.0.5"; // 更新版本号 - 每次修改都要递增
 // 安装阶段
 self.addEventListener("install", (event) => {
-  const ASSETS_TO_CACHE = ["/about", "/message"];
+  const ASSETS_TO_CACHE = ["/about", "/index"];
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE);
