@@ -3,7 +3,7 @@ enum EMode {
   INSERT = "INSERT",
   VISUAL = "VISUAL",
   COMMAND = "COMMAND",
-  SEARCH = "SEARCH",
+  SEARCH = "SEARCH"
 }
 
 let cursor: HTMLElement | null = document.getElementById("cursor");
@@ -14,15 +14,14 @@ const windowSize = {
   width: window.innerWidth,
   height: window.innerHeight,
   vw: window.innerWidth / 100,
-  vh: window.innerHeight / 100,
+  vh: window.innerHeight / 100
 };
-let cursorPosition = {
+const cursorPosition = {
   x: windowSize.vw,
-  y: windowSize.vh,
+  y: windowSize.vh
 };
 let currentLine = 0;
-let currentPageItems: NodeListOf<Element> =
-  document.querySelectorAll(".nvim-line");
+const currentPageItems: NodeListOf<Element> = document.querySelectorAll(".nvim-line");
 
 const firstItem = currentPageItems[0]?.getBoundingClientRect();
 
@@ -108,12 +107,13 @@ function handleCommand(command: string) {
       case "h":
         window.location.href = "/neovim/help";
         break;
-      case "b":
+      case "b": {
         const keyBindings = document.getElementById("key-bindings");
         if (keyBindings) {
           keyBindings.classList.toggle("hidden");
         }
         break;
+      }
       default:
         console.log("Unknown command:", cmd);
     }
@@ -156,7 +156,7 @@ function updatePosition() {
     undefined,
     undefined,
     undefined,
-    `${Math.floor(cursorPosition.y / 100) || 1}:${Math.floor(cursorPosition.x) || 1}`,
+    `${Math.floor(cursorPosition.y / 100) || 1}:${Math.floor(cursorPosition.x) || 1}`
   );
 
   if (cursor) {
@@ -183,8 +183,9 @@ function moveCursor(direction: "j" | "k") {
       console.log("Invalid direction");
   }
 
-  const { y: screenVerticalPosition, x: screenHorizontalPosition } =
-    currentPageItems[currentLine]?.getBoundingClientRect() ?? { y: 0, x: 0 };
+  const { y: screenVerticalPosition, x: screenHorizontalPosition } = currentPageItems[
+    currentLine
+  ]?.getBoundingClientRect() ?? { y: 0, x: 0 };
   cursorPosition.y = screenVerticalPosition;
   cursorPosition.x = screenHorizontalPosition - 18;
 }

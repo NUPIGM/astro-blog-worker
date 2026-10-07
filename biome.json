@@ -18,10 +18,10 @@
       "**/*.css",
       "**/*.json",
       "**/*.jsonc",
-      "!**/node_modules/**",
-      "!**/dist/**",
-      "!**/.astro/**",
-      "!**/.wrangler/**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.astro",
+      "!**/.wrangler",
       "!cv.json",
       "!package-lock.json"
     ]

@@ -4,31 +4,13 @@
     "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@cv": [
-        "./cv.json"
-      ],
-      "@icons/*": [
-        "src/icons/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ]
+      "@/*": ["src/*"],
+      "@cv": ["./cv.json"],
+      "@icons/*": ["src/icons/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"]
     }
   },
-  "include": [
-    "global.d.ts",
-    "src",
-    "src/**/*.astro",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/lib"
-  ]
+  "include": ["global.d.ts", "src", "src/**/*.astro", "src/**/*.ts"],
+  "exclude": ["node_modules", "src/lib"]
 }

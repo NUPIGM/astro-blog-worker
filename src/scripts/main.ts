@@ -4,7 +4,7 @@ const mq = window.matchMedia("(min-width: 640px)");
 if (mq.matches) {
   contextCursor({
     radius: 25,
-    transitionSpeed: 0.1,
+    transitionSpeed: 0.1
   });
 
   const container = document.documentElement;
@@ -20,7 +20,7 @@ if (mq.matches) {
   function throttle(func: Function, delay: number) {
     let lastCall = 0;
 
-    return function (...args: unknown[]) {
+    return (...args: unknown[]) => {
       const now = Date.now();
       if (now - lastCall < delay) return;
       lastCall = now;
@@ -44,7 +44,7 @@ if (mq.matches) {
         const deltaY = lastY - startY;
         container.scrollTop = scrollTop - deltaY * scrollSpeedSensitivity;
       });
-    }, throttleDelay),
+    }, throttleDelay)
   );
 
   container.addEventListener("mouseup", () => {

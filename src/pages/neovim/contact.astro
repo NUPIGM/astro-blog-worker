@@ -37,50 +37,39 @@ const parsedProfiles = profiles.map(({ url }) => {
 
       <!-- Email render -->
       <div class="flex place-content-center">
-        <a
-          href={`mailto:${rawEmail}`}
-          data-href={`mailto:${rawEmail}`}
-          class="max-w-max nvim-line"
-        >
-          {emailBody}<span class="symbol">[at]</span>{emailDomain}<span
-            class="symbol">[dot]</span
-          >{emailExtension}
+        <a href={`mailto:${rawEmail}`} data-href={`mailto:${rawEmail}`} class="max-w-max nvim-line">
+          {emailBody}<span class="symbol">[at]</span>{emailDomain}<span class="symbol">[dot]</span>
+          {emailExtension}
         </a>
       </div>
 
       <!-- Contacts render -->
-      {
-        parsedProfiles &&
-          parsedProfiles.map(({ url, domain, extension, params }) => (
-            <div class="flex place-content-center">
-              <a href={url} data-href={url} class="max-w-max nvim-line">
-                {domain}
-                <span class="symbol">[dot]</span>
-                {extension}
-                <span class="symbol">[slash]</span>
-                {params.map((param, index) => (
-                  <span>
-                    {param}
-                    {index < params.length - 1 ? (
-                      <span class="symbol">[slash]</span>
-                    ) : (
-                      ""
-                    )}
-                  </span>
-                ))}
-              </a>
-            </div>
-          ))
-      }
+      {parsedProfiles &&
+        parsedProfiles.map(({ url, domain, extension, params }) => (
+          <div class="flex place-content-center">
+            <a href={url} data-href={url} class="max-w-max nvim-line">
+              {domain}
+              <span class="symbol">[dot]</span>
+              {extension}
+              <span class="symbol">[slash]</span>
+              {params.map((param, index) => (
+                <span>
+                  {param}
+                  {index < params.length - 1 ? <span class="symbol">[slash]</span> : ""}
+                </span>
+              ))}
+            </a>
+          </div>
+        ))}
     </div>
   </div>
 </Layout>
 
 <style>
-  a {
-    @apply mb-2 block decoration-dotted hover:underline hover:text-green;
-  }
-  a span.symbol {
-    @apply group-hover:text-skin-muted text-blue font-semibold;
-  }
+a {
+  @apply mb-2 block decoration-dotted hover:underline hover:text-green;
+}
+a span.symbol {
+  @apply group-hover:text-skin-muted text-blue font-semibold;
+}
 </style>

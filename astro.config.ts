@@ -21,16 +21,16 @@ export default defineConfig({
       include: {
         mdi: ["*"],
         ri: ["*"],
-        "simple-icons": ["*"],
-      },
+        "simple-icons": ["*"]
+      }
     }),
     playformCompress({
       CSS: true,
       Image: true,
       Action: {
-        Passed: async () => true,
-      },
-    }),
+        Passed: async () => true
+      }
+    })
   ],
-  output: "static",
+  output: "static"
 });

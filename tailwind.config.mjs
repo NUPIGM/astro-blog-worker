@@ -27,47 +27,47 @@ export default {
         "nvim-statusline": "#303030",
         skin: {
           hue: withOpacity("--color"),
-          muted: withOpacity("--muted"),
+          muted: withOpacity("--muted")
         },
         nvim: {
           blue: withOpacity("--color-nvim-blue"),
-          green: withOpacity("--color-nvim-green"),
-        },
+          green: withOpacity("--color-nvim-green")
+        }
       },
       textColor: {
         skin: {
           base: withOpacity("--color-text-base"),
           muted: withOpacity("--color-text-muted"),
-          inverted: withOpacity("--color-text-inverted"),
+          inverted: withOpacity("--color-text-inverted")
         },
         nvim: {
           green: withOpacity("--color-nvim-green"),
-          blue: withOpacity("--color-nvim-blue"),
-        },
+          blue: withOpacity("--color-nvim-blue")
+        }
       },
       backgroundColor: {
         skin: {
           fill: withOpacity("--color-fill"),
           "button-accent": withOpacity("--color-button-accent"),
           "button-accent-hover": withOpacity("--color-button-accent-hover"),
-          "button-muted": withOpacity("--color-button-muted"),
-        },
+          "button-muted": withOpacity("--color-button-muted")
+        }
       },
       ringColor: {
         skin: {
-          fill: withOpacity("--color-fill"),
-        },
+          fill: withOpacity("--color-fill")
+        }
       },
       gradientColorStops: {
         skin: {
-          hue: withOpacity("--color-fill"),
-        },
+          hue: withOpacity("--color-fill")
+        }
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-      },
-    },
+        mono: ["JetBrains Mono", "monospace"]
+      }
+    }
   },
-  plugins: [typography, daisyui, scrollbar, scrollbarHide],
+  plugins: [typography, daisyui, scrollbar, scrollbarHide]
 };

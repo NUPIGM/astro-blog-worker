@@ -4,23 +4,23 @@ import { propNames } from "./propNames";
 import type { CProps } from "./types";
 
 export const contextCursor = (props: CProps = {}) => {
-	// Default props
-	props = {
-		radius: props.radius || 20,
-		transitionSpeed: props.transitionSpeed || 0.16,
-		parallaxIndex: props.parallaxIndex || 10,
-		hoverPadding: props.hoverPadding || 6,
-	};
+  // Default props
+  props = {
+    radius: props.radius || 20,
+    transitionSpeed: props.transitionSpeed || 0.16,
+    parallaxIndex: props.parallaxIndex || 10,
+    hoverPadding: props.hoverPadding || 6
+  };
 
-	// Set base
-	setStyles();
-	const cCursor = addCursor(props) as HTMLElement;
+  // Set base
+  setStyles();
+  const cCursor = addCursor(props) as HTMLElement;
 
-	// Load mode when page is loaded
-	window.onload = () => {
-		let interactElements = document.querySelectorAll(
-			`[${propNames.dataAttr}]`,
-		) as NodeListOf<Element>;
-		contextMode(cCursor, props, interactElements);
-	};
+  // Load mode when page is loaded
+  window.onload = () => {
+    const interactElements = document.querySelectorAll(
+      `[${propNames.dataAttr}]`
+    ) as NodeListOf<Element>;
+    contextMode(cCursor, props, interactElements);
+  };
 };
