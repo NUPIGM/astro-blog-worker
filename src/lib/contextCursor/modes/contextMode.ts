@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
 import { getMoveIndex, isElHasProperty, getStyleProp } from "../chunks";
 import { propNames } from "../propNames";
+import type { CProps } from "../types";
 
 export const contextMode = (
   cursor: HTMLElement,
