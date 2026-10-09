@@ -5,9 +5,9 @@ import { SITE_TITLE, AUTHOR } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate } = Astro.props;
 const navItems = [
-  { label: "博文", href: "/post/" },
+  { label: "博文", href: "/posts/" },
   { label: "分享", href: Astro.url.toString() },
 ];
 ---
@@ -16,7 +16,7 @@ const navItems = [
   title={title}
   description={description}
   navItems={navItems}
-  count={90}
+  count={0}
   tags={["tags"]}
 >
   <!-- 版主 -->

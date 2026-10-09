@@ -2,10 +2,19 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-
+<BaseLayout
+  title="关于"
+  description="查看博客中的全部标签与对应文章数量"
+  navItems={[
+    { label: "博文", href: "/posts/" },
+    { label: "分享", href: Astro.url.toString() },
+  ]}
+  count={1}
+  tags={["tags"]}
+>
 <article class="mx-auto max-w-3xl py-8">
   <div class="space-y-4 text-gray-700">
     <h1 class="text-3xl font-bold text-gray-900">关于我</h1>
     <p>这里是关于页面内容，正在补充中。</p>
   </div>
-</article>
+</article></BaseLayout>

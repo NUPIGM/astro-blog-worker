@@ -25,7 +25,7 @@ const posts = (await getCollection("blog"))
   );
 const navItems = [
   { label: "博文", href: "/posts/" },
-  { label: "标签", href: "/tags/" },
+  { label: "分享", href: Astro.url.toString() }
 ];
 ---
 
@@ -33,7 +33,7 @@ const navItems = [
   title="留言 "
   description="查看博客中的全部标签与对应文章数量"
   navItems={navItems}
-  count={1}
+  count={posts.length}
   tags={["tags"]}
 >
   <PostList posts={posts} />
