@@ -1,50 +1,50 @@
 {
   "analyticsCode": "",
   "basics": {
-    "name": "Anmol Singh",
-    "label": "Software Developer",
-    "animated_main_label": "developer",
+    "name": "NUPIGM",
+    "label": "热爱计算机科学的自由开发者",
+    "animated_main_label": "javascript",
     "animated_secondary_initial_label": "software",
     "animated_secondary_final_label": "fullstack",
-    "image": "/pfp.jpg",
-    "email": "anmolsingh51200@gmail.com",
-    "url": "https://anmol.pro",
-    "summary": "Full Stack developer with experience building and deploying production-ready web apps in freelance teams. Delivered two client websites and worked closely with teams to create scalable, maintainable solutions.",
+    "image": "/ave.jpeg",
+    "email": "nupigm@gmail.com",
+    "url": "/",
+    "summary": "爱好#科技#编程。享受编程DIY的乐趣。热衷于学习新技术，探索新领域。喜欢分享知识，帮助他人解决问题。致力于成为一名优秀的全栈开发者。",
     "theme": "platinum",
     "location": {
-      "address": "Panipat",
-      "city": "Haryana",
-      "countryCode": "IN",
-      "region": "India"
+      "address": "***",
+      "city": "Fu Jian",
+      "countryCode": "CN",
+      "region": "China"
     },
     "profiles": [
       {
         "network": "X / Twitter",
         "icon": "ri:twitter-fill",
         "color": "#1DA1F2",
-        "username": "@anmolthedev",
-        "url": "https://x.com/anmolthedev"
+        "username": "@nupigm",
+        "url": "https://x.com/nupigm"
       },
       {
         "network": "GitHub",
         "icon": "mdi:github",
         "color": "#929AAB",
-        "username": "Anmol-TheDev",
-        "url": "https://github.com/Anmol-TheDev"
+        "username": "nupigm",
+        "url": "https://github.com/nupigm"
       },
       {
         "network": "Email",
         "icon": "ri:mail-fill",
         "color": "#D44638",
-        "username": "anmolsingh",
-        "url": "mailto:anmolsingh51200@gmail.com"
+        "username": "nupigm",
+        "url": "mailto:nupigm@gmail.com"
       },
       {
         "network": "GitHub Stars",
         "icon": "ri:star-line",
         "color": "#FBBC05",
         "username": "Star on GitHub",
-        "url": "https://github.com/Anmol-TheDev/potfolio2.0"
+        "url": "https://github.com/NUPIGM/astro-blog-worker/tree/potfolio"
       }
     ]
   },
@@ -116,20 +116,12 @@
   ],
   "education": [
     {
-      "institution": "node",
-      "url": "https://dealamaze.in",
-      "area": "string",
+      "institution": "medical college of fu zhou university",
+      "url": "",
+      "area": "Fu Zhou",
       "studyType": "string",
-      "startDate": "2025-07-01",
-      "endDate": "2025-07-02"
-    },
-    {
-      "institution": "go",
-      "url": "https://dealamaze.in",
-      "area": "string",
-      "studyType": "string",
-      "startDate": "2025-07-01",
-      "endDate": "2025-07-02"
+      "startDate": "2017-09-01",
+      "endDate": "2020-07-01"
     }
   ],
   "certificates": [],
@@ -158,17 +150,6 @@
       ]
     },
     {
-      "name": "Bootstrap",
-      "icon": "simple-icons:bootstrap",
-      "level": "Intermediate",
-      "keywords": [
-        "Web Development",
-        "Frontend",
-        "CSS Framework",
-        "Responsive Design"
-      ]
-    },
-    {
       "name": "JavaScript",
       "icon": "simple-icons:javascript",
       "level": "Advanced",
@@ -186,22 +167,10 @@
       ]
     },
     {
-      "name": "Next-Js",
-      "icon": "simple-icons:nextdotjs",
-      "level": "Advanced",
-      "keywords": ["Web Development", "Frontend", "SSR", "Static Generation"]
-    },
-    {
       "name": "Astro",
       "icon": "simple-icons:astro",
       "level": "Intermediate",
       "keywords": ["Web Development", "Frontend", "SSR", "Static Generation"]
-    },
-    {
-      "name": "React",
-      "icon": "simple-icons:react",
-      "level": "Advanced",
-      "keywords": ["Web Development", "Frontend", "Static Generation"]
     },
     {
       "name": "Go-lang",
@@ -209,60 +178,15 @@
       "level": "Advanced",
       "keywords": ["Web Development", "Frontend", "Static Generation"]
     },
-    {
-      "name": "Gin",
-      "icon": "simple-icons:gin",
-      "level": "Advanced",
-      "keywords": ["Web Development", "Frontend", "Static Generation"]
-    },
-    {
-      "name": "Node",
-      "icon": "ri:nodejs-line",
-      "level": "Intermediate",
-      "keywords": ["Web Development", "Backend", "JavaScript", "Server"]
-    },
-    {
-      "name": "PNPM",
-      "icon": "simple-icons:pnpm",
-      "level": "Beginner",
-      "keywords": ["Package Manager", "Web Development", "Frontend", "Backend"]
-    },
-    {
-      "name": "Java",
-      "icon": "ri:java-line",
-      "level": "Intermediate",
-      "keywords": ["Web Development", "Backend"]
-    },
-    {
-      "name": "MongoDB",
-      "icon": "simple-icons:mongodb",
-      "level": "Beginner",
-      "keywords": ["Databases", "File", "Data Storage", "Backend"]
-    },
-    {
-      "name": "PostgreSQL",
-      "icon": "simple-icons:postgresql",
-      "level": "Intermediate",
-      "keywords": ["Backend", "Databases", "SQL", "Relational Database"]
-    },
-    {
-      "name": "Git",
-      "icon": "mdi:git",
-      "level": "Advanced",
-      "keywords": ["Version Control", "Collaboration", "Source Code"]
-    },
+
+
     {
       "name": "GitHub",
       "icon": "mdi:github",
       "level": "Advanced",
       "keywords": ["Version Control", "Collaboration", "Source Code", "Git"]
     },
-    {
-      "name": "AWS",
-      "icon": "simple-icons:amazonaws",
-      "level": "Beginner",
-      "keywords": ["Cloud Computing", "Backend", "Infrastructure"]
-    },
+  
     {
       "name": "Docker",
       "icon": "mdi:docker",
@@ -276,27 +200,22 @@
       "keywords": ["Scripting", "Automation"]
     },
     {
+      "name": "Node",
+      "icon": "ri:nodejs-line",
+      "level": "Intermediate",
+      "keywords": ["Web Development", "Backend", "JavaScript", "Server"]
+    },
+    {
       "name": "Linux",
       "icon": "simple-icons:linux",
       "level": "Intermediate",
       "keywords": ["OS", "Scripting", "Automation"]
-    },
-    {
-      "name": "Swagger",
-      "icon": "simple-icons:swagger",
-      "level": "Beginner",
-      "keywords": ["API", "Documentation", "Web Development", "Backend"]
-    },
-    {
-      "name": "Postman",
-      "icon": "simple-icons:postman",
-      "level": "Intermediate",
-      "keywords": ["API", "Testing", "Web Development", "Backend"]
     }
+ 
   ],
   "languages": [
     {
-      "language": "Hindi",
+      "language": "Chinese",
       "fluency": "Native speaker"
     },
     {
@@ -306,90 +225,34 @@
   ],
   "projects": [
     {
-      "name": "DealAmaze",
+      "name": "QuanX",
       "isActive": true,
-      "description": "A comprehensive eCommerce platform similar to Amazon, featuring full functionality for both sellers and consumers with advanced product management and seamless shopping experience.",
+      "description": "QuanX、Loon、Surge等规则的配置和一些脚本，方便用户在这些平台上使用。提供了丰富的规则和脚本，帮助用户实现更好的网络体验。",
       "highlights": [
-        "🛒 Multi-vendor Marketplace",
-        "📦 Advanced Order Management",
-        "💳 Secure Payment Integration",
-        "🏪 Seller Dashboard & Analytics",
-        "🔍 Smart Product Search & Filtering",
-        "📱 Responsive Mobile Design",
-        "🚚 Real-time Order Tracking",
-        "⭐ Review & Rating System"
+        "🪸配置",
+        "🌈脚本",
+        "🍄规则",
+        "🐚插件"
       ],
       "stack": {
-        "React": "simple-icons:react",
-        "Next-Js": "simple-icons:nextdotjs",
-        "TypeScript": "simple-icons:typescript",
-        "Tailwind": "mdi:tailwind",
-        "Node.js": "ri:nodejs-line"
-      },
-      "url": "https://dealamaze.in"
-    },
-    {
-      "name": "GoTruks (UBL)",
-      "isActive": true,
-      "description": "A smart logistics and transport booking platform for Dubai-based clients, enabling seamless truck booking and shipment management across the Middle East with real-time tracking.",
-      "highlights": [
-        "🚛 Smart Truck Booking System",
-        "📍 Real-time GPS Tracking",
-        "💰 Transparent Pricing Model",
-        "🌍 Cross-border GCC Transport",
-        "❄️ Refrigerated & Container Transport",
-        "📱 Instant Booking & Payment",
-        "📊 Fleet Management Dashboard",
-        "🔒 Secure Payment Gateway"
-      ],
-      "stack": {
-        "React": "simple-icons:react",
-        "TypeScript": "simple-icons:typescript",
-        "Next-Js": "simple-icons:nextdotjs",
-        "Tailwind": "mdi:tailwind",
         "JavaScript": "simple-icons:javascript"
       },
-      "url": "https://www.gotruks.com"
+      "url": "https://github.com/NUPIGM/QuanX"
     },
     {
-      "name": "ParticleFX",
+      "name": "五笔词库查询",
       "isActive": true,
-      "description": "A zero-dependency JavaScript library to create interactive particle effects from images using canvas. Easily works with React, Vue, or plain HTML. Customize animations, physics, and user interactions.",
+      "description": " 五笔词库，搜集了常用的五笔词库，方便用户查询五笔编码和对应的汉字。带有笔划图标，帮助他们快速找到所需的汉字及其编码。",
       "highlights": [
-        "🖼️ Turn Images into Particles",
-        "🌀 Hover & Click Effects",
-        "🎨 Custom Shapes & Filters",
-        "⚙️ Configurable Physics",
-        "📱 Responsive Design",
-        "📸 Export as PNG",
-        "📦 TypeScript Ready",
-        "✨ Works Without Any Framework"
+        "✨笔划",
+        "🌼图标",
+        "🍃五笔",
+        "🎉查询"
       ],
       "stack": {
-        "JavaScript": "simple-icons:javascript",
-        "TypeScript": "simple-icons:typescript",
-        "CanvasAPI": "mdi:draw",
-        "HTML5": "simple-icons:html5"
+        "JavaScript": "simple-icons:javascript"
       },
-      "url": "https://particlefx.anmol.pro"
-    },
-    {
-      "name": "Music WebApp",
-      "isActive": true,
-      "description": "A fun and smooth music streaming app where users can discover, play, and enjoy their favorite songs anytime. It features playlists, search, and seamless audio playback for a great listening experience.",
-      "highlights": [
-        "🔥 Firebase Integration",
-        "🔐 User Authentication",
-        "🎵 Playlist Management",
-        "🔍 Song Search"
-      ],
-      "stack": {
-        "React": "simple-icons:react",
-        "tailwind": "mdi:tailwind",
-        "Rest-Api": "mdi:api"
-      },
-      "github": "https://github.com/Anmol-TheDev/Music_app",
-      "url": "https://music.anmol.pro"
+      "url": "https://github.com/NUPIGM/Wubi_Code_Lookup"
     }
   ]
 }
