@@ -1,9 +1,9 @@
 enum EMode {
-  NORMAL = "NORMAL",
-  INSERT = "INSERT",
-  VISUAL = "VISUAL",
-  COMMAND = "COMMAND",
-  SEARCH = "SEARCH"
+  NORMAL = "普通",
+  INSERT = "插入",
+  VISUAL = "可视",
+  COMMAND = "命令",
+  SEARCH = "搜索"
 }
 
 let cursor: HTMLElement | null = document.getElementById("cursor");

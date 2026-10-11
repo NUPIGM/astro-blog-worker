@@ -1,66 +1,68 @@
 ---
-import Layout from "@layouts/Neovim.astro";
 import { basics } from "@cv";
+import Layout from "@layouts/Neovim.astro";
 
 const { name } = basics;
 ---
 
 <Layout title={`${name} - NEOVIM`}>
-  <div class="flex flex-col items-center justify-center h-screen">
-    <h1 class="text-4xl font-bold mb-8 text-blue nvim-line">Welcome to my portfolio</h1>
-    <div class="text-center w-1/3">
-      <div class="mb-4 flex place-content-center">
-        <p class="nvim-line max-w-max">Keyboard friendly</p>
-      </div>
-      <div class="mb-2 flex place-content-center">
-        <p class="nvim-line max-w-max">Neovim mode</p>
-      </div>
-      <div class="py-8 text-green text-left hero-content flex flex-col">
-        <p class="nvim-line">
-          <span>type :about<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span><span>to view about information</span></span>
-        </p>
-        <p class="nvim-line">
-          <span>type :proj<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span>to view personal projects</span>
-        </p>
-        <p class="nvim-line">
-          <span>type :hi<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span>to view contact details</span>
-        </p>
-        <p class="nvim-line">
-          <span>type /<span class="text-blue">&lt;Search term&gt;</span></span>
-          <span>to search posts</span>
-        </p>
-        <p class="nvim-line">
-          <span>type :h<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span
-            >to view the
-            <a href="neovim/help" class="underline text-blue hover:text-blue-800">help</a>
-            page</span
-          >
-        </p>
-        <p class="nvim-line">
-          <span>type :b<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span>to toggle the <span class="text-blue">key-bindings</span> pop-up</span>
-        </p>
-        <p class="nvim-line">
-          <span>type :q<span class="text-blue">&lt;Enter&gt;</span></span>
-          <span>to exit</span>
-        </p>
-      </div>
+    <div class="flex flex-col items-center justify-center h-screen">
+        <h1 class="text-4xl font-bold mb-8 text-blue nvim-line">欢迎来到我的个人主页</h1>
+        <div class="text-center w-1/3">
+            <div class="mb-4 flex place-content-center">
+                <p class="nvim-line max-w-max">键盘友好</p>
+            </div>
+            <div class="mb-2 flex place-content-center">
+                <p class="nvim-line max-w-max">Neovim 模式</p>
+            </div>
+            <div class="py-8 text-green text-left hero-content flex flex-col">
+                <p class="nvim-line">
+                    <span>输入 :about<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span><span>查看关于信息</span></span>
+                </p>
+                <p class="nvim-line">
+                    <span>输入 :proj<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span>查看个人项目</span>
+                </p>
+                <p class="nvim-line">
+                    <span>输入 :hi<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span>查看联系方式</span>
+                </p>
+                <p class="nvim-line">
+                    <span>输入 /<span class="text-blue">&lt;搜索词&gt;</span></span>
+                    <span>搜索文章</span>
+                </p>
+                <p class="nvim-line">
+                    <span>输入 :h<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span
+                        >查看
+                        <a href="neovim/help" class="underline text-blue hover:text-blue-800"
+                            >帮助</a
+                        >
+                        页面</span
+                    >
+                </p>
+                <p class="nvim-line">
+                    <span>输入 :b<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span>切换 <span class="text-blue">快捷键</span> 弹窗</span>
+                </p>
+                <p class="nvim-line">
+                    <span>输入 :q<span class="text-blue">&lt;Enter&gt;</span></span>
+                    <span>退出</span>
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
 </Layout>
 
 <style>
 * {
-  cursor: default !important;
+    cursor: default;
 }
 .hero-content p {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-wrap: nowrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-wrap: nowrap;
 }
 </style>

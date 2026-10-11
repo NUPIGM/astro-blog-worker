@@ -2,31 +2,27 @@
 import Layout from "@layouts/Neovim.astro";
 ---
 
-<Layout title="Help">
+<Layout title="帮助">
   <div class="flex flex-col items-center justify-center h-full">
-    <h1 class="text-4xl font-bold mb-8 text-blue">Help</h1>
+    <h1 class="text-4xl font-bold mb-8 text-blue">帮助</h1>
     <div class="text-center">
-      <p class="mb-4">version 0.0.1</p>
+      <p class="mb-4">版本 0.0.1</p>
       <div class="flex flex-col text-left justify-left p-10">
         <p class="p-4">
-          This page contains basic instructions to use this page. Some Vim key bindings are enabled
-          and can be used within the page itself, but some of them don't work in all the pages.
+          本页面包含使用本站的基本说明。部分 Vim 快捷键已启用，可在页面内直接使用，但并非所有页面都支持全部快捷键。
         </p>
 
-        <h2 class="p-4 text-2xl font-bold text-blue">Instructions</h2>
+        <h2 class="p-4 text-2xl font-bold text-blue">使用说明</h2>
         <p class="ml-4">
-          <kbd class="font-bold">u</kbd>: Undo the last change, in this case, it navigates
-          backwards.
+          <kbd class="font-bold">u</kbd>：撤销上一次更改，在本页面中用于返回上一页。
         </p>
-        <p class="ml-4"><kbd class="font-bold">j</kbd>: Move the cursor down one line.</p>
-        <p class="ml-4"><kbd class="font-bold">k</kbd>: Move the cursor up one line.</p>
+        <p class="ml-4"><kbd class="font-bold">j</kbd>：光标下移一行。</p>
+        <p class="ml-4"><kbd class="font-bold">k</kbd>：光标上移一行。</p>
         <p class="ml-4">
-          <kbd class="font-bold">g</kbd>: Move the cursor to the first line of the file, in this
-          case, page.
+          <kbd class="font-bold">g</kbd>：将光标移动到文件首行，在本页面中即页面顶部。
         </p>
         <p class="ml-4">
-          <kbd class="font-bold">G</kbd>: Move the cursor to the last line of the file, in this
-          case, page.
+          <kbd class="font-bold">G</kbd>：将光标移动到文件末行，在本页面中即页面底部。
         </p>
       </div>
     </div>

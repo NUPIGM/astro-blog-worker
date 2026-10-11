@@ -13,7 +13,7 @@ export interface Props {
 
 const {
     title,
-    description = "Interactive Neovim-themed portfolio interface showcasing Anmol Singh's projects and experience. A keyboard-friendly, terminal-inspired alternative view of a full-stack developer's portfolio featuring e-commerce, music streaming, and social media applications."
+    description = "一个交互式 Neovim 主题的个人主页界面，展示 Anmol Singh 的项目与经验。这是一个键盘友好、终端风格的全栈开发者作品集的另一种视图，涵盖电商、音乐流媒体和社交媒体应用。"
 } = Astro.props;
 
 const { url, image, name, location } = CV.basics;
@@ -23,7 +23,7 @@ const { city, region } = location;
 const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: `${name}'s Neovim Portfolio`,
+    name: `${name} 的 Neovim 作品集`,
     description: description,
     url: `${url}/neovim`,
     applicationCategory: "Portfolio",
@@ -41,29 +41,29 @@ const structuredData = {
             "@type": "PostalAddress",
             addressLocality: city,
             addressRegion: region,
-            addressCountry: "IN"
+            addressCountry: "CN"
         }
     }
 };
 
 const keywords = [
-    "Neovim Portfolio",
-    "Interactive Portfolio",
-    "Keyboard Navigation",
-    "Terminal Interface",
-    "Developer Portfolio",
+    "Neovim 作品集",
+    "交互式作品集",
+    "键盘导航",
+    "终端界面",
+    "开发者作品集",
     name,
     CV.basics.label,
-    "Web Development",
-    "Full Stack Developer",
+    "Web 开发",
+    "全栈开发者",
     city,
     region,
-    "India"
+    "中国"
 ];
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="overflow-hidden">
+<html lang="zh-CN" class="overflow-hidden">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,7 +74,7 @@ const keywords = [
         <meta name="description" content={description}>
         <meta name="author" content={name}>
         <meta name="keywords" content={keywords.join(", ")}>
-        <meta name="geo.region" content="IN-HR">
+        <meta name="geo.region" content="CN-FJ">
         <meta name="geo.placename" content={city}>
 
         <!-- Canonical URL -->
@@ -90,8 +90,8 @@ const keywords = [
         <meta property="og:title" content={title}>
         <meta property="og:description" content={description}>
         <meta property="og:image" content={image}>
-        <meta property="og:site_name" content={`${name}'s Neovim Portfolio`}>
-        <meta property="og:locale" content="en_IN">
+        <meta property="og:site_name" content={`${name} 的 Neovim 作品集`}>
+        <meta property="og:locale" content="zh_CN">
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">

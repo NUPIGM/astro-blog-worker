@@ -13,9 +13,9 @@
     "theme": "platinum",
     "location": {
       "address": "***",
-      "city": "Fu Jian",
+      "city": "福建",
       "countryCode": "CN",
-      "region": "China"
+      "region": "中国"
     },
     "profiles": [
       {
@@ -50,48 +50,22 @@
   },
   "work": [
     {
-      "name": "Advika Innovate",
-      "position": "Frontend Developer",
-      "location_type": "Remote",
-      "location": "印度",
-      "url": "https://advikainnovate.com/",
-      "startDate": "2025-07-01",
-      "endDate": null,
-      "summary": "Contributing to a centralized ecommerce platform to manage multiple ecommerce stores from a single interface, including order and inventory management.",
-      "responsibilities": [
-        "Developing and maintaining the frontend of a centralized ecommerce platform.",
-        "Implementing features for order management, inventory control, and other ecommerce functionalities.",
-        "Collaborating with the team to create a scalable and user-friendly platform."
-      ],
-      "skills": {
-        "React": "simple-icons:react",
-        "MUI": "simple-icons:mui",
-        "React Hook Form": "simple-icons:reacthookform",
-        "React Query": "simple-icons:reactquery",
-        "Zod": "simple-icons:zod",
-        "TypeScript": "simple-icons:typescript",
-        "CSS3": "ri:css3-fill",
-        "Git": "mdi:git",
-        "GitHub": "mdi:github"
-      }
-    },
-    {
       "name": "PixelSaffron",
-      "position": "Full-Stack Developer",
-      "location_type": "Remote",
-      "location": "IN",
-      "url": "https://pixelsaffron.in/",
+      "position": "全栈开发工程师",
+      "location_type": "远程",
+      "location": "中国",
+      "url": "",
       "startDate": "2024-10-03",
       "endDate": "2025-06-30",
-      "summary": "Led front-end development for a full-stack eCommerce platform built for a Mumbai-based clothing brand. Implemented core features like order management, secure payment integration, and responsive UI for seamless user experience.",
+      "summary": "提升用户体验。",
 
       "responsibilities": [
-        "Built and maintained both front-end and back-end components of a production-ready eCommerce web app using modern web technologies.",
-        "Focused on building scalable, responsive, and maintainable front-end features, ensuring high performance and usability.",
-        "Integrated payment gateways and developed order management features to support real-time order processing.",
-        "Collaborated with clients and team members to align technical solutions with business needs.",
-        "Ensured clean, modular code and implemented best practices for performance optimization and maintainability.",
-        "Developed and connected RESTful APIs to handle key business logic and data flow between client and server."
+        "使用现代 Web 技术构建并维护了一个生产级电商应用的前后端组件。",
+        "专注于构建可扩展、响应式且易于维护的前端功能，确保高性能与良好的可用性。",
+        "集成支付网关并开发订单管理功能，支持实时订单处理。",
+        "与客户和团队成员协作，使技术方案与业务需求保持一致。",
+        "保证代码整洁、模块化，并实施性能优化与可维护性方面的最佳实践。",
+        "开发并对接 RESTful API，处理客户端与服务器之间的核心业务逻辑和数据流转。"
       ],
 
       "skills": {
@@ -100,26 +74,19 @@
         "HTML5": "simple-icons:html5",
         "CSS3": "ri:css3-fill",
         "Tailwind": "mdi:tailwind",
-        "Bootstrap": "simple-icons:bootstrap",
         "JavaScript ": "simple-icons:javascript",
         "TypeScript": "simple-icons:typescript",
-        "Next-Js": "simple-icons:nextdotjs",
-        "React": "simple-icons:react",
         "NodeJS": "ri:nodejs-line",
-
-        "Bruno": "simple-icons:bruno",
-        "Redux": "simple-icons:redux",
-        "Git": "mdi:git",
         "GitHub": "mdi:github"
       }
     }
   ],
   "education": [
     {
-      "institution": "medical college of fu zhou university",
+      "institution": "泉州医学学校",
       "url": "",
-      "area": "Fu Zhou",
-      "studyType": "string",
+      "area": "泉州",
+      "studyType": "检验",
       "startDate": "2017-09-01",
       "endDate": "2020-07-01"
     }
@@ -237,7 +204,8 @@
       "stack": {
         "JavaScript": "simple-icons:javascript"
       },
-      "url": "https://github.com/NUPIGM/QuanX"
+      "url":"",
+      "github": "https://github.com/NUPIGM/QuanX"
     },
     {
       "name": "五笔词库查询",
@@ -252,7 +220,8 @@
       "stack": {
         "JavaScript": "simple-icons:javascript"
       },
-      "url": "https://github.com/NUPIGM/Wubi_Code_Lookup"
+      "url":"",
+      "github": "https://github.com/NUPIGM/Wubi_Code_Lookup"
     }
   ]
 }

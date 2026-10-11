@@ -6,7 +6,7 @@ import Section from "../Section.astro";
 
 <Section className={Astro.props.className} title="Projects">
     <div class="grid grid-cols-1 gap-3 md:grid-cols-2 print:flex print:flex-col">
-        {projects?.map(({ url, description, highlights, name, isActive, github, stack }) => {
+        {projects?.map(({ url, description, highlights, name, isActive, stack }) => {
             return (
                 <footer class="grid-span-1 group relative flex min-h-80 flex-col overflow-hidden rounded-md bg-skin-button-muted/50 p-5 shadow-sm ring-1 ring-skin-muted sm:hover:ring-2 sm:hover:ring-skin-hue sm:hover:bg-skin-muted transition-all duration-250 ease-in-out">
                     <div class="relative z-10 flex items-center justify-between space-x-[10px]">
@@ -31,20 +31,6 @@ import Section from "../Section.astro";
                                 )}
                             </div>
                         </div>
-
-                        {github && (
-                            <a
-                                data-ccursor="lift"
-                                href={github}
-                                title={`View ${name} in GitHub`}
-                                aria-label={`View ${name} in GitHub`}
-                                target="_blank"
-                                rel="noopener"
-                                class="opacity-75 hover:opacity-100 cursor-none"
-                            >
-                                <Icon name="mdi:github" width={24} height={24} />
-                            </a>
-                        )}
                     </div>
 
                     <p data-ccursor="noPadding" class="relative z-10 py-3 text-sm text-skin-base">
