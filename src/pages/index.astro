@@ -13,7 +13,7 @@ import NeovimButton from "../components/neovim/Button.astro";
 
 <Layout title="nupigm - 个人主页">
     <main
-        class="relative grid h-full max-w-7xl gap-12 p-8 max-sm:py-16 md:min-h-screen md:grid-cols-6 md:p-16 xl:gap-24 text-skin-base print:gap-4"
+        class="relative grid h-full max-w-7xl gap-12 p-8 max-sm:py-16 md:min-h-screen md:grid-cols-6 md:p-8 xl:gap-24 text-skin-base print:gap-4"
     >
         <!-- 个人信息 -->
         <div
@@ -35,104 +35,6 @@ import NeovimButton from "../components/neovim/Button.astro";
             <Education />
         </div>
         <!-- 键盘管理器 -->
-        <KeyboardManager />
+        <!-- <KeyboardManager /> -->
     </main>
-
-    <style is:global>
-    * {
-        scrollbar-color: var(--color-button-muted) var(--color-fill);
-    }
-    @page {
-        size: auto;
-        margin: 0;
-    }
-    main {
-        margin: auto;
-        width: 100%;
-    }
-
-    @keyframes slide-enter {
-        0% {
-            transform: translateY(10px);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-        .slide-enter,
-        .slide-enter-content > *:not(:has(.table-of-contents)) {
-            --enter-stage: 0;
-            --enter-step: 150ms;
-            --enter-initial: 0ms;
-            animation: slide-enter 1s both 1;
-            animation-delay: calc(var(--enter-initial) + var(--enter-stage) * var(--enter-step));
-        }
-
-        .slide-enter-content > *:nth-child(1) {
-            --enter-stage: 1;
-        }
-        .slide-enter-content > *:nth-child(2) {
-            --enter-stage: 2;
-        }
-        .slide-enter-content > *:nth-child(3) {
-            --enter-stage: 3;
-        }
-        .slide-enter-content > *:nth-child(4) {
-            --enter-stage: 4;
-        }
-        .slide-enter-content > *:nth-child(5) {
-            --enter-stage: 5;
-        }
-        .slide-enter-content > *:nth-child(6) {
-            --enter-stage: 6;
-        }
-        .slide-enter-content > *:nth-child(7) {
-            --enter-stage: 7;
-        }
-        .slide-enter-content > *:nth-child(8) {
-            --enter-stage: 8;
-        }
-        .slide-enter-content > *:nth-child(9) {
-            --enter-stage: 9;
-        }
-        .slide-enter-content > *:nth-child(10) {
-            --enter-stage: 10;
-        }
-        .slide-enter-content > *:nth-child(11) {
-            --enter-stage: 11;
-        }
-        .slide-enter-content > *:nth-child(12) {
-            --enter-stage: 12;
-        }
-        .slide-enter-content > *:nth-child(13) {
-            --enter-stage: 13;
-        }
-        .slide-enter-content > *:nth-child(14) {
-            --enter-stage: 14;
-        }
-        .slide-enter-content > *:nth-child(15) {
-            --enter-stage: 15;
-        }
-        .slide-enter-content > *:nth-child(16) {
-            --enter-stage: 16;
-        }
-        .slide-enter-content > *:nth-child(17) {
-            --enter-stage: 17;
-        }
-        .slide-enter-content > *:nth-child(18) {
-            --enter-stage: 18;
-        }
-        .slide-enter-content > *:nth-child(19) {
-            --enter-stage: 19;
-        }
-        .slide-enter-content > *:nth-child(20) {
-            --enter-stage: 20;
-        }
-    }
-    </style>
 </Layout>

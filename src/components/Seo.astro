@@ -1,0 +1,149 @@
+---
+import CV from "@cv";
+
+interface Props {
+    title: string;
+    description?: string;
+    image?: string;
+    canonicalURL?: string;
+    keywords?: string[];
+}
+
+const {
+    title,
+    image = CV.basics.image,
+    canonicalURL = CV.basics.url,
+    keywords = [
+        "NUPIGM",
+        "NP Dev",
+        "Full Stack Developer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Web Developer",
+        "TypeScript Developer",
+        "Go Developer",
+        "China"
+    ]
+} = Astro.props;
+
+const { url, theme, name, location } = CV.basics;
+const { city, region } = location;
+
+// Create a more detailed description
+const detailedDescription = "nupigm 的个人主页，展示他的项目、经验和技能。";
+
+// Create structured data for better SEO
+const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: name,
+    alternateName: "NP Dev",
+    jobTitle: CV.basics.label,
+    url: url,
+    email: CV.basics.email,
+    alumniOf: CV.education?.[0]?.institution,
+    knowsLanguage: CV.languages?.map((lang) => lang.language),
+    sameAs: CV.basics.profiles.map((profile) => profile.url),
+    image: image,
+    description: detailedDescription,
+    address: {
+        "@type": "PostalAddress",
+        addressLocality: city,
+        addressRegion: region,
+        addressCountry: "CN"
+    },
+    knowsAbout: CV.skills.map((skill) => skill.name),
+    worksFor: CV.work?.map((work) => ({
+        "@type": "Organization",
+        name: work.name,
+        position: work.position
+    }))
+};
+
+const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: url
+        },
+        {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: `${url}#projects`
+        },
+        {
+            "@type": "ListItem",
+            position: 3,
+            name: "About",
+            item: `${url}#about`
+        },
+        {
+            "@type": "ListItem",
+            position: 4,
+            name: "Contact",
+            item: `${url}#contact`
+        }
+    ]
+};
+---
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title}>
+<meta name="description" content={detailedDescription}>
+<meta name="author" content={name}>
+<meta name="keywords" content={keywords.join(", ")}>
+<meta name="geo.region" content="IN-HR">
+<meta name="geo.placename" content={city}>
+<meta name="generator" content={Astro.generator}>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL}>
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="/apple-touch-icon.webp">
+
+<!-- Preload critical assets -->
+<link rel="preload" as="image" href={image}>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content={url}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={detailedDescription}>
+<meta property="og:image" content={image}>
+<meta property="og:site_name" content={`${name}'s Portfolio`}>
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:domain" content={url.split("//")[1] ?? ""}>
+<meta name="twitter:url" content={url}>
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={detailedDescription}>
+<meta name="twitter:image" content={image}>
+<meta
+    name="twitter:creator"
+    content={CV.basics.profiles.find((p) => p.network === "X / Twitter")?.username}
+>
+
+<!-- Additional meta tags -->
+<meta name="theme-color" content={theme === "dark" ? "#1a1a1a" : "#ffffff"}>
+<meta name="referrer" content="no-referrer">
+<meta name="generator" content={Astro.generator}>
+
+<!-- Structured Data -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<!-- Google Site Verification -->
+<meta name="google-site-verification" content="oi4G-5FCwNn5m9MvSyjyBxVatgwi8KT_KtVuC9Pckmg">

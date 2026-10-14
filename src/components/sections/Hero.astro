@@ -9,7 +9,7 @@ const { city, region, address } = location;
 ---
 
 <Section className={Astro.props.className}>
-    <div class="min-w-[275px]">
+    <div class="">
         <section
             id="about"
             aria-label="About me"
@@ -28,7 +28,7 @@ const { city, region, address } = location;
                     >
                 </figure>
                 <div class="flex flex-col items-center">
-                    <h1 class=" font-semibold ">{name}</h1>
+                    <h1 class="font-mono md:font-semibold ">{name}</h1>
                     <div class="overflow-hidden mt-1">
                         <div
                             class="font-roboto-condensed font-bold lowercase text-xl lg:text-[1rem] lg:leading-[1rem]"
