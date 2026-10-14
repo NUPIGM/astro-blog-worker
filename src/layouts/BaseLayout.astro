@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FloatingWidget from "../components/FloatingWidget.astro";
+import LoadingIndicator from "../components/LoadingIndicator.astro";
 import { fade } from "astro:transitions";
 interface Props {
   title: string;
@@ -29,5 +30,6 @@ const { title, description, navItems, count, tags } = Astro.props;
     </main>
     <Footer />
     <FloatingWidget />
+    <LoadingIndicator />
   </body>
 </html>

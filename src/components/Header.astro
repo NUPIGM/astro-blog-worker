@@ -1,14 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import { SITE_TITLE } from "../consts";
-
 interface Props {
   title: string;
   navItems?: { label: string; href: string }[];
   count: number;
   tags: string[];
 }
-const { title, navItems, count, tags } = Astro.props;
+const { title, navItems = [], count, tags } = Astro.props;
 ---
 
 <header>

@@ -1,0 +1,69 @@
+---
+/**
+ * 页面跳转加载动画
+ *
+ * 依赖 BaseHead 中全局启用的 ClientRouter（astro:transitions）：
+ * - astro:before-preparation：点击站内链接 / 前进后退开始跳转时显示
+ * - astro:page-load / astro:after-swap：新页面挂载完成后隐藏
+ *
+ * 该组件在全站每个页面都会渲染，外层遮罩通过 transition:persist 在
+ * ClientRouter 替换 DOM 时保持不变，因此隐藏时的淡出动画可以跨页面流畅完成。
+ */
+
+// 加载超过该时长才显示遮罩，避免快速跳转时闪烁
+const SHOW_DELAY = 200;
+---
+
+<div
+  id="page-loading"
+  transition:persist
+  role="status"
+  aria-hidden="true"
+  class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-base-100/70 opacity-0 backdrop-blur-sm transition-[opacity,visibility] duration-200 pointer-events-none invisible print:hidden"
+>
+  <span class="loading loading-spinner loading-lg text-primary"></span>
+  <span class="text-sm text-base-content/70">加载中…</span>
+</div>
+
+<script>
+  const LOADING_ID = "page-loading";
+  // ClientRouter 的 script 默认只在首次加载执行一次，
+  // 但为防止 data-astro-rerun 等情况导致重复注册，做一次初始化守卫
+  if (!(window as any).__loadingIndicatorReady) {
+    (window as any).__loadingIndicatorReady = true;
+
+    const getOverlay = () => document.getElementById(LOADING_ID);
+
+    let showTimer: number | undefined;
+
+    const show = () => {
+      window.clearTimeout(showTimer);
+      showTimer = window.setTimeout(() => {
+        const overlay = getOverlay();
+        overlay?.classList.remove(
+          "opacity-0",
+          "invisible",
+          "pointer-events-none"
+        );
+        overlay?.setAttribute("aria-hidden", "false");
+      }, 200);
+    };
+
+    const hide = () => {
+      window.clearTimeout(showTimer);
+      const overlay = getOverlay();
+      overlay?.classList.add(
+        "opacity-0",
+        "invisible",
+        "pointer-events-none"
+      );
+      overlay?.setAttribute("aria-hidden", "true");
+    };
+
+    // 站内跳转开始（点击链接、浏览器前进 / 后退）
+    document.addEventListener("astro:before-preparation", show);
+    // 新页面已挂载（首次加载与每次跳转后都会触发）
+    document.addEventListener("astro:page-load", hide);
+    document.addEventListener("astro:after-swap", hide);
+  }
+</script>
