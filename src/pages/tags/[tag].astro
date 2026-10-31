@@ -1,40 +1,33 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import PostList from "../../components/PostList.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  const tags = [
-    ...new Set(posts.flatMap((article) => article.data.tags ?? [])),
-  ];
-
-  return tags.map((tag) => ({
-    params: { tag },
-    props: { tag },
-  }));
+    const posts = await getCollection("blog");
+    const tags = [...new Set(posts.flatMap((article) => article.data.tags ?? []))];
+    return tags.map((tag) => ({
+        params: { tag },
+        props: { tag }
+    }));
 }
 
 const { tag } = Astro.props as { tag: string };
-const decodedTag = tag;
 const posts = (await getCollection("blog"))
-  .filter((article) => article.data.tags?.includes(decodedTag))
-  .sort(
-    (a, b) =>
-      new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
-  );
+    .filter((article) => article.data.tags?.includes(tag))
+    .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
 const navItems = [
-  { label: "博文", href: "/posts/" },
-  { label: "分享", href: Astro.url.toString() }
+    { label: "博文", href: "/posts/" },
+    { label: "标签", href: "/tags/" }
 ];
 ---
 
 <BaseLayout
-  title="留言 "
-  description="查看博客中的全部标签与对应文章数量"
-  navItems={navItems}
-  count={posts.length}
-  tags={["tags"]}
+    title={`标签：${tag}`}
+    description={`标签「${tag}」下的全部文章，共 ${posts.length} 篇`}
+    navItems={navItems}
+    count={posts.length}
+    tags={["tags"]}
 >
-  <PostList posts={posts} />
+    <PostList posts={posts} />
 </BaseLayout>

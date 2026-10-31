@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import videoDetailData from "../test_data/video_detail.json";
+  import { sanitizeRichText } from "../lib/sanitize";
 
   export let vodId: string | number = "";
 
@@ -9,10 +9,13 @@
     url: string;
   };
 
-  let detail: any = null;
+  type VideoDetailItem = Record<string, any>;
+
+  let detail: VideoDetailItem | null = null;
   let episodes: EpisodeItem[] = [];
   let loading = true;
   let error = "";
+  let synopsis = "";
 
   const normalizeM3u8Url = (value = "") => {
     if (!value) return "";
@@ -33,19 +36,6 @@
     return trimmed;
   };
 
-  const readFixture = async <T,>(fixture: T): Promise<T> => {
-    const payload = encodeURIComponent(JSON.stringify(fixture));
-    const response = await fetch(
-      `data:application/json;charset=utf-8,${payload}`,
-    );
-
-    if (!response.ok) {
-      throw new Error("请求失败");
-    }
-
-    return response.json();
-  };
-
   const parseEpisodes = (raw = "") => {
     if (!raw) return [];
 
@@ -64,15 +54,17 @@
       .filter((item) => item.url);
   };
 
-  const fetchVideoDetail = async () => {
+  // 数据已作为模块随包加载，无需序列化后经 data: URL 往返
+  const fetchVideoDetail = () => {
     loading = true;
     error = "";
 
     try {
-      const data = await readFixture(videoDetailData);
-      const list = Array.isArray(data?.list) ? data.list : [];
+      const list: VideoDetailItem[] = Array.isArray(videoDetailData?.list)
+        ? (videoDetailData.list as VideoDetailItem[])
+        : [];
       const matched = list.find(
-        (item: any) => String(item.vod_id) === String(vodId),
+        (item) => String(item.vod_id) === String(vodId),
       );
 
       if (!matched) {
@@ -90,13 +82,16 @@
     }
   };
 
-  onMount(() => {
-    if (vodId) fetchVideoDetail();
-  });
-
+  // 单处触发：首次挂载与 vodId 变化都走这条响应式语句，避免重复请求
   $: if (vodId) {
     fetchVideoDetail();
   }
+
+  $: synopsis = detail
+    ? sanitizeRichText(detail.vod_content) ||
+      sanitizeRichText(detail.vod_blurb) ||
+      "暂无简介"
+    : "";
 </script>
 
 <div class="mx-auto max-w-6xl px-4 py-8">
@@ -104,14 +99,14 @@
     <div
       class="animate-pulse space-y-5 rounded-[28px] border border-slate-200 bg-white/80 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)]"
     >
-      <div class="h-72 rounded-[24px] bg-slate-200"></div>
+      <div class="h-72 rounded-3xl       bg-slate-200"></div>
       <div class="h-6 w-1/3 rounded bg-slate-200"></div>
       <div class="h-4 w-2/3 rounded bg-slate-200"></div>
       <div class="h-4 w-1/2 rounded bg-slate-200"></div>
     </div>
   {:else if error}
     <div
-      class="rounded-[24px] border border-red-200 bg-red-50 px-5 py-4 text-red-600"
+      class="rounded-3xl border border-red-200 bg-red-50 px-5 py-4 text-red-600"
     >
       {error}
     </div>
@@ -190,10 +185,11 @@
         </div>
       </div>
 
-      <div class="mt-8 rounded-[24px] border border-slate-200 bg-slate-50 p-5">
+      <div class="mt-8 rounded-3xl border border-slate-200 bg-slate-50 p-5">
         <h3 class="mb-3 text-lg font-semibold text-slate-800">简介</h3>
         <div class="prose max-w-none text-sm leading-7 text-slate-600">
-          {@html detail.vod_content || detail.vod_blurb || "暂无简介"}
+          <!-- 已经 sanitizeRichText 白名单净化，仅保留安全标签且无属性 -->
+          {@html synopsis}
         </div>
       </div>
     </div>

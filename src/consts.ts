@@ -4,6 +4,5 @@
 const SITE_TITLE = "个人博客";
 const SITE_DESCRIPTION = "啥都学一点，万一用上了呢。有个博客一直是我的想法。";
 const AUTHOR = "NUPIGM";
-const TURN_OFF_SW = true;
 
-export { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TURN_OFF_SW };
+export { SITE_TITLE, SITE_DESCRIPTION, AUTHOR };

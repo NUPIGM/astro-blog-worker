@@ -1,0 +1,71 @@
+---
+const {
+  title,
+  description,
+  detailedDescription = description,
+  image,
+  keywords = [],
+  theme,
+} = Astro.props;
+
+const name = "nupigm";
+const city = "China";
+const url = new URL(Astro.url.pathname, Astro.site).toString();
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title}>
+<meta name="description" content={detailedDescription}>
+<meta name="author" content={name}>
+<meta name="keywords" content={keywords.join(", ")}>
+<meta name="geo.region" content="CN">
+<meta name="geo.placename" content={city}>
+<meta name="generator" content={Astro.generator}>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL}>
+
+<!-- Favicon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="/apple-touch-icon.webp">
+
+<!-- Preload critical assets -->
+<link rel="preload" as="image" href={image}>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content={url}>
+<meta property="og:title" content={title}>
+<meta property="og:description" content={detailedDescription}>
+<meta property="og:image" content={image}>
+<meta property="og:site_name" content={`${name}'s Portfolio`}>
+<meta property="og:locale" content="en_IN">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:domain" content={url.split("//")[1] ?? ""}>
+<meta name="twitter:url" content={url}>
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={detailedDescription}>
+<meta name="twitter:image" content={image}>
+<meta name="twitter:creator" content={name}>
+
+<!-- Additional meta tags -->
+<meta name="theme-color" content={theme === "dark" ? "#1a1a1a" : "#ffffff"}>
+<meta name="referrer" content="no-referrer">
+<meta name="generator" content={Astro.generator}>
+
+<!-- Structured Data -->
+<!-- <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} /> -->
+
+<!-- include manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Google Site Verification -->
+<meta name="google-site-verification" content="oi4G-5FCwNn5m9MvSyjyBxVatgwi8KT_KtVuC9Pckmg">

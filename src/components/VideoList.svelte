@@ -16,29 +16,18 @@
   let loading = false;
   let error = "";
 
-  const readFixture = async <T,>(fixture: T): Promise<T> => {
-    const payload = encodeURIComponent(JSON.stringify(fixture));
-    const response = await fetch(
-      `data:application/json;charset=utf-8,${payload}`,
-    );
-
-    if (!response.ok) {
-      throw new Error("请求失败");
-    }
-
-    return response.json();
-  };
-
-  const fetchVideos = async (query = "") => {
-    const data = await readFixture(videoListData);
-    const list = Array.isArray(data?.list) ? data.list : [];
+  // 数据已作为模块随包加载，无需再序列化后经 data: URL 往返一次
+  const fetchVideos = (query = ""): VideoItem[] => {
+    const list: VideoItem[] = Array.isArray(videoListData?.list)
+      ? (videoListData.list as VideoItem[])
+      : [];
     const q = query.trim().toLowerCase();
 
     if (!q) {
       return list;
     }
 
-    return list.filter((item: VideoItem) =>
+    return list.filter((item) =>
       [item.vod_name, item.type_name, item.vod_remarks, item.vod_time]
         .join(" ")
         .toLowerCase()
@@ -46,12 +35,12 @@
     );
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     loading = true;
     error = "";
 
     try {
-      videos = await fetchVideos(keyword);
+      videos = fetchVideos(keyword);
     } catch (err) {
       error = err instanceof Error ? err.message : "搜索失败";
       videos = [];

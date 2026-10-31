@@ -95,20 +95,39 @@
 </style>
 
 <script>
-  const btn = document.getElementById("back-to-top");
+  // ClientRouter 会在站内跳转时替换 DOM，因此不能在模块作用域缓存按钮节点，
+  // 每次都用 id 现查；点击走事件委托，滚动状态更新走 rAF 节流。
+  if (!(window as any).__floatingWidgetReady) {
+    (window as any).__floatingWidgetReady = true;
 
-  const updateVisibility = () => {
-    if (!btn) return;
-    const shouldShow = window.scrollY > 300;
-    btn.style.opacity = shouldShow ? "1" : "0.7";
-    btn.style.transform = shouldShow ? "translateY(0)" : "translateY(4px)";
-    btn.style.pointerEvents = shouldShow ? "auto" : "none";
-  };
+    let ticking = false;
 
-  btn?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+    const syncButton = () => {
+      ticking = false;
+      const btn = document.getElementById("back-to-top") as HTMLElement | null;
+      if (!btn) return;
+      const shouldShow = window.scrollY > 300;
+      btn.style.opacity = shouldShow ? "1" : "0.7";
+      btn.style.transform = shouldShow ? "translateY(0)" : "translateY(4px)";
+      btn.style.pointerEvents = shouldShow ? "auto" : "none";
+    };
 
-  updateVisibility();
-  window.addEventListener("scroll", updateVisibility, { passive: true });
+    const requestSync = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(syncButton);
+    };
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("#back-to-top")) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+
+    window.addEventListener("scroll", requestSync, { passive: true });
+    document.addEventListener("astro:page-load", requestSync);
+
+    requestSync();
+  }
 </script>

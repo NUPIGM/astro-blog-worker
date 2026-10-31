@@ -11,13 +11,14 @@ interface Props {
   navItems?: { label: string; href: string }[];
   count: number;
   tags: string[];
+  keywords?: string[];
 }
-const { title, description, navItems, count, tags } = Astro.props;
+const { title, description, navItems, count, tags, keywords } = Astro.props;
 ---
 
 <html lang="zh-cn">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} keywords={keywords} />
   </head>
 
   <body

@@ -1,0 +1,15 @@
+# 安全响应头（Cloudflare Workers 静态资源）
+# 注意：Cloudflare 的 _headers 只支持 /* 与 /path/* 两种通配，
+# 不支持 /*.jpg 这类后缀匹配，因此这里只做通配与目录级规则。
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+
+# /_astro/* 的 immutable 缓存由 @astrojs/cloudflare 构建时自动追加，
+# 此处不要重复声明，避免覆盖。

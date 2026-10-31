@@ -10,7 +10,6 @@ const tags: Array<[string, number]> = [
 ].sort((a, b) => {
   return b[1] - a[1];
 });
-console.log(tags);
 
 const navItems = [
   { label: "博文", href: "/posts/" },
@@ -32,7 +31,7 @@ const navItems = [
         {
           tags.map(([tagName, count]) => (
             <a
-              href={`/tags/${encodeURIComponent(tagName)}`}
+              href={`/tags/${encodeURIComponent(tagName)}/`}
               class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
             >
               <span>{tagName}</span>

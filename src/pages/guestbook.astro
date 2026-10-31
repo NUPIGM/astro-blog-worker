@@ -71,39 +71,45 @@ const navItems = [
   <div class="mt-10 pt-8 border-t border-gray-200">
     <h2 class="text-lg font-medium text-gray-900 mb-5">写下你的留言</h2>
 
-    <form
-      class="space-y-5"
-      novalidate
-      onsubmit="preventDefault(); return false;"
-    >
+    <!-- 纯静态站点暂无后端，表单未接入提交接口，禁用提交避免误导 -->
+    <form class="space-y-5" onsubmit="return false;">
       <div>
-        <label class="block text-sm text-gray-600 mb-1.5">昵称</label>
+        <label class="block text-sm text-gray-600 mb-1.5" for="gb-name">昵称</label>
         <input
+          id="gb-name"
           type="text"
           name="name"
           required
+          autocomplete="nickname"
+          maxlength="32"
           class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
           placeholder="请输入你的昵称"
         />
       </div>
 
       <div>
-        <label class="block text-sm text-gray-600 mb-1.5">留言内容</label>
+        <label class="block text-sm text-gray-600 mb-1.5" for="gb-content">留言内容</label>
         <textarea
+          id="gb-content"
           name="content"
           required
           rows="4"
+          maxlength="500"
           class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
           placeholder="说点什么吧..."></textarea>
       </div>
 
-      <button
-        type="button"
-        onclick="return false;"
-        class="px-6 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors pointer-events-none select-none"
-      >
-        提交留言
-      </button>
+      <div class="flex items-center gap-3">
+        <button
+          type="submit"
+          disabled
+          aria-disabled="true"
+          class="px-6 py-2 bg-blue-600 text-white text-sm rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          提交留言
+        </button>
+        <span class="text-xs text-gray-500">留言接口尚未接入，暂时无法提交。</span>
+      </div>
     </form>
   </div>
 </BaseLayout>

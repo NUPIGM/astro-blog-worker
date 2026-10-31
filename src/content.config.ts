@@ -12,15 +12,6 @@ export const blog = defineCollection({
     tags: z.array(z.string()).optional(),
   }),
 });
-export const about = defineCollection({
-  loader: glob({ base: "./src/content/about", pattern: "**/*.md" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-  }),
-});
-
 export const collections = {
   blog,
-  about,
 };
