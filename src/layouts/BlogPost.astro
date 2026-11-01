@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Prose } from "@/components/starwind/prose";
+import { AUTHOR } from "../consts";
 import BaseLayout from "./BaseLayout.astro";
-import { SITE_TITLE, AUTHOR } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -12,30 +13,22 @@ const navItems = [
 ];
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  navItems={navItems}
-  count={0}
-  tags={["tags"]}
->
-  <!-- 版主 -->
-  <main class="flex-1">
-    <p class="text-[15px] text-gray-600 max-w-[90%] mb-6">
-      {description}
-    </p>
+<BaseLayout title={title} description={description} navItems={navItems} count={0} tags={["tags"]}>
+    <!-- 版主 -->
+    <main class="flex-1">
+        <p class="text-[15px] text-muted-foreground max-w-[90%] mb-6">
+            {description}
+        </p>
 
-    <!-- 插槽：可继续放正文内容 -->
-    <div class="prose prose-slate max-w-none warp-break-words">
-      <slot />
-    </div>
-    <br />
-    <br />
-    <div
-      class="ml-auto flex w-max flex-col items-start text-left text-xs text-gray-600 mb-3"
-    >
-      <a class="w-max">Author: {AUTHOR}</a>
-      <a class="w-max">Date: {pubDate}</a>
-    </div>
-  </main>
+        <!-- 正文排版由 Starwind Prose 组件接管（替代 @tailwindcss/typography 的 .prose） -->
+        <Prose class="max-w-none">
+            <slot />
+        </Prose>
+        <br>
+        <br>
+        <div class="ml-auto flex w-max flex-col items-start text-left text-xs text-muted-foreground mb-3">
+            <p class="w-max">Author: {AUTHOR}</p>
+            <p class="w-max">Date: {pubDate}</p>
+        </div>
+    </main>
 </BaseLayout>

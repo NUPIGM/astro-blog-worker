@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Badge } from "@/components/starwind/badge";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const posts = await getCollection("blog");
@@ -26,19 +27,22 @@ const navItems = [
 >
   <div class="wrapper">
     <div class="tags-container max-w-3xl mx-auto py-8">
-      <h1 class="text-3xl font-bold mb-8">全部标签</h1>
+      <h1 class="text-3xl font-bold text-foreground mb-8">全部标签</h1>
       <div class="flex flex-wrap gap-3">
         {
           tags.map(([tagName, count]) => (
-            <a
+            <Badge
               href={`/tags/${encodeURIComponent(tagName)}/`}
-              class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
+              tone="neutral"
+              appearance="outline"
+              size="md"
+              class="gap-2 bg-muted px-4 py-2 text-sm text-foreground/80 transition hover:border-primary/30 hover:bg-primary/10 hover:text-primary"
             >
               <span>{tagName}</span>
-              <span class="rounded-full bg-gray-200 px-2 py-0.5 text-xs text-gray-600">
+              <span class="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground">
                 {count}
               </span>
-            </a>
+            </Badge>
           ))
         }
       </div>

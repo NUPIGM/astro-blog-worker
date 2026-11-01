@@ -8,7 +8,12 @@
  *
  * 该组件在全站每个页面都会渲染，外层遮罩通过 transition:persist 在
  * ClientRouter 替换 DOM 时保持不变，因此隐藏时的淡出动画可以跨页面流畅完成。
+ *
+ * 样式已由 daisyUI（loading / loading-spinner / base-100 / base-content）
+ * 迁移为 Starwind：Spinner 组件 + 语义 token。
  */
+
+import { Spinner } from "@/components/starwind/spinner";
 
 // 加载超过该时长才显示遮罩，避免快速跳转时闪烁
 const SHOW_DELAY = 200;
@@ -19,10 +24,10 @@ const SHOW_DELAY = 200;
   transition:persist
   role="status"
   aria-hidden="true"
-  class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-base-100/70 opacity-0 backdrop-blur-sm transition-[opacity,visibility] duration-200 pointer-events-none invisible print:hidden"
+  class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-background/70 opacity-0 backdrop-blur-sm transition-[opacity,visibility] duration-200 pointer-events-none invisible print:hidden"
 >
-  <span class="loading loading-spinner loading-lg text-primary"></span>
-  <span class="text-sm text-base-content/70">加载中…</span>
+  <Spinner class="size-10 text-primary" />
+  <span class="text-sm text-muted-foreground">加载中…</span>
 </div>
 
 <script>

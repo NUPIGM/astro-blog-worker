@@ -10,16 +10,17 @@ interface Props {
     description: string;
     image?: string;
     keywords?: string[];
+    noindex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 // 默认分享图已压到 1200x630 / 约 35KB，替代原先 224KB 的 logo.png
-const { title, description, image = "/og-image.jpg", keywords } = Astro.props;
+const { title, description, image = "/og-image.jpg", keywords, noindex } = Astro.props;
 
 const ogImage = new URL(image, Astro.site ?? Astro.url);
 ---
 
-<Seo title={title} description={description} image={ogImage} keywords={keywords} />
+<Seo title={title} description={description} image={ogImage} keywords={keywords} noindex={noindex} />
 
 <ClientRouter />

@@ -6,6 +6,7 @@ const {
   image,
   keywords = [],
   theme,
+  noindex = false,
 } = Astro.props;
 
 const name = "nupigm";
@@ -23,6 +24,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="description" content={detailedDescription}>
 <meta name="author" content={name}>
 <meta name="keywords" content={keywords.join(", ")}>
+{noindex && <meta name="robots" content="noindex, nofollow">}
 <meta name="geo.region" content="CN">
 <meta name="geo.placename" content={city}>
 <meta name="generator" content={Astro.generator}>

@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import FloatingWidget from "../components/FloatingWidget.astro";
 import LoadingIndicator from "../components/LoadingIndicator.astro";
 import { fade } from "astro:transitions";
+
 interface Props {
   title: string;
   description: string;
@@ -12,17 +13,19 @@ interface Props {
   count: number;
   tags: string[];
   keywords?: string[];
+  noindex?: boolean;
 }
-const { title, description, navItems, count, tags, keywords } = Astro.props;
+const { title, description, navItems, count, tags, keywords, noindex } =
+  Astro.props;
 ---
 
 <html lang="zh-cn">
   <head>
-    <BaseHead title={title} description={description} keywords={keywords} />
+    <BaseHead title={title} description={description} keywords={keywords} noindex={noindex} />
   </head>
 
   <body
-    class="m-auto max-w-5xl bg-white not-print:shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-10"
+    class="m-auto max-w-5xl bg-background text-foreground not-print:shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-10"
   >
     <Header title={title} navItems={navItems} count={count} tags={tags} />
 

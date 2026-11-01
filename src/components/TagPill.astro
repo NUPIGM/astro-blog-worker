@@ -1,4 +1,6 @@
 ---
+import { Badge } from "@/components/starwind/badge";
+
 interface Props {
   tag: string;
   href?: string;
@@ -12,12 +14,15 @@ const {
 } = Astro.props;
 ---
 
-<a
+<Badge
   href={href}
+  size="sm"
+  tone="neutral"
+  appearance="outline"
   class:list={[
-    "inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs text-gray-700 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600",
+    "bg-muted px-2.5 py-1 text-xs text-foreground/80 transition hover:border-primary/30 hover:bg-primary/10 hover:text-primary",
     className,
   ]}
 >
   {tag}
-</a>
+</Badge>

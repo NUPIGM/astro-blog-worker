@@ -1,4 +1,8 @@
 ---
+import { Button } from "@/components/starwind/button";
+import { Input } from "@/components/starwind/input";
+import { Textarea } from "@/components/starwind/textarea";
+import { Separator } from "@/components/starwind/separator";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 // A4Paper.astro
@@ -56,59 +60,64 @@ const navItems = [
   <div class="space-y-8 mb-12">
     {
       messages.map((msg) => (
-        <div class="border-b border-gray-100 pb-6 last:border-0">
+        <div class="border-b border-border pb-6 last:border-0">
           <div class="flex items-baseline justify-between mb-2">
-            <span class="font-medium text-gray-900">{msg.name}</span>
-            <span class="text-xs text-gray-500">{msg.date}</span>
+            <span class="font-medium text-foreground">{msg.name}</span>
+            <span class="text-xs text-muted-foreground">{msg.date}</span>
           </div>
-          <p class="text-[15px] leading-7 text-gray-700">{msg.content}</p>
+          <p class="text-[15px] leading-7 text-foreground/80">{msg.content}</p>
         </div>
       ))
     }
   </div>
 
   <!-- 留言表单 -->
-  <div class="mt-10 pt-8 border-t border-gray-200">
-    <h2 class="text-lg font-medium text-gray-900 mb-5">写下你的留言</h2>
+  <Separator class="mt-10" />
+  <div class="pt-8">
+    <h2 class="text-lg font-medium text-foreground mb-5">写下你的留言</h2>
 
     <!-- 纯静态站点暂无后端，表单未接入提交接口，禁用提交避免误导 -->
     <form class="space-y-5" onsubmit="return false;">
       <div>
-        <label class="block text-sm text-gray-600 mb-1.5" for="gb-name">昵称</label>
-        <input
+        <label class="block text-sm text-muted-foreground mb-1.5" for="gb-name">昵称</label>
+        <Input
           id="gb-name"
           type="text"
           name="name"
           required
           autocomplete="nickname"
           maxlength="32"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          size="sm"
+          class="px-3 py-2 text-sm"
           placeholder="请输入你的昵称"
         />
       </div>
 
       <div>
-        <label class="block text-sm text-gray-600 mb-1.5" for="gb-content">留言内容</label>
-        <textarea
+        <label class="block text-sm text-muted-foreground mb-1.5" for="gb-content">留言内容</label>
+        <Textarea
           id="gb-content"
           name="content"
           required
           rows="4"
           maxlength="500"
-          class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none"
-          placeholder="说点什么吧..."></textarea>
+          size="sm"
+          class="px-3 py-2 text-sm resize-none"
+          placeholder="说点什么吧..."></Textarea>
       </div>
 
       <div class="flex items-center gap-3">
-        <button
+        <Button
           type="submit"
+          variant="primary"
+          size="sm"
           disabled
           aria-disabled="true"
-          class="px-6 py-2 bg-blue-600 text-white text-sm rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-6"
         >
           提交留言
-        </button>
-        <span class="text-xs text-gray-500">留言接口尚未接入，暂时无法提交。</span>
+        </Button>
+        <span class="text-xs text-muted-foreground">留言接口尚未接入，暂时无法提交。</span>
       </div>
     </form>
   </div>

@@ -1,22 +1,27 @@
 /*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+  全局样式入口。
 
-@import "tailwindcss";
+  样式方案已从 daisyUI 迁移至 Starwind：
+  - Tailwind CSS v4 保留为底层引擎（Starwind 组件本身构建于其上）
+  - daisyUI 插件已移除，语义类由 Starwind 组件与 token 取代
+  - Starwind 的样式基础（tailwindcss / tw-animate-css / forms / 设计 token）由 starwind.css 提供
+  - @tailwindcss/typography 仅保留给 Svelte 岛中的 .prose 使用（Starwind 无 Svelte 适配）
+*/
+
+@import "./starwind.css";
 @plugin "@tailwindcss/typography";
-@plugin "daisyui" {
-  themes: cupcake, dark;
-}
 
 @layer base {
-  .prose {
+  /* .prose 供 Svelte 岛继续使用；.sw-prose 为 Starwind Prose 组件
+     两者都需要处理长 URL / 长代码串的折行 */
+  .prose,
+  .sw-prose {
     overflow-wrap: anywhere;
     word-break: break-word;
   }
 
-  .prose :where(pre, code, a, table, img, blockquote) {
+  .prose :where(pre, code, a, table, img, blockquote),
+  .sw-prose :where(pre, code, a, table, img, blockquote) {
     overflow-wrap: anywhere;
     word-break: break-word;
   }
