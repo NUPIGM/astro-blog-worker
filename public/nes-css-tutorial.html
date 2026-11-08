@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NES.css 实战教程 · 8bit 像素风 CSS 框架</title>
+
+<link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+
+<style>
+  /* ============ 字体：缝合像素字体 / Fusion Pixel Font ============
+     TakWolf/fusion-pixel-font · 12px 比例模式 · 简体中文字形 · OFL-1.1
+     400 用原版，700 用官方算法粗体（pixel-font-studio/fusion-bold-pixel-font），
+     目的是让 <b> 拿到真实粗体，而不是让浏览器给像素字合成一层糊掉的假粗。 */
+  @font-face{
+    font-family:"Fusion Pixel";
+    src:url("fonts/fusion-pixel-12px-proportional-zh-hans.woff2") format("woff2");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Fusion Pixel";
+    src:url("fonts/fusion-bold-pixel-12px-proportional-zh-hans.woff2") format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
+
+  :root{
+    --ink:#212529;
+    --paper:#f4f1e8;
+    --line:#212529;
+    --accent:#e60012;
+    --muted:#6b6a63;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(rgba(33,37,41,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(33,37,41,.05) 1px, transparent 1px);
+    background-size:16px 16px;
+    color:var(--ink);
+    /* 字体族：像素字体优先，系统字体仅作极端缺字兜底 */
+    font-family:"Fusion Pixel","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px;
+    line-height:1.9;
+  }
+  /* 标题/标签原先依赖 Press Start 2P（只有拉丁字形），换成像素字体后中英文同族，不再字体跳变 */
+  .pixel{font-family:"Fusion Pixel","PingFang SC",monospace;line-height:1.9;letter-spacing:.5px}
+
+  /* 行内 code 里的长串（URL、类名组合）没有断行点，窄屏会把整页顶宽 */
+  code{overflow-wrap:anywhere}
+
+  /* 补丁：NES.css 的列表标记是 position:absolute + top:calc(50% - 8px)，
+     对齐的是「整个 li 的垂直中点」。条目一旦折成两行，圆点就会跑到第二行边上。
+     这里把它钉到首行的行框中线，单行/多行都正确。 */
+  .nes-list.is-disc li::before,
+  .nes-list.is-circle li::before{
+    top:calc(0.55em - 7px);
+  }
+
+  /* ---------- 布局：NES.css 不提供栅格，这一层全靠手写 ---------- */
+  .shell{
+    max-width:1180px;
+    margin:0 auto;
+    padding:32px 20px 96px;
+    display:grid;
+    grid-template-columns:212px minmax(0,1fr);
+    gap:32px;
+    align-items:start;
+  }
+  .sidebar{position:sticky;top:24px}
+  main{min-width:0}
+  .sidebar .nav{padding:14px 0}
+  .sidebar a{
+    display:block;
+    padding:7px 14px;
+    color:var(--ink);
+    text-decoration:none;
+    font-size:13px;
+    border-left:4px solid transparent;
+  }
+  .sidebar a:hover{background:#e9e5d8;border-left-color:var(--accent)}
+  .sidebar .nav-title{
+    font-size:9px;padding:0 14px 8px;color:var(--muted);letter-spacing:1px;
+  }
+
+  /* ---------- 头部 ---------- */
+  .hero{margin-bottom:32px}
+  .hero h1{
+    font-size:22px;
+    margin:0 0 20px;
+    line-height:1.8;
+  }
+  .hero h1 span{color:var(--accent)}
+  .hero p{margin:0 0 12px;font-size:14px;color:#ded9cc}
+  .hero b{color:#fff}
+  .badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
+  /* .nes-badge 内部文字是绝对定位 + 固定父宽，不能改成 auto，
+     否则父级失去宽度基准、文字会互相重叠。只能按内容改 em 宽度。 */
+  .badges .nes-badge{width:7em;margin:4px}
+  .badges .nes-badge.is-splited{width:11em}
+
+  /* ---------- 章节 ---------- */
+  section.card{margin-bottom:28px;scroll-margin-top:24px}
+  section.card > .title{font-size:13px}
+  h2.sub{
+    font-size:11px;
+    margin:26px 0 10px;
+    padding-bottom:8px;
+    border-bottom:3px dashed #c9c4b2;
+    line-height:1.9;
+  }
+  h2.sub:first-of-type{margin-top:8px}
+  .lead{font-size:14px;color:#3a3d40;margin:0 0 6px}
+  .note{
+    font-size:13px;
+    color:#4a4d50;
+    padding:10px 14px;
+    background:#fffdf4;
+    border-left:4px solid var(--accent);
+    margin:14px 0;
+  }
+  .note b{color:var(--accent)}
+
+  /* ---------- 演示区 ---------- */
+  .demo{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    align-items:center;
+    padding:20px;
+    background:#fff;
+    border:4px solid var(--ink);
+    margin:14px 0 0;
+  }
+  .demo.col{flex-direction:column;align-items:stretch}
+  .demo.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px}
+  .demo-label{
+    width:100%;
+    font-size:9px;
+    color:var(--muted);
+    margin:0 0 -4px;
+    font-family:"Fusion Pixel","PingFang SC",monospace;
+  }
+  .stack{display:flex;flex-direction:column;gap:14px;width:100%}
+
+  /* ---------- 代码块 ---------- */
+  .code{
+    position:relative;
+    margin:0;
+    background:#1b1e21;
+    border:4px solid var(--ink);
+    border-top:0;
+    /* flex 子项默认 min-width:auto，会被 pre 里最长的一行代码撑开，
+       导致整页横向溢出。必须显式归零，让滚动发生在 pre 内部。 */
+    min-width:0;
+    max-width:100%;
+  }
+  .code pre{
+    margin:0;
+    padding:16px 18px;
+    padding-right:66px;  /* 给右上角 COPY 按钮留出空位，避免长行被压住 */
+    max-width:100%;
+    overflow-x:auto;
+    font-family:"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;
+    line-height:1.75;
+    color:#e6e3da;
+    tab-size:2;
+  }
+  .copy{
+    position:absolute;
+    top:8px;right:8px;
+    font-family:"Fusion Pixel","PingFang SC",monospace;
+    font-size:8px;
+    padding:7px 9px;
+    background:#f4f1e8;
+    color:var(--ink);
+    border:2px solid #f4f1e8;
+    cursor:pointer;
+  }
+  .copy:hover{background:#ffd93d}
+  .copy.ok{background:#92cc41;border-color:#92cc41}
+
+  /* 类名速查表 */
+  .cheat{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+  .cheat th,.cheat td{border:3px solid var(--ink);padding:9px 11px;text-align:left;vertical-align:top}
+  .cheat th{background:#212529;color:#fff;font-family:"Fusion Pixel","PingFang SC",monospace;font-size:9px;line-height:1.9}
+  .cheat code{font-family:"SF Mono",Menlo,monospace;font-size:12px;background:#f0ecdf;padding:2px 5px}
+  .cheat td:first-child code{color:#b1000e;background:transparent;padding:0}
+
+  .stage{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    padding:22px;background:#fff;border:4px solid var(--ink);margin-top:14px;
+  }
+  .icon-cell{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-size:9px;font-family:"SF Mono",monospace;color:var(--muted);
+  }
+  #game-dialog{max-width:420px;width:90%}
+  /* 补丁：NES.css 里写的是 .nes-dialog::-webkit-backdrop，浏览器不认这个伪元素
+     （标准名是 ::backdrop），所以原生弹窗没有暗色遮罩，这里补一行 */
+  .nes-dialog::backdrop{background:rgba(0,0,0,.35)}
+
+  /* ---------- 补丁：NES.css 2.3.0 的 nes-radio 只有「选中态」图形，
+     源码里没有 .nes-radio + span::before 的空环规则，未选中项是完全空白的。
+     下面用同一套 2px 方块逻辑补一个空环。 ---------- */
+  .nes-radio:not(:checked) + span::before{
+    position:absolute;
+    top:-2px;left:-20px;
+    content:"";
+    width:2px;height:2px;
+    color:#212529;
+    /* 6×6 个 2px 方块拼出的 12×12 圆环 */
+    box-shadow:
+      4px 0,6px 0,
+      2px 2px,8px 2px,
+      0 4px,10px 4px,
+      0 6px,10px 6px,
+      2px 8px,8px 8px,
+      4px 10px,6px 10px;
+  }
+  .nes-radio.is-dark:not(:checked) + span::before{color:#fff}
+  .dark-strip{
+    width:100%;
+    background:#212529;
+    padding:16px 20px;
+    display:flex;
+    gap:26px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .dark-strip span{font-size:14px}
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);
+    background:#212529;color:#fff;padding:10px 16px;font-size:12px;
+    font-family:"Fusion Pixel","PingFang SC",monospace;
+    opacity:0;pointer-events:none;transition:.25s;z-index:99;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  footer{text-align:center;font-size:11px;color:var(--muted);padding-top:24px}
+  footer a{color:var(--ink)}
+
+  @media (max-width:860px){
+    /* 关键：轨道必须 minmax(0,1fr)，用 1fr 会被长代码行的 min-content 撑爆 */
+    .shell{grid-template-columns:minmax(0,1fr);padding-top:20px}
+    .sidebar{position:static;order:-1}
+    .sidebar .nav{display:flex;flex-wrap:wrap;gap:4px}
+    .sidebar a{border-left:0;border-bottom:3px solid transparent;font-size:12px}
+    .sidebar .nav-title{display:none}
+    .hero h1{font-size:16px}
+    .demo{padding:14px}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ 侧边栏 ============ -->
+  <aside class="sidebar">
+    <div class="nes-container is-rounded nav">
+      <p class="nav-title pixel">CONTENTS</p>
+      <a href="#install">01 安装</a>
+      <a href="#mindset">02 核心思路</a>
+      <a href="#container">03 容器</a>
+      <a href="#button">04 按钮</a>
+      <a href="#text">05 文本·列表</a>
+      <a href="#form">06 表单</a>
+      <a href="#progress">07 进度条</a>
+      <a href="#badge">08 徽章</a>
+      <a href="#icon">09 图标</a>
+      <a href="#avatar">10 头像</a>
+      <a href="#balloon">11 气泡</a>
+      <a href="#dialog">12 对话框</a>
+      <a href="#table">13 表格</a>
+      <a href="#character">14 像素角色</a>
+      <a href="#cheatsheet">15 速查表</a>
+      <a href="#pitfall">16 常见坑</a>
+    </div>
+  </aside>
+
+  <!-- ============ 主内容 ============ -->
+  <main>
+
+    <!-- HERO -->
+    <header class="hero nes-container is-dark is-rounded">
+      <h1 class="pixel">NES.css <span>实战教程</span></h1>
+      <p>一个只做「组件」的 8bit 像素风 CSS 框架：纯 CSS、零 JavaScript、约 30KB。
+         它给你红白机时代的按钮、对话框和进度条，但<b>不给你栅格、不给字体、不给配色方案</b>——
+         布局和主题都得自己写。</p>
+      <p>这页教程里每个组件都是<b>真实渲染</b>的，不是截图。代码块右侧可以一键复制。</p>
+      <div class="badges">
+        <span class="nes-badge"><span class="is-dark">v2.3.0</span></span>
+        <span class="nes-badge"><span class="is-success">纯 CSS</span></span>
+        <span class="nes-badge"><span class="is-warning">零 JS</span></span>
+        <span class="nes-badge is-splited"><span class="is-dark">LICENSE</span><span class="is-primary">MIT</span></span>
+      </div>
+    </header>
+
+    <!-- 01 安装 -->
+    <section class="card nes-container is-rounded" id="install">
+      <p class="title pixel">01 · 安装</p>
+      <p class="lead">三种方式，选一种就行。学习阶段建议直接用 CDN，省掉构建流程。</p>
+
+      <h2 class="sub pixel">A · CDN：一行 link</h2>
+      <p class="lead">把这段放进 <code>&lt;head&gt;</code> 里，立刻可用。<code>@2.3.0</code> 锁定版本，避免以后升级把样式打乱。</p>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet"&gt;</pre>
+      </div>
+
+      <h2 class="sub pixel">B · npm</h2>
+      <p class="lead">进构建流程时用。包里还暴露了 <code>sass</code> 和 <code>style</code> 两个字段，想改主题色可以编译 Sass 源文件。</p>
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">npm install nes.css
+# 或
+yarn add nes.css
+
+# 然后在入口引入
+import 'nes.css/css/nes.min.css'</pre>
+      </div>
+
+      <h2 class="sub pixel">C · 字体：缝合像素字体</h2>
+      <p class="lead">NES.css 不带字体。官方推荐 <b>Press Start 2P</b>，但它<b>只有拉丁字形</b>——中文会静默掉回系统字体，
+         于是「标题像素、正文宋体」的割裂感就出来了。本项目改用
+         <a href="https://github.com/TakWolf/fusion-pixel-font" target="_blank" rel="noopener">缝合像素字体 Fusion Pixel Font</a>：
+         同一套文件同时覆盖中英文与符号，标题和正文终于同族。</p>
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">/* 400 原版 + 700 官方算法粗体，两个文件放本地 fonts/ 目录 */
+@font-face{
+  font-family:"Fusion Pixel";
+  src:url("fonts/fusion-pixel-12px-proportional-zh-hans.woff2") format("woff2");
+  font-weight:400; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Fusion Pixel";
+  src:url("fonts/fusion-bold-pixel-12px-proportional-zh-hans.woff2") format("woff2");
+  font-weight:700; font-style:normal; font-display:swap;
+}
+
+body{
+  font-family:"Fusion Pixel","PingFang SC","Microsoft YaHei",sans-serif;
+}
+/* 标题不再需要单独的西文像素字体，中英文同一族 */
+.pixel{ font-family:"Fusion Pixel",monospace; }</pre>
+      </div>
+      <div class="note">
+        <b>为什么是「12px 比例模式 / 简体中文」这一版？</b>像素字体有 8 / 10 / 12 三档设计尺寸，
+        以及「等宽 / 比例」两种宽度模式。比例模式的字距与行高更自然、更适合正文，
+        官方也建议无特殊需求优先用它；<code>zh_hans</code> 版的汉字取自《通用规范汉字表》写法。
+        本项目实际使用的 610 个字符（含中英文、标点、<code>→ ★ · </code>等符号）经 cmap 校验<b>全部覆盖，零缺字</b>。
+      </div>
+      <div class="note">
+        <b>代码块故意不换：</b><code>pre</code> 与行内 <code>code</code> 仍走系统等宽（SF Mono / Menlo / Consolas）。
+        原因有二：比例字体会破坏代码缩进对齐；等宽模式的像素字在 12.5px 这种非整数倍尺寸下会糊。
+        想要全站像素化，把 <code>.code pre</code> 与 <code>code</code> 的 font-family 换成
+        同系列的 <code>monospaced</code> 文件即可。
+      </div>
+    </section>
+
+    <!-- 02 核心思路 -->
+    <section class="card nes-container is-rounded" id="mindset">
+      <p class="title pixel">02 · 核心思路</p>
+      <p class="lead">先理解一件事，后面所有组件都不会用错：<b>NES.css 里几乎所有组件都是一张「带 4px 像素边框的盒子」</b>，
+         差别只在边框画法与内部 padding。所以它才敢只做组件、不做布局。</p>
+      <p class="lead">于是你要自己补三样东西：栅格、间距、主题色。这页用的是最朴素的 CSS Grid + 一个 16px 的棋盘背景。</p>
+      <div class="demo col">
+        <p class="demo-label">LAYOUT IS YOUR JOB · 16px 像素网格</p>
+        <p class="lead" style="margin:0">这个页面的底纹就是两条 16px 重复渐变，成本极低，但立刻有了「屏幕像素感」：</p>
+        <div class="code" style="margin-top:8px">
+          <button class="copy" type="button">COPY</button>
+          <pre class="src">body{
+  background-color:#f4f1e8;
+  background-image:
+    linear-gradient(rgba(33,37,41,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33,37,41,.05) 1px, transparent 1px);
+  background-size:16px 16px;
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 容器 -->
+    <section class="card nes-container is-rounded" id="container">
+      <p class="title pixel">03 · 容器 nes-container</p>
+      <p class="lead">最基础的盒子。<code>with-title</code> 会把第一个 <code>.title</code> 顶到边框上，形成经典对话框标题。</p>
+
+      <div class="demo">
+        <div class="nes-container with-title" style="flex:1;min-width:240px">
+          <p class="title">普通</p>
+          <p style="margin:0;font-size:13px">默认容器</p>
+        </div>
+        <div class="nes-container with-title is-rounded" style="flex:1;min-width:240px">
+          <p class="title">圆角</p>
+          <p style="margin:0;font-size:13px">is-rounded</p>
+        </div>
+        <div class="nes-container with-title is-dark" style="flex:1;min-width:240px">
+          <p class="title">暗色</p>
+          <p style="margin:0;font-size:13px">is-dark</p>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;div class="nes-container with-title"&gt;
+  &lt;p class="title"&gt;标题&lt;/p&gt;
+  &lt;p&gt;内容&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- 加圆角 / 加暗色 --&gt;
+&lt;div class="nes-container with-title is-rounded"&gt;...&lt;/div&gt;
+&lt;div class="nes-container with-title is-dark"&gt;...&lt;/div&gt;</pre>
+      </div>
+      <div class="note">
+        <b>注意：</b><code>is-rounded</code> 和 <code>is-dark</code> 都能叠加，但两者叠加时阴影与边框会重绘一次
+        （源码里有专门为 <code>.is-rounded.is-dark</code> 写的组合选择器）。别指望只写 <code>is-rounded</code> 就自动适配暗色。
+      </div>
+    </section>
+
+    <!-- 04 按钮 -->
+    <section class="card nes-container is-rounded" id="button">
+      <p class="title pixel">04 · 按钮 nes-btn</p>
+      <p class="lead">四色语义 + disabled。按钮的「按下」效果是 4px 位移 + 阴影消失，纯 CSS，不需要 JS。</p>
+
+      <div class="demo">
+        <button type="button" class="nes-btn">Normal</button>
+        <button type="button" class="nes-btn is-primary">Primary</button>
+        <button type="button" class="nes-btn is-success">Success</button>
+        <button type="button" class="nes-btn is-warning">Warning</button>
+        <button type="button" class="nes-btn is-error">Error</button>
+        <button type="button" class="nes-btn is-disabled">Disabled</button>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;button type="button" class="nes-btn"&gt;Normal&lt;/button&gt;
+&lt;button type="button" class="nes-btn is-primary"&gt;Primary&lt;/button&gt;
+&lt;button type="button" class="nes-btn is-success"&gt;Success&lt;/button&gt;
+&lt;button type="button" class="nes-btn is-warning"&gt;Warning&lt;/button&gt;
+&lt;button type="button" class="nes-btn is-error"&gt;Error&lt;/button&gt;
+&lt;button type="button" class="nes-btn is-disabled"&gt;Disabled&lt;/button&gt;</pre>
+      </div>
+      <div class="note">
+        <b>易错点：</b>一定要写 <code>type="button"</code>。默认 <code>type</code> 是 <code>submit</code>，
+        放在表单里点一下就提交了。<code>is-disabled</code> 只是<b>样式</b>上禁用，事件照样触发——
+        真要禁用请同时加 <code>disabled</code> 属性。
+      </div>
+    </section>
+
+    <!-- 05 文本 列表 -->
+    <section class="card nes-container is-rounded" id="text">
+      <p class="title pixel">05 · 文本与列表</p>
+      <p class="lead">文字语义色 <code>nes-text</code>，列表 <code>nes-list</code> 提供圆点/空心圆两种标记（用 <code>::before</code> 画的方块）。</p>
+
+      <div class="demo col">
+        <p style="margin:0">
+          <span class="nes-text">Normal</span> ·
+          <span class="nes-text is-primary">Primary</span> ·
+          <span class="nes-text is-success">Success</span> ·
+          <span class="nes-text is-warning">Warning</span> ·
+          <span class="nes-text is-error">Error</span> ·
+          <span class="nes-text is-disabled">Disabled</span>
+        </p>
+        <div style="display:flex;gap:40px;flex-wrap:wrap">
+          <ul class="nes-list is-disc" style="margin:0">
+            <li>is-disc 实心</li>
+            <li>第二项</li>
+          </ul>
+          <ul class="nes-list is-circle" style="margin:0">
+            <li>is-circle 空心</li>
+            <li>第二项</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;span class="nes-text is-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="nes-text is-success"&gt;Success&lt;/span&gt;
+&lt;span class="nes-text is-warning"&gt;Warning&lt;/span&gt;
+&lt;span class="nes-text is-error"&gt;Error&lt;/span&gt;
+&lt;span class="nes-text is-disabled"&gt;Disabled&lt;/span&gt;
+
+&lt;ul class="nes-list is-disc"&gt;
+  &lt;li&gt;实心方块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul class="nes-list is-circle"&gt;
+  &lt;li&gt;空心方块&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      </div>
+    </section>
+
+    <!-- 06 表单 -->
+    <section class="card nes-container is-rounded" id="form">
+      <p class="title pixel">06 · 表单</p>
+      <p class="lead">这是 NES.css 里结构要求最严的部分：<b>复选框和单选框必须自带 <code>&lt;span&gt;</code> 兄弟节点</b>，
+         图标是画在 span 上的；<b>下拉框必须外包一层 <code>.nes-select</code></b>，因为箭头是用容器伪元素画的。</p>
+
+      <div class="demo col">
+        <div class="nes-field">
+          <label for="name">用户名</label>
+          <input type="text" id="name" class="nes-input" placeholder="PLAYER 1">
+        </div>
+        <div class="nes-field">
+          <label for="mail">邮箱（失败态）</label>
+          <input type="email" id="mail" class="nes-input is-error" value="not-an-email">
+        </div>
+        <div class="nes-field">
+          <label for="note">留言</label>
+          <textarea id="note" class="nes-textarea" rows="3" placeholder="在这里输入…"></textarea>
+        </div>
+        <div class="nes-field">
+          <label for="lv">难度</label>
+          <div class="nes-select is-success">
+            <select id="lv">
+              <option value="0">EASY</option>
+              <option value="1">NORMAL</option>
+              <option value="2">HARD</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:28px;flex-wrap:wrap">
+          <label>
+            <input type="checkbox" class="nes-checkbox" checked>
+            <span>记住我</span>
+          </label>
+          <label>
+            <input type="checkbox" class="nes-checkbox">
+            <span>订阅通知</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:28px;flex-wrap:wrap">
+          <label>
+            <input type="radio" class="nes-radio" name="p" checked>
+            <span>单人</span>
+          </label>
+          <label>
+            <input type="radio" class="nes-radio" name="p">
+            <span>双人</span>
+          </label>
+        </div>
+        <div class="dark-strip">
+          <label>
+            <input type="checkbox" class="nes-checkbox is-dark" checked>
+            <span>is-dark 复选框</span>
+          </label>
+          <label>
+            <input type="radio" class="nes-radio is-dark" name="d" checked>
+            <span>is-dark 单选框</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;!-- 输入框：放在 .nes-field 里才有上下间距 --&gt;
+&lt;div class="nes-field"&gt;
+  &lt;label for="name"&gt;用户名&lt;/label&gt;
+  &lt;input type="text" id="name" class="nes-input"&gt;
+&lt;/div&gt;
+&lt;input class="nes-input is-success"&gt;   &lt;!-- 四态：is-success / is-warning / is-error / is-disabled --&gt;
+&lt;textarea class="nes-textarea"&gt;&lt;/textarea&gt;
+
+&lt;!-- 下拉框：必须外包 .nes-select，否则箭头不出现 --&gt;
+&lt;div class="nes-select is-success"&gt;
+  &lt;select&gt;
+    &lt;option&gt;EASY&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;!-- 复选框：span 是必须的，方块底图靠它显示 --&gt;
+&lt;label&gt;
+  &lt;input type="checkbox" class="nes-checkbox" checked&gt;
+  &lt;span&gt;记住我&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- 单选框：同理，同一组要共用 name --&gt;
+&lt;label&gt;
+  &lt;input type="radio" class="nes-radio" name="p" checked&gt;
+  &lt;span&gt;单人&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- 暗色控件要用在深色背景上，否则白像素画在白底上等于没有 --&gt;
+&lt;label&gt;
+  &lt;input type="checkbox" class="nes-checkbox is-dark" checked&gt;
+  &lt;span&gt;暗色勾选&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- 必补补丁：2.3.0 的 radio 未选中态没有任何图形 --&gt;
+&lt;style&gt;
+  .nes-radio:not(:checked) + span::before{
+    position:absolute; top:-2px; left:-20px; content:"";
+    width:2px; height:2px; color:#212529;
+    box-shadow:
+      4px 0,6px 0,
+      2px 2px,8px 2px,
+      0 4px,10px 4px,
+      0 6px,10px 6px,
+      2px 8px,8px 8px,
+      4px 10px,6px 10px;
+  }
+&lt;/style&gt;</pre>
+      </div>
+      <div class="note">
+        <b>为什么 checkbox 一定要 span？</b>因为 NES.css 把原生勾选框<b>完全透明化</b>（<code>appearance:none</code> + 1px + 裁剪），
+        再用 <code>input + span::before</code> 配合几十个 <code>box-shadow</code> 方块在 span 上「画」出像素方框和勾。
+        少了 span，你只会看到一个 1px 的、被裁掉的残影。
+      </div>
+      <div class="note">
+        <b>框架缺陷（实测 2.3.0）：</b>整套源码里只有 <code>.nes-radio:checked + span::before</code>，
+        <b>没有未选中态的空环规则</b>——所以默认情况下未选中的单选框是完全空白的，只能靠 checked 的那一个来暗示分组。
+        上面倒数那段 style 就是本页打的补丁（否则你会看到「单人」前面有圆圈、「双人」前面什么都没有）。
+        这是很少被文档提到的坑，遇到时别以为是自己的写法错了。
+      </div>
+    </section>
+
+    <!-- 07 进度条 -->
+    <section class="card nes-container is-rounded" id="progress">
+      <p class="title pixel">07 · 进度条 nes-progress</p>
+      <p class="lead">本质是原生 <code>&lt;progress&gt;</code> 加伪元素着色，所以 <code>value</code>/<code>max</code> 是标准属性，纯 HTML 就能动。</p>
+
+      <div class="demo col">
+        <progress class="nes-progress" value="70" max="100"></progress>
+        <progress class="nes-progress is-primary" value="50" max="100"></progress>
+        <progress class="nes-progress is-success" value="80" max="100"></progress>
+        <progress class="nes-progress is-warning" value="30" max="100"></progress>
+        <progress class="nes-progress is-error" value="10" max="100"></progress>
+        <progress class="nes-progress is-pattern" value="60" max="100"></progress>
+        <progress class="nes-progress is-rounded is-primary" value="40" max="100"></progress>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;progress class="nes-progress" value="70" max="100"&gt;&lt;/progress&gt;
+&lt;progress class="nes-progress is-primary" value="50" max="100"&gt;&lt;/progress&gt;
+&lt;progress class="nes-progress is-success" value="80" max="100"&gt;&lt;/progress&gt;
+&lt;progress class="nes-progress is-warning" value="30" max="100"&gt;&lt;/progress&gt;
+&lt;progress class="nes-progress is-error" value="10" max="100"&gt;&lt;/progress&gt;
+&lt;progress class="nes-progress is-pattern" value="60" max="100"&gt;&lt;/progress&gt;  &lt;!-- 斜纹填充 --&gt;
+&lt;progress class="nes-progress is-rounded is-primary" value="40" max="100"&gt;&lt;/progress&gt;</pre>
+      </div>
+      <div class="note">
+        想做出「血条随血量变色」的效果？不用改 CSS，JS 只改 <code>class</code> 和 <code>value</code> 两个东西就够了——
+        样式全在前端，这正是「纯 CSS 框架」的好处。
+      </div>
+    </section>
+
+    <!-- 08 徽章 -->
+    <section class="card nes-container is-rounded" id="badge">
+      <p class="title pixel">08 · 徽章 nes-badge</p>
+      <p class="lead">三种形态：普通（单标签）、<code>is-splited</code>（双色拼接，适合「对象 + 版本号」）、
+         <code>is-icon</code>（图标徽章）。</p>
+
+      <div class="demo col">
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
+          <span class="nes-badge"><span class="is-dark">NEW</span></span>
+          <span class="nes-badge"><span class="is-success">PASS</span></span>
+          <span class="nes-badge"><span class="is-warning">WARN</span></span>
+          <span class="nes-badge"><span class="is-error">FAIL</span></span>
+          <span class="nes-badge is-splited"><span class="is-dark">npm</span><span class="is-primary">2.3.0</span></span>
+        </div>
+        <!-- is-icon 的星形是绝对定位到徽章左上角外侧的，必须留出上方与左侧空间，否则会压住邻居 -->
+        <div style="padding:2.9em 0 0 2.9em;border-top:3px dashed #c9c4b2;margin-top:6px">
+          <span class="nes-badge is-icon"><span class="is-warning">★</span></span>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;span class="nes-badge"&gt;&lt;span class="is-dark"&gt;NEW&lt;/span&gt;&lt;/span&gt;
+
+&lt;!-- 双色拼接：两个 span，第一个是深色底座 --&gt;
+&lt;span class="nes-badge is-splited"&gt;
+  &lt;span class="is-dark"&gt;npm&lt;/span&gt;&lt;span class="is-primary"&gt;2.3.0&lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- 图标徽章 --&gt;
+&lt;span class="nes-badge is-icon"&gt;&lt;span class="is-warning"&gt;★&lt;/span&gt;&lt;/span&gt;</pre>
+      </div>
+      <div class="note">
+        <b>反直觉的一个细节：</b><code>.nes-badge</code> 是 <code>inline-block</code> +
+        <b>固定宽度 10.5em</b>，里面的文字用 <code>position:absolute; width:100%</code> 铺满，
+        边框则靠四向 <code>box-shadow</code> 画出来。所以你<b>不能</b>把宽度改成 <code>auto</code>——
+        一旦父级没有确定宽度，绝对定位的文字就失去基准，多个徽章会直接叠在一起。
+        要缩短只能按 em 指定宽度（本页顶部那几个小徽章就是这么压到 7em 的）。
+      </div>
+    </section>
+
+    <!-- 09 图标 -->
+    <section class="card nes-container is-rounded" id="icon">
+      <p class="title pixel">09 · 图标 nes-icon</p>
+      <p class="lead">用 <code>&lt;i&gt;</code> 元素 + 伪元素底图实现。<code>heart</code> / <code>star</code> / <code>trophy</code> / <code>like</code>
+         支持 <code>is-half</code> <code>is-empty</code> <code>is-transparent</code> 三种状态，天生适合做评分。</p>
+
+      <div class="demo grid">
+        <div class="icon-cell"><i class="nes-icon is-large heart"></i>heart</div>
+        <div class="icon-cell"><i class="nes-icon is-large heart is-half"></i>is-half</div>
+        <div class="icon-cell"><i class="nes-icon is-large heart is-transparent"></i>is-transparent</div>
+        <div class="icon-cell"><i class="nes-icon is-large heart is-empty"></i>is-empty</div>
+        <div class="icon-cell"><i class="nes-icon is-large star"></i>star</div>
+        <div class="icon-cell"><i class="nes-icon is-large star is-half"></i>star half</div>
+        <div class="icon-cell"><i class="nes-icon is-large trophy"></i>trophy</div>
+        <div class="icon-cell"><i class="nes-icon is-large like"></i>like</div>
+        <div class="icon-cell"><i class="nes-icon is-large close"></i>close</div>
+        <div class="icon-cell"><i class="nes-icon is-large coin"></i>coin</div>
+      </div>
+
+      <p class="lead" style="margin-top:18px">社交图标是一整套品牌位图，尺寸只有 <code>is-small/is-medium/is-large</code> 三档：</p>
+      <div class="demo">
+        <i class="nes-icon github is-medium"></i>
+        <i class="nes-icon twitter is-medium"></i>
+        <i class="nes-icon youtube is-medium"></i>
+        <i class="nes-icon facebook is-medium"></i>
+        <i class="nes-icon instagram is-medium"></i>
+        <i class="nes-icon twitch is-medium"></i>
+        <i class="nes-icon reddit is-medium"></i>
+        <i class="nes-icon linkedin is-medium"></i>
+        <i class="nes-icon medium is-medium"></i>
+        <i class="nes-icon google is-medium"></i>
+        <i class="nes-icon gmail is-medium"></i>
+        <i class="nes-icon whatsapp is-medium"></i>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;i class="nes-icon heart"&gt;&lt;/i&gt;                    &lt;!-- 默认尺寸 --&gt;
+&lt;i class="nes-icon is-medium heart"&gt;&lt;/i&gt;
+&lt;i class="nes-icon is-large heart is-half"&gt;&lt;/i&gt;
+&lt;i class="nes-icon is-large heart is-empty"&gt;&lt;/i&gt;
+
+&lt;!-- 全部可用图标名 --&gt;
+&lt;!-- heart  star  trophy  like  close  coin
+     github twitter youtube facebook instagram twitch
+     reddit linkedin medium google gmail whatsapp --&gt;
+
+&lt;!-- 5 星评分：满星 + 半星 + 空星组合 --&gt;
+&lt;i class="nes-icon star"&gt;&lt;/i&gt;
+&lt;i class="nes-icon star"&gt;&lt;/i&gt;
+&lt;i class="nes-icon star is-half"&gt;&lt;/i&gt;
+&lt;i class="nes-icon star is-empty"&gt;&lt;/i&gt;</pre>
+      </div>
+    </section>
+
+    <!-- 10 头像 -->
+    <section class="card nes-container is-rounded" id="avatar">
+      <p class="title pixel">10 · 头像 nes-avatar</p>
+      <p class="lead">就是个带像素化渲染的 <code>&lt;img&gt;</code>。关键是 <code>image-rendering:pixelated</code>——
+         放大时保持硬边，不然图片会被浏览器插值糊掉。</p>
+
+      <div class="demo">
+        <img class="nes-avatar is-small" alt="小头像" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'><rect width='8' height='8' fill='%23e60012'/><rect x='2' y='2' width='4' height='4' fill='%23ffd93d'/><rect x='3' y='3' width='1' height='1' fill='%23212529'/><rect x='1' y='6' width='6' height='1' fill='%23212529'/></svg>">
+        <img class="nes-avatar" alt="默认头像" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'><rect width='8' height='8' fill='%2392cc41'/><rect x='2' y='2' width='4' height='4' fill='%23fff'/><rect x='3' y='3' width='1' height='1' fill='%23212529'/><rect x='1' y='6' width='6' height='1' fill='%23212529'/></svg>">
+        <img class="nes-avatar is-large" alt="大头像" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'><rect width='8' height='8' fill='%232091ff'/><rect x='2' y='2' width='4' height='4' fill='%23fff'/><rect x='3' y='3' width='1' height='1' fill='%23212529'/><rect x='1' y='6' width='6' height='1' fill='%23212529'/></svg>">
+        <img class="nes-avatar is-large is-rounded" alt="圆角头像" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8' shape-rendering='crispEdges'><rect width='8' height='8' fill='%23f7d51d'/><rect x='2' y='2' width='4' height='4' fill='%23fff'/><rect x='3' y='3' width='1' height='1' fill='%23212529'/><rect x='1' y='6' width='6' height='1' fill='%23212529'/></svg>">
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;img class="nes-avatar is-small" src="avatar.png" alt=""&gt;
+&lt;img class="nes-avatar" src="avatar.png" alt=""&gt;              &lt;!-- 默认 --&gt;
+&lt;img class="nes-avatar is-medium" src="avatar.png" alt=""&gt;
+&lt;img class="nes-avatar is-large is-rounded" src="avatar.png" alt=""&gt;</pre>
+      </div>
+    </section>
+
+    <!-- 11 气泡 -->
+    <section class="card nes-container is-rounded" id="balloon">
+      <p class="title pixel">11 · 对话气泡 nes-balloon</p>
+      <p class="lead"><code>from-left</code> 尖角朝左下，<code>from-right</code> 朝右下。配合 <code>.nes-bcrikko</code> 这个像素小人，
+         两行代码就是一个对话框场景。</p>
+
+      <div class="stage" style="flex-direction:column;align-items:stretch;gap:26px;background:transparent;border:0;padding:0">
+        <div style="display:flex;align-items:flex-end;gap:16px">
+          <i class="nes-bcrikko"></i>
+          <div class="nes-balloon from-left" style="flex:1">
+            <p style="margin:0;font-size:13px">Hey! 这个气泡的尖角朝左，配一个站立的小人。</p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:16px">
+          <div class="nes-balloon from-right" style="flex:1">
+            <p style="margin:0;font-size:13px">朝右的气泡通常表示「对方说话」。</p>
+          </div>
+          <i class="nes-bcrikko"></i>
+        </div>
+        <div class="nes-balloon from-left is-dark" style="align-self:flex-start">
+          <p style="margin:0;font-size:13px">暗色气泡：加 is-dark，适合做系统提示。</p>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;div class="nes-balloon from-left"&gt;
+  &lt;p&gt;尖角朝左&lt;/p&gt;
+&lt;/div&gt;
+&lt;i class="nes-bcrikko"&gt;&lt;/i&gt;
+
+&lt;div class="nes-balloon from-right"&gt;
+  &lt;p&gt;尖角朝右&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class="nes-balloon from-left is-dark"&gt;
+  &lt;p&gt;暗色气泡&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </div>
+      <div class="note">
+        气泡宽度是自适应的。想让尖角正好对准人物，把人物和气泡放进同一个 flex 行、
+        用 <code>align-items:flex-end</code> 对齐底部就够了——<b>别去调 margin 微调</b>，换字号就全乱。
+      </div>
+    </section>
+
+    <!-- 12 对话框 -->
+    <section class="card nes-container is-rounded" id="dialog">
+      <p class="title pixel">12 · 对话框 nes-dialog</p>
+      <p class="lead">建议直接用原生 <code>&lt;dialog&gt;</code> 元素：遮罩、ESC 关闭、焦点锁定浏览器都帮你做了，
+         NES.css 只负责外观。<b>这是本框架里唯一需要一行 JS 的组件</b>（<code>showModal()</code>）。</p>
+
+      <div class="demo">
+        <button type="button" class="nes-btn is-primary" id="open-dialog">打开对话框</button>
+        <button type="button" class="nes-btn is-warning" id="boom">点我看提示</button>
+      </div>
+
+      <dialog class="nes-dialog is-rounded" id="game-dialog">
+        <form method="dialog">
+          <p class="title pixel" style="font-size:11px">GAME OVER</p>
+          <p style="font-size:13px;margin:12px 0 20px">是否从存档点继续？</p>
+          <menu class="dialog-menu" style="display:flex;gap:12px;justify-content:flex-end;padding:0;margin:0">
+            <button class="nes-btn" value="cancel">取消</button>
+            <button class="nes-btn is-primary" value="ok">继续</button>
+          </menu>
+        </form>
+      </dialog>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;dialog class="nes-dialog is-rounded" id="game-dialog"&gt;
+  &lt;form method="dialog"&gt;
+    &lt;p class="title"&gt;GAME OVER&lt;/p&gt;
+    &lt;p&gt;是否从存档点继续？&lt;/p&gt;
+    &lt;menu class="dialog-menu"&gt;
+      &lt;button class="nes-btn"&gt;取消&lt;/button&gt;
+      &lt;button class="nes-btn is-primary"&gt;继续&lt;/button&gt;
+    &lt;/menu&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;
+
+&lt;script&gt;
+  document.getElementById('open').onclick = () =&gt;
+    document.getElementById('game-dialog').showModal();
+&lt;/script&gt;</pre>
+      </div>
+      <div class="note">
+        <code>&lt;form method="dialog"&gt;</code> 里的按钮会<b>自动关闭对话框</b>并把 <code>value</code> 写进
+        <code>dialog.returnValue</code>，不用自己写关闭逻辑。这就是为什么推荐它而不是手搓 div 弹窗。
+      </div>
+      <div class="note">
+        <b>遮罩是坏的（实测 2.3.0）：</b>框架里写的是 <code>.nes-dialog::-webkit-backdrop</code>，
+        但浏览器只认标准的 <code>::backdrop</code>，<code>::-webkit-backdrop</code> 这个伪元素并不存在。
+        结果是弹窗打开了、背景却<b>不会变暗</b>。补一行即可，本页就加了这句：
+        <code>.nes-dialog::backdrop{background:rgba(0,0,0,.35)}</code>
+      </div>
+    </section>
+
+    <!-- 13 表格 -->
+    <section class="card nes-container is-rounded" id="table">
+      <p class="title pixel">13 · 表格 nes-table</p>
+      <p class="lead">纯边框强化，没有斑马纹。窄屏时外面套 <code>.nes-table-responsive</code> 获得横向滚动。</p>
+
+      <div class="demo col">
+        <div class="nes-table-responsive">
+          <table class="nes-table is-bordered is-centered" style="width:100%">
+            <thead>
+              <tr><th>关卡</th><th>用时</th><th>评级</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1-1</td><td>00:42</td><td>★</td></tr>
+              <tr><td>1-2</td><td>01:10</td><td>★★</td></tr>
+              <tr><td>1-3</td><td>00:38</td><td>★★★</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;div class="nes-table-responsive"&gt;
+  &lt;table class="nes-table is-bordered is-centered"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;关卡&lt;/th&gt;&lt;th&gt;用时&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;1-1&lt;/td&gt;&lt;td&gt;00:42&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- 变体 --&gt;
+&lt;table class="nes-table is-dark is-bordered"&gt;...&lt;/table&gt;</pre>
+      </div>
+    </section>
+
+    <!-- 14 角色 -->
+    <section class="card nes-container is-rounded" id="character">
+      <p class="title pixel">14 · 像素角色</p>
+      <p class="lead">一组用 <code>box-shadow</code> 拼出来的像素角色，全部是 <code>&lt;i&gt;</code> 元素，尺寸固定不可缩放。
+         做彩蛋或 404 页面时很好用。</p>
+
+      <div class="demo grid" style="grid-template-columns:repeat(auto-fill,minmax(96px,1fr));justify-items:center">
+        <div class="icon-cell"><i class="nes-mario"></i>mario</div>
+        <div class="icon-cell"><i class="nes-ash"></i>ash</div>
+        <div class="icon-cell"><i class="nes-pokeball"></i>pokeball</div>
+        <div class="icon-cell"><i class="nes-bulbasaur"></i>bulbasaur</div>
+        <div class="icon-cell"><i class="nes-charmander"></i>charmander</div>
+        <div class="icon-cell"><i class="nes-squirtle"></i>squirtle</div>
+        <div class="icon-cell"><i class="nes-kirby"></i>kirby</div>
+        <div class="icon-cell"><i class="nes-bcrikko"></i>bcrikko</div>
+        <div class="icon-cell"><i class="nes-octocat animate"></i>octocat</div>
+        <div class="icon-cell"><i class="nes-phone"></i>phone</div>
+        <div class="icon-cell"><i class="nes-smartphone"></i>smartphone</div>
+        <div class="icon-cell"><i class="nes-logo"></i>logo</div>
+        <div class="icon-cell"><i class="nes-jp-logo"></i>nes-jp-logo</div>
+        <div class="icon-cell"><i class="snes-logo"></i>snes-logo</div>
+        <div class="icon-cell"><i class="snes-jp-logo"></i>snes-jp</div>
+      </div>
+
+      <div class="code">
+        <button class="copy" type="button">COPY</button>
+        <pre class="src">&lt;i class="nes-mario"&gt;&lt;/i&gt;
+&lt;i class="nes-ash"&gt;&lt;/i&gt;
+&lt;i class="nes-pokeball"&gt;&lt;/i&gt;
+&lt;i class="nes-bulbasaur"&gt;&lt;/i&gt;
+&lt;i class="nes-charmander"&gt;&lt;/i&gt;
+&lt;i class="nes-squirtle"&gt;&lt;/i&gt;
+&lt;i class="nes-kirby"&gt;&lt;/i&gt;
+&lt;i class="nes-bcrikko"&gt;&lt;/i&gt;
+&lt;i class="nes-octocat animate"&gt;&lt;/i&gt;   &lt;!-- 加 animate 才有摇头动画 --&gt;
+&lt;i class="nes-phone"&gt;&lt;/i&gt;
+&lt;i class="nes-smartphone"&gt;&lt;/i&gt;
+&lt;i class="nes-logo"&gt;&lt;/i&gt;
+&lt;i class="nes-jp-logo"&gt;&lt;/i&gt;
+&lt;i class="snes-logo"&gt;&lt;/i&gt;
+&lt;i class="snes-jp-logo"&gt;&lt;/i&gt;</pre>
+      </div>
+    </section>
+
+    <!-- 15 速查表 -->
+    <section class="card nes-container is-rounded" id="cheatsheet">
+      <p class="title pixel">15 · 类名速查表</p>
+      <p class="lead">按「组件 → 变体」记，比背一堆类名靠谱。这张表是从 2.3.0 正式 CSS 里逐个核对过的。</p>
+      <table class="cheat">
+        <thead>
+          <tr><th>组件</th><th>基础类</th><th>变体</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.nes-container</code></td><td>容器盒子</td><td><code>with-title</code> <code>is-rounded</code> <code>is-dark</code></td></tr>
+          <tr><td><code>.nes-btn</code></td><td>按钮</td><td><code>is-primary</code> <code>is-success</code> <code>is-warning</code> <code>is-error</code> <code>is-disabled</code></td></tr>
+          <tr><td><code>.nes-text</code></td><td>文字语义色</td><td>同上五色</td></tr>
+          <tr><td><code>.nes-input</code></td><td>输入框</td><td><code>is-success</code> <code>is-warning</code> <code>is-error</code> <code>is-disabled</code></td></tr>
+          <tr><td><code>.nes-textarea</code></td><td>多行文本</td><td>四态同上</td></tr>
+          <tr><td><code>.nes-select</code></td><td>下拉框外壳</td><td>四态同上（写在容器上）</td></tr>
+          <tr><td><code>.nes-checkbox</code></td><td>复选框</td><td><code>is-dark</code>（需配套 <code>&lt;span&gt;</code>）</td></tr>
+          <tr><td><code>.nes-radio</code></td><td>单选框</td><td><code>is-dark</code>（需配套 <code>&lt;span&gt;</code>；<b>未选中态无图形，需补丁</b>）</td></tr>
+          <tr><td><code>.nes-field</code></td><td>表单项包裹</td><td>—</td></tr>
+          <tr><td><code>.nes-progress</code></td><td>进度条</td><td><code>is-primary/success/warning/error</code> <code>is-pattern</code> <code>is-rounded</code></td></tr>
+          <tr><td><code>.nes-badge</code></td><td>徽章</td><td><code>is-splited</code> <code>is-icon</code> + 内部 <code>is-*</code> 配色</td></tr>
+          <tr><td><code>.nes-icon</code></td><td>图标</td><td>图标名 + <code>is-small/medium/large</code> + <code>is-half/is-empty/is-transparent</code></td></tr>
+          <tr><td><code>.nes-avatar</code></td><td>头像</td><td><code>is-small/medium/large</code> <code>is-rounded</code></td></tr>
+          <tr><td><code>.nes-balloon</code></td><td>气泡</td><td><code>from-left</code> <code>from-right</code> <code>is-dark</code></td></tr>
+          <tr><td><code>.nes-dialog</code></td><td>对话框</td><td><code>is-rounded</code> <code>is-dark</code></td></tr>
+          <tr><td><code>.nes-table</code></td><td>表格</td><td><code>is-bordered</code> <code>is-centered</code> <code>is-dark</code>（外层 <code>nes-table-responsive</code>）</td></tr>
+          <tr><td><code>.nes-list</code></td><td>列表</td><td><code>is-disc</code> <code>is-circle</code></td></tr>
+          <tr><td><code>.nes-pointer</code></td><td>像素手型光标</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 16 常见坑 -->
+    <section class="card nes-container is-rounded" id="pitfall">
+      <p class="title pixel">16 · 六个常见坑</p>
+      <p class="lead">这些问题几乎每个用 NES.css 的人都会撞一次，提前知道能省两小时。</p>
+      <ul class="nes-list is-disc" style="font-size:13.5px;line-height:2.1">
+        <li><b>字体不生效：</b>框架自带 <code>html{font-family:sans-serif}</code> 的重置，你的 font-family 必须写在 link 之后，或用选择器压过它。</li>
+        <li><b>尺寸全是 rem：</b>在 <code>html</code> 上调字号会让所有组件等比缩放，但像素边框（4px）不跟着变，画风会崩。要缩放请整体用 <code>transform:scale()</code>。</li>
+        <li><b>想改主题色：</b>不要覆盖 <code>.is-primary</code>，会连同按钮、图标、进度条一起改。正确做法是编译 Sass，改 <code>$color-primary</code> 变量。</li>
+        <li><b>图标对不齐：</b><code>.nes-icon</code> 是 <code>inline-block</code> 且带固定尺寸，混在文字里请加 <code>vertical-align:middle</code>。</li>
+        <li><b>行高会变：</b>换成缝合像素字体后，字形框是 1300 / -300 / 1200（上下 / 字身），默认行高约 1.33em，比 Press Start 2P 的约 2 紧得多。正文要显式补 <code>line-height</code>，否则中文会挤成一坨。</li>
+        <li><b>非整数倍缩放会糊：</b>像素字体按 12px 设计，用在 15px（1.25 倍）时每个像素落到 1.25 个物理像素上，边缘必然发虚。这不是 bug，是点阵字体的物理限制——想要锐利，字号请取 12 的整数倍（12 / 24 / 36px）。</li>
+        <li><b>单选框未选中看不见：</b>2.3.0 只画了 <code>:checked</code> 态，未选中的 <code>nes-radio</code> 是空白的，需要自己补空环（见第 06 节）。</li>
+      </ul>
+      <div class="note">
+        需要深色站点？把 <code>body</code> 背景设成 <code>#212529</code>，然后所有组件加 <code>is-dark</code>。
+        框架没有全局的「深色模式开关」——<code>is-dark</code> 是逐组件生效的。
+      </div>
+    </section>
+
+    <footer>
+      <p class="pixel" style="font-size:9px">MADE WITH NES.CSS v2.3.0</p>
+      <p>官方仓库 <a href="https://github.com/nostalgic-css/NES.css" target="_blank" rel="noopener">nostalgic-css/NES.css</a> ·
+         官网 <a href="https://nostalgic-css.github.io/NES.css/" target="_blank" rel="noopener">nostalgic-css.github.io</a> ·
+         MIT License</p>
+      <p>字体 <a href="https://github.com/TakWolf/fusion-pixel-font" target="_blank" rel="noopener">缝合像素字体 / Fusion Pixel Font</a>
+         v2026.10.25（12px 比例模式 · zh-Hans）· SIL Open Font License 1.1 ·
+         粗体取自 <a href="https://github.com/pixel-font-studio/fusion-bold-pixel-font" target="_blank" rel="noopener">缝合粗像素字体</a></p>
+    </footer>
+
+  </main>
+</div>
+
+<div class="toast" id="toast">COPIED!</div>
+
+<script>
+  // 复制：file:// 下 navigator.clipboard 可能不可用，降级到 execCommand
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:-1000px;left:0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('execCommand failed'));
+      } catch (e) {
+        reject(e);
+      }
+      document.body.removeChild(ta);
+    });
+  }
+
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('.src').textContent;
+      copyText(code).then(function () {
+        btn.textContent = 'OK';
+        btn.classList.add('ok');
+      }).catch(function () {
+        btn.textContent = 'FAIL';
+      }).then(function () {
+        setTimeout(function () {
+          btn.textContent = 'COPY';
+          btn.classList.remove('ok');
+        }, 1400);
+      });
+    });
+  });
+
+  // 对话框
+  var dlg = document.getElementById('game-dialog');
+  document.getElementById('open-dialog').addEventListener('click', function () {
+    dlg.showModal();
+  });
+  dlg.addEventListener('close', function () {
+    if (dlg.returnValue === 'ok') toast('CONTINUE!');
+  });
+
+  // 轻提示
+  var t = document.getElementById('toast'), timer;
+  function toast(msg) {
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function () { t.classList.remove('show'); }, 1600);
+  }
+  document.getElementById('boom').addEventListener('click', function () {
+    toast('IT IS A SECRET TO EVERYBODY.');
+  });
+</script>
+
+</body>
+</html>

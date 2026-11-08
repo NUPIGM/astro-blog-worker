@@ -1,34 +1,21 @@
 ---
-import { Separator } from "@/components/starwind/separator";
 ---
 
 <footer class="print:hidden">
-  <!-- 作者 & 日期（横线上方） -->
-
-  <!-- 横线 -->
-  <Separator class="my-3.5 bg-outline/60" />
-
-  <!-- 版权 + 链接 -->
-  <div
-    class="flex justify-between gap-10 items-center text-xs text-muted-foreground"
-  >
-    <div>Copyright © 2019-2026 All Rights</div>
-    <div class="flex gap-[clamp(1px,3dvw,16px)]">
-      <a
-        href="/rss.xml"
-        class="hover:text-primary underline-offset-4 hover:underline transition-all duration-200"
-        >RSS</a
-      >
-      <a
-        href="/sitemap-index.xml"
-        class="hover:text-primary underline-offset-4 hover:underline transition-all duration-200"
-        >SITEMAP</a
-      >
-      <a
-        href="https://github.com/NUPIGM/astro-blog-worker"
-        class="hover:text-primary underline-offset-4 hover:underline transition-all duration-200"
-        >CONTACT</a
-      >
+    <!-- 版权 + 链接 -->
+    <div class="flex justify-between gap-10 items-center text-xs text-muted-foreground">
+        <div>Copyright © 2019-2026 All Rights</div>
+        <div class="flex gap-[clamp(1px,3dvw,16px)]">
+            <a
+                href="/sitemap-index.xml"
+                class="hover:text-primary underline-offset-4 hover:underline transition-all duration-200"
+                >SITEMAP</a
+            >
+            <a
+                href="https://github.com/NUPIGM/astro-blog-worker"
+                class="hover:text-primary underline-offset-4 hover:underline transition-all duration-200"
+                >CONTACT</a
+            >
+        </div>
     </div>
-  </div>
 </footer>

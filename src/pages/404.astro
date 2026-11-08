@@ -6,8 +6,7 @@ import { Separator } from "@/components/starwind/separator";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const posts = (await getCollection("blog")).sort(
-  (a, b) =>
-    new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
+    (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
 
 // 推荐阅读：最新三篇，够短不压迫
@@ -15,211 +14,181 @@ const recommended = posts.slice(0, 3);
 
 // 搜索索引：只有 title / description / tags，体积足够小，避免额外请求
 const searchIndex = posts.map((post) => ({
-  title: post.data.title,
-  description: post.data.description,
-  tags: post.data.tags ?? [],
-  date: post.data.pubDate,
-  href: `/posts/${post.id}/`,
+    title: post.data.title,
+    description: post.data.description,
+    tags: post.data.tags ?? [],
+    date: post.data.pubDate,
+    href: `/posts/${post.id}/`
 }));
 
 const safeIndex = JSON.stringify(searchIndex).replace(/</g, "\\u003c");
 
 const navItems = [
-  { label: "博文", href: "/posts/" },
-  { label: "留言", href: "/guestbook/" },
-  { label: "关于", href: "/about/" },
+    { label: "博文", href: "/posts/" },
+    { label: "留言", href: "/guestbook/" },
+    { label: "关于", href: "/about/" }
 ];
 
 const quickLinks = [
-  { label: "全部标签", desc: "按主题找文章", href: "/tags/" },
-  { label: "留言板", desc: "说点什么", href: "/guestbook/" },
-  { label: "关于本站", desc: "这里是谁", href: "/about/" },
-  { label: "RSS 订阅", desc: "新文章推送", href: "/rss.xml" },
+    { label: "全部标签", desc: "按主题找文章", href: "/tags/" },
+    { label: "留言板", desc: "说点什么", href: "/guestbook/" },
+    { label: "关于本站", desc: "这里是谁", href: "/about/" },
+    { label: "RSS 订阅", desc: "新文章推送", href: "/rss.xml" }
 ];
 ---
 
 <BaseLayout
-  title="页面未找到"
-  description="这条链接没有对应的内容，可以返回首页或搜索站内文章继续浏览。"
-  keywords={["404", "页面未找到", "个人博客"]}
-  noindex
-  navItems={navItems}
-  count={posts.length}
-  tags={["tags"]}
+    title="页面未找到"
+    description="这条链接没有对应的内容，可以返回首页或搜索站内文章继续浏览。"
+    keywords={["404", "页面未找到", "个人博客"]}
+    noindex
+    navItems={navItems}
+    count={posts.length}
+    tags={["tags"]}
 >
-  <!-- 主视觉：错误提示 + 搜索 + 出口 -->
-  <section class="mx-auto max-w-2xl pt-2 pb-10 text-center sm:pt-6 sm:pb-14">
-    <div aria-hidden="true" class="select-none">
-      <span
-        class="block bg-gradient-to-b from-brand/30 to-brand/0 bg-clip-text text-[clamp(5rem,20vw,9rem)] leading-[0.85] font-bold tracking-tighter text-transparent"
-        >404</span
-      >
-    </div>
-
-    <h2 class="mt-4 text-xl font-medium text-foreground sm:text-2xl">
-      这条链接通向一片空白
-    </h2>
-
-    <p
-      class="mx-auto mt-3 max-w-md text-sm leading-7 text-foreground/70 sm:text-[15px]"
-    >
-      页面可能被移动、改名，或者地址里少了一个字母。用下面的搜索找找看，也可以直接从推荐里挑一篇继续读。
-    </p>
-
-    <p
-      id="nf-path"
-      hidden
-      class="mx-auto mt-3 max-w-md truncate font-mono text-xs text-muted-foreground"
-    >
-    </p>
-
-    <!-- 站内搜索（纯前端过滤构建期索引，无后端、无死链） -->
-    <form
-      role="search"
-      class="relative mx-auto mt-8 max-w-lg"
-      onsubmit="return false;"
-    >
-      <label class="sr-only" for="nf-search">搜索站内文章</label>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <circle cx="11" cy="11" r="7"></circle>
-        <path d="m20 20-3.5-3.5"></path>
-      </svg>
-      <Input
-        id="nf-search"
-        type="search"
-        name="q"
-        autocomplete="off"
-        size="md"
-        class="h-11 pr-3 pl-10"
-        placeholder="搜索文章标题、简介或标签…"
-        aria-describedby="nf-status"
-      />
-    </form>
-
-    <p
-      id="nf-status"
-      class="mt-2 text-xs text-muted-foreground"
-      aria-live="polite"
-    >
-      {posts.length} 篇文章可搜索
-    </p>
-
-    <!-- 搜索结果面板 -->
-    <div
-      id="nf-panel"
-      hidden
-      class="mx-auto mt-4 max-w-lg overflow-hidden rounded-lg border border-border bg-card text-left shadow-xs"
-    >
-      <ul
-        id="nf-list"
-        class="max-h-72 divide-y divide-border overflow-y-auto overscroll-contain"
-      >
-      </ul>
-      <p
-        id="nf-empty"
-        hidden
-        class="px-4 py-8 text-center text-sm text-muted-foreground"
-      >
-      </p>
-    </div>
-
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <Button as="a" href="/" variant="primary" size="md" class="px-6">
-        返回首页
-      </Button>
-      <Button as="a" href="/posts/" variant="outline" size="md" class="px-6">
-        浏览全部博文
-      </Button>
-    </div>
-  </section>
-
-  <Separator class="bg-brand/60" />
-
-  <!-- 推荐阅读 -->
-  <section class="mx-auto max-w-3xl py-10">
-    <div class="flex items-baseline justify-between">
-      <h2 class="text-xs tracking-[0.2em] text-muted-foreground uppercase">
-        推荐阅读
-      </h2>
-      <a
-        href="/posts/"
-        class="text-xs text-foreground/70 underline-offset-4 transition-colors duration-200 hover:text-primary hover:underline"
-        >全部文章 →</a
-      >
-    </div>
-
-    <ul class="mt-4 divide-y divide-border">
-      {
-        recommended.map((post) => (
-          <li>
-            <a
-              href={`/posts/${post.id}/`}
-              class="group flex items-baseline justify-between gap-4 py-4"
+    <!-- 主视觉：错误提示 + 搜索 + 出口 -->
+    <section class="mx-auto max-w-2xl pt-2 pb-10 text-center sm:pt-6 sm:pb-14">
+        <div aria-hidden="true" class="select-none">
+            <span
+                class="block bg-liner-to-b from-brand/30 to-brand/0 bg-clip-text text-[clamp(5rem,20vw,9rem)] leading-[0.85] font-bold tracking-tighter text-transparent"
+                >404</span
             >
-              <span class="min-w-0">
-                <span class="block truncate text-[15px] font-medium text-foreground transition-colors group-hover:text-primary">
-                  {post.data.title}
-                </span>
-                {post.data.description && (
-                  <span class="mt-1 block truncate text-xs text-muted-foreground">
-                    {post.data.description}
-                  </span>
-                )}
-              </span>
-              <span class="shrink-0 text-xs text-muted-foreground">
-                {post.data.pubDate}
-              </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+        </div>
 
-  <!-- 快捷入口：全部指向真实存在的路由 -->
-  <nav class="mx-auto max-w-3xl pb-6" aria-label="站内快捷入口">
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-      {
-        quickLinks.map((link) => (
-          <a
-            href={link.href}
-            class="rounded-lg border border-border px-4 py-3 transition-colors duration-200 hover:border-primary/30 hover:bg-muted"
-          >
-            <span class="block text-sm font-medium text-foreground">
-              {link.label}
-            </span>
-            <span class="mt-0.5 block text-xs text-muted-foreground">
-              {link.desc}
-            </span>
-          </a>
-        ))
-      }
-    </div>
-  </nav>
+        <h2 class="mt-4 text-xl font-medium text-foreground sm:text-2xl">这条链接通向一片空白</h2>
+
+        <p class="mx-auto mt-3 max-w-md text-sm leading-7 text-foreground/70 sm:text-[15px]">
+            页面可能被移动、改名，或者地址里少了一个字母。用下面的搜索找找看，也可以直接从推荐里挑一篇继续读。
+        </p>
+
+        <p
+            id="nf-path"
+            hidden
+            class="mx-auto mt-3 max-w-md truncate font-mono text-xs text-muted-foreground"
+        ></p>
+
+        <!-- 站内搜索（纯前端过滤构建期索引，无后端、无死链） -->
+        <form class="relative mx-auto mt-8 max-w-lg" onsubmit="return false;">
+            <label class="sr-only" for="nf-search">搜索站内文章</label>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+            >
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <Input
+                id="nf-search"
+                type="search"
+                name="q"
+                autocomplete="off"
+                size="md"
+                class="h-11 pr-3 pl-10"
+                placeholder="搜索文章标题、简介或标签…"
+                aria-describedby="nf-status"
+            />
+        </form>
+
+        <p id="nf-status" class="mt-2 text-xs text-muted-foreground" aria-live="polite">
+            {posts.length}
+            篇文章可搜索
+        </p>
+
+        <!-- 搜索结果面板 -->
+        <div
+            id="nf-panel"
+            hidden
+            class="mx-auto mt-4 max-w-lg overflow-hidden rounded-lg border border-border bg-card text-left shadow-xs"
+        >
+            <ul
+                id="nf-list"
+                class="max-h-72 divide-y divide-border overflow-y-auto overscroll-contain"
+            ></ul>
+            <p id="nf-empty" hidden class="px-4 py-8 text-center text-sm text-muted-foreground"></p>
+        </div>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button as="a" href="/" variant="primary" size="md" class="px-6"> 返回首页 </Button>
+            <Button as="a" href="/posts/" variant="outline" size="md" class="px-6">
+                浏览全部博文
+            </Button>
+        </div>
+    </section>
+
+    <Separator class="bg-brand/60" />
+
+    <!-- 推荐阅读 -->
+    <section class="mx-auto max-w-3xl py-10">
+        <div class="flex items-baseline justify-between">
+            <h2 class="text-xs tracking-[0.2em] text-muted-foreground uppercase">推荐阅读</h2>
+            <a
+                href="/posts/"
+                class="text-xs text-foreground/70 underline-offset-4 transition-colors duration-200 hover:text-primary hover:underline"
+                >全部文章 →</a
+            >
+        </div>
+
+        <ul class="mt-4 divide-y divide-border">
+            {recommended.map((post) => (
+                <li>
+                    <a
+                        href={`/posts/${post.id}/`}
+                        class="group flex items-baseline justify-between gap-4 py-4"
+                    >
+                        <span class="min-w-0">
+                            <span class="block truncate text-[15px] font-medium text-foreground transition-colors group-hover:text-primary">
+                                {post.data.title}
+                            </span>
+                            {post.data.description && (
+                                <span class="mt-1 block truncate text-xs text-muted-foreground">
+                                    {post.data.description}
+                                </span>
+                            )}
+                        </span>
+                        <span class="shrink-0 text-xs text-muted-foreground">
+                            {post.data.pubDate}
+                        </span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </section>
+
+    <!-- 快捷入口：全部指向真实存在的路由 -->
+    <nav class="mx-auto max-w-3xl pb-6" aria-label="站内快捷入口">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {quickLinks.map((link) => (
+                <a
+                    href={link.href}
+                    class="rounded-lg border border-border px-4 py-3 transition-colors duration-200 hover:border-primary/30 hover:bg-muted"
+                >
+                    <span class="block text-sm font-medium text-foreground">{link.label}</span>
+                    <span class="mt-0.5 block text-xs text-muted-foreground">{link.desc}</span>
+                </a>
+            ))}
+        </div>
+    </nav>
 </BaseLayout>
 
 <script is:inline type="application/json" id="nf-index" set:html={safeIndex} />
 
 <script>
-  type IndexItem = {
+type IndexItem = {
     title: string;
     description: string;
     tags: string[];
     date: string;
     href: string;
-  };
+};
 
-  const initNotFound = () => {
+const initNotFound = () => {
     const input = document.getElementById("nf-search") as HTMLInputElement | null;
     const panel = document.getElementById("nf-panel");
     const list = document.getElementById("nf-list");
@@ -235,91 +204,90 @@ const quickLinks = [
 
     let index: IndexItem[] = [];
     try {
-      index = JSON.parse(indexEl.textContent ?? "[]") as IndexItem[];
+        index = JSON.parse(indexEl.textContent ?? "[]") as IndexItem[];
     } catch {
-      index = [];
+        index = [];
     }
     if (index.length === 0) {
-      status.textContent = "暂无可搜索的文章";
-      return;
+        status.textContent = "暂无可搜索的文章";
+        return;
     }
 
     // 把当前访问的真实路径告诉用户，避免"我明明点的是这个地址"的困惑
     if (pathEl && location.pathname && location.pathname !== "/404") {
-      pathEl.textContent = `请求的地址：${location.pathname}`;
-      pathEl.hidden = false;
+        pathEl.textContent = `请求的地址：${location.pathname}`;
+        pathEl.hidden = false;
     }
 
     const defaultStatus = `${index.length} 篇文章可搜索`;
 
     const renderItem = (item: IndexItem) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = item.href;
-      a.className =
-        "block px-4 py-3 transition-colors duration-150 hover:bg-muted focus-visible:bg-muted focus-visible:outline-none";
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = item.href;
+        a.className =
+            "block px-4 py-3 transition-colors duration-150 hover:bg-muted focus-visible:bg-muted focus-visible:outline-none";
 
-      const title = document.createElement("span");
-      title.className = "block truncate text-sm font-medium text-foreground";
-      title.textContent = item.title;
+        const title = document.createElement("span");
+        title.className = "block truncate text-sm font-medium text-foreground";
+        title.textContent = item.title;
 
-      const detail =
-        item.description || (item.tags.length > 0 ? item.tags.join(" / ") : "");
-      if (detail) {
-        const meta = document.createElement("span");
-        meta.className = "mt-1 block truncate text-xs text-muted-foreground";
-        meta.textContent = detail;
-        a.append(title, meta);
-      } else {
-        a.append(title);
-      }
-      li.append(a);
-      return li;
+        const detail = item.description || (item.tags.length > 0 ? item.tags.join(" / ") : "");
+        if (detail) {
+            const meta = document.createElement("span");
+            meta.className = "mt-1 block truncate text-xs text-muted-foreground";
+            meta.textContent = detail;
+            a.append(title, meta);
+        } else {
+            a.append(title);
+        }
+        li.append(a);
+        return li;
     };
 
     const search = () => {
-      const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+        const terms = input.value.toLowerCase().split(/\s+/).filter(Boolean);
 
-      // 空关键词：回到初始态，露出推荐阅读
-      if (terms.length === 0) {
-        panel.hidden = true;
-        list.replaceChildren();
-        empty.hidden = true;
-        status.textContent = defaultStatus;
-        return;
-      }
+        // 空关键词：回到初始态，露出推荐阅读
+        if (terms.length === 0) {
+            panel.hidden = true;
+            list.replaceChildren();
+            empty.hidden = true;
+            status.textContent = defaultStatus;
+            return;
+        }
 
-      const matched = index.filter((item) => {
-        const haystack =
-          `${item.title} ${item.description} ${item.tags.join(" ")}`.toLowerCase();
-        return terms.every((term) => haystack.includes(term));
-      });
+        const matched = index.filter((item) => {
+            const haystack =
+                `${item.title} ${item.description} ${item.tags.join(" ")}`.toLowerCase();
+            return terms.every((term) => haystack.includes(term));
+        });
 
-      panel.hidden = false;
-      list.replaceChildren(...matched.slice(0, 12).map(renderItem));
+        panel.hidden = false;
+        list.replaceChildren(...matched.slice(0, 12).map(renderItem));
 
-      if (matched.length === 0) {
-        empty.hidden = false;
-        empty.textContent = `没有找到与「${input.value.trim()}」相关的文章，换个短一点的关键词试试。`;
-        status.textContent = "没有匹配结果";
-      } else {
-        empty.hidden = true;
-        status.textContent = `找到 ${matched.length} 篇相关文章`;
-      }
+        if (matched.length === 0) {
+            empty.hidden = false;
+            empty.textContent = `没有找到与「${input.value.trim()}」相关的文章，换个短一点的关键词试试。`;
+            status.textContent = "没有匹配结果";
+        } else {
+            empty.hidden = true;
+            status.textContent = `找到 ${matched.length} 篇相关文章`;
+        }
     };
 
     input.addEventListener("input", search);
     input.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        input.value = "";
-        search();
-        input.blur();
-      }
+        if (event.key === "Escape") {
+            input.value = "";
+            search();
+            input.blur();
+        }
     });
 
     search();
-  };
+};
 
-  initNotFound();
-  document.addEventListener("astro:page-load", initNotFound);
+initNotFound();
+document.addEventListener("astro:page-load", initNotFound);
 </script>

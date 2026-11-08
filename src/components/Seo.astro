@@ -1,16 +1,10 @@
 ---
-const {
-  title,
-  description,
-  detailedDescription = description,
-  image,
-  keywords = [],
-  theme,
-  noindex = false,
-} = Astro.props;
+import { AUTHOR, REGION } from "@/consts";
 
-const name = "nupigm";
-const city = "China";
+const { title, detailedDescription, image, keywords = [], theme, noindex = false } = Astro.props;
+
+const name = AUTHOR;
+const city = REGION;
 const url = new URL(Astro.url.pathname, Astro.site).toString();
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---

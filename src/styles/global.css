@@ -1,52 +1,21 @@
 /*
   全局样式入口。
+  */
+@import "normalize.css";
+@import "tailwindcss";
 
-  样式方案已从 daisyUI 迁移至 Starwind：
-  - Tailwind CSS v4 保留为底层引擎（Starwind 组件本身构建于其上）
-  - daisyUI 插件已移除，语义类由 Starwind 组件与 token 取代
-  - Starwind 的样式基础（tailwindcss / tw-animate-css / forms / 设计 token）由 starwind.css 提供
-  - @tailwindcss/typography 仅保留给 Svelte 岛中的 .prose 使用（Starwind 无 Svelte 适配）
-*/
-
-@import "./starwind.css";
-@plugin "@tailwindcss/typography";
-
-@layer base {
-  /* .prose 供 Svelte 岛继续使用；.sw-prose 为 Starwind Prose 组件
-     两者都需要处理长 URL / 长代码串的折行 */
-  .prose,
-  .sw-prose {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  .prose :where(pre, code, a, table, img, blockquote),
-  .sw-prose :where(pre, code, a, table, img, blockquote) {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
+@font-face {
+  font-family: "Ark Pixel";
+  src: url("/fonts/ark-pixel-font-12px-proportional-ttf/ark-pixel-12px-proportional-zh_hans.ttf.woff2")
+    format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
-/* 打印专用优化 */
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 18mm 20mm; /* 统一上下左右边距 */
-  }
-
-  html,
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  main {
-    width: 100% !important;
-    max-width: none !important;
-    min-height: auto !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
-  }
+body {
+  font-family: "Ark Pixel", sans-serif;
+  font-size: 16px;
+  background-color: rgb(30, 30, 30);
+  color: rgb(220, 220, 220);
 }

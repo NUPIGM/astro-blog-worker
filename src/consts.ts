@@ -4,5 +4,6 @@
 const SITE_TITLE = "个人博客";
 const SITE_DESCRIPTION = "啥都学一点，万一用上了呢。有个博客一直是我的想法。";
 const AUTHOR = "NUPIGM";
+const REGION = "China";
 
-export { SITE_TITLE, SITE_DESCRIPTION, AUTHOR };
+export { AUTHOR, REGION, SITE_DESCRIPTION, SITE_TITLE };

@@ -1,39 +1,30 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
+import { ClientRouter, fade } from "astro:transitions";
+import "../styles/global.css";
 import Footer from "../components/Footer.astro";
-import FloatingWidget from "../components/FloatingWidget.astro";
-import LoadingIndicator from "../components/LoadingIndicator.astro";
-import { fade } from "astro:transitions";
+import Header from "../components/Header.astro";
+import Seo from "../components/Seo.astro";
 
-interface Props {
-  title: string;
-  description: string;
-  navItems?: { label: string; href: string }[];
-  count: number;
-  tags: string[];
-  keywords?: string[];
-  noindex?: boolean;
-}
-const { title, description, navItems, count, tags, keywords, noindex } =
-  Astro.props;
+const { seo } = Astro.props;
+const { title, detailedDescription, image, keywords, theme, noindex = false } = seo || {};
 ---
 
-<html lang="zh-cn">
-  <head>
-    <BaseHead title={title} description={description} keywords={keywords} noindex={noindex} />
-  </head>
+<html lang="zh-CN">
+    <head>
+        <Seo
+            title={title}
+            detailedDescription={detailedDescription}
+            image={image}
+            keywords={keywords}
+            theme={theme}
+            noindex={noindex}
+        />
+        <ClientRouter />
+    </head>
 
-  <body
-    class="m-auto max-w-5xl bg-background text-foreground not-print:shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-10"
-  >
-    <Header title={title} navItems={navItems} count={count} tags={tags} />
-
-    <main transition:animate={fade({ duration: "0.4s" })}>
-      <slot />
-    </main>
-    <Footer />
-    <FloatingWidget />
-    <LoadingIndicator />
-  </body>
+    <body transition:animate={fade({ duration: "0.25s" })}>
+        <Header />
+        <slot />
+        <Footer />
+    </body>
 </html>

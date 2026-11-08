@@ -1,18 +1,18 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "@/components/hero.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const navItems = [
-  { label: "博文", href: "/posts/" },
-  { label: "留言", href: "/guestbook/" },
-  { label: "关于", href: "/about/" },
-];
+const seo = {
+    title: "首页",
+    detailedDescription: "这里是首页内容，正在补充中。",
+    image: "/images/hero.gif",
+    keywords: ["Astro", "博客", "个人网站"]
+};
 ---
 
-<BaseLayout
-  title={SITE_TITLE}
-  description={SITE_DESCRIPTION}
-  navItems={navItems}
-  count={1}
-  tags={["tags"]}
->welcome</BaseLayout>
+<BaseLayout seo={seo}>
+    <main>
+        <Hero />
+        <p class="h-200">Welcome to my blog!这里是...</p>
+    </main>
+</BaseLayout>
