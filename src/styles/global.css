@@ -15,7 +15,17 @@
 
 body {
   font-family: "Ark Pixel", sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   background-color: rgb(30, 30, 30);
-  color: rgb(220, 220, 220);
+  color: rgb(238, 238, 238);
+}
+header,
+footer,
+main {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+main {
+  padding-top: 32px;
+  padding-bottom: 32px;
 }

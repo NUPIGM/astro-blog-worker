@@ -8,14 +8,14 @@ type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate } = Astro.props;
 const navItems = [
-  { label: "博文", href: "/posts/" },
-  { label: "分享", href: Astro.url.toString() },
+    { label: "博文", href: "/posts/" },
+    { label: "分享", href: Astro.url.toString() }
 ];
 ---
 
 <BaseLayout title={title} description={description} navItems={navItems} count={0} tags={["tags"]}>
     <!-- 版主 -->
-    <main class="flex-1">
+    <main class="flex-1 pt-4 pb-4">
         <p class="text-[15px] text-muted-foreground max-w-[90%] mb-6">
             {description}
         </p>
@@ -26,7 +26,9 @@ const navItems = [
         </Prose>
         <br>
         <br>
-        <div class="ml-auto flex w-max flex-col items-start text-left text-xs text-muted-foreground mb-3">
+        <div
+            class="ml-auto flex w-max flex-col items-start text-left text-xs text-muted-foreground mb-3"
+        >
             <p class="w-max">Author: {AUTHOR}</p>
             <p class="w-max">Date: {pubDate}</p>
         </div>

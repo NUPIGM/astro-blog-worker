@@ -1,6 +1,7 @@
 ---
 import Hero from "@/components/hero.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Home from "@/layouts/home.astro";
 
 const seo = {
     title: "首页",
@@ -11,8 +12,5 @@ const seo = {
 ---
 
 <BaseLayout seo={seo}>
-    <main>
-        <Hero />
-        <p class="h-200">Welcome to my blog!这里是...</p>
-    </main>
+    <Home />
 </BaseLayout>
