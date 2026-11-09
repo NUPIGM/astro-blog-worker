@@ -6,8 +6,9 @@ const { posts } = Astro.props;
 ---
 
 <main>
+    <h2 class="pt-6 pb-6  font-bold">文章列表</h2>
     {posts.map((article: CollectionEntry<"blog">) => (
-        <article class="group">
+        <article class="group pb-6 pt-4">
             <a href={`/posts/${article.id}/`} class="block">
                 <h2 class="mb-1.5  font-medium text-foreground transition-colors group-hover:text-primary">
                     {article.data.title}
