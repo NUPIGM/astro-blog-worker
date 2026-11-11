@@ -1,7 +1,7 @@
 ---
 title: "GO 语言学习笔记"
 description: "关于 Go 闭包的基础学习笔记，记录闭包的定义、状态保持和调用方式。"
-pubDate: "2026-09-20"
+pubDate: "2025-11-20"
 tags: ["GO", "笔记", "算法", "closure"]
 ---
 

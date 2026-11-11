@@ -1,7 +1,7 @@
 ---
 title: "Astro Content Collections 的使用方式"
 description: "学习如何在 Astro 中用 Content Collections 管理博客文章和元数据。"
-pubDate: "2026-09-15"
+pubDate: "2026-09-1"
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["Astro", "内容集合", "Markdown"]
 ---

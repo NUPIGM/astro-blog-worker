@@ -1,7 +1,7 @@
 ---
 title: "从零搭建一个 Astro 个人站"
 description: "用 Astro 快速搭建一个现代化的个人博客和作品展示网站。"
-pubDate: "2026-09-15"
+pubDate: "2026-02-15"
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["Astro", "个人站点", "建站"]
 ---

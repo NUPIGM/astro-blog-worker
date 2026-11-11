@@ -1,7 +1,7 @@
 ---
-title: "array reduce flatmap"
-description: "Lorem ipsum dolor sit amet"
-pubDate: "2022-07-08"
+title: "array reduce/flatmap"
+description: "reduce flatmap 函数使用方法"
+pubDate: "2025-07-08"
 heroImage: "/blog-placeholder-3.jpg"
 tags: ["JavaScript", "flatMap", "reduce", "数组"]
 ---

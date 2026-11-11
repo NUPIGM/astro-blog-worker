@@ -1,8 +1,7 @@
 ---
 title: "解决百度网盘限速"
-description: "3个方法解决百度网盘限速（2026-03-25）"
-pubDate: "2026-09-27"
-heroImage: "/blog-placeholder-4.jpg"
+description: "3个方法解决百度网盘限速"
+pubDate: "2026-03-25"
 tags: ["示例", "博客"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "博客站点的目录结构设计"
 description: "介绍 Astro 博客项目中常见目录和职责分工，帮助你组织内容和组件。"
-pubDate: "2026-09-15"
+pubDate: "2026-07-10"
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["Astro", "项目结构", "博客"]
 ---

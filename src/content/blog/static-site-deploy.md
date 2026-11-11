@@ -1,7 +1,7 @@
 ---
 title: "把个人站点部署到 Cloudflare 和其他平台"
 description: "介绍如何把 Astro 静态站点部署到 Cloudflare、Vercel 等平台，并保持稳定访问。"
-pubDate: "2026-09-15"
+pubDate: "2026-05-15"
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["部署", "Cloudflare", "静态站点"]
 ---

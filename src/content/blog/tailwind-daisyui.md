@@ -1,7 +1,7 @@
 ---
 title: "用 Tailwind + DaisyUI 提升博客样式"
 description: "介绍如何在 Astro 项目里接入 Tailwind CSS 和 DaisyUI，快速设计统一的博客界面。"
-pubDate: "2026-09-15"
+pubDate: "2026-05-3"
 heroImage: "/blog-placeholder-1.jpg"
 tags: ["Tailwind CSS", "DaisyUI", "前端样式"]
 ---

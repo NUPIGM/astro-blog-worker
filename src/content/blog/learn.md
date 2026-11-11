@@ -1,7 +1,7 @@
 ---
 title: "极简博客 PWA 开发教程"
 description: "使用纯 HTML/JavaScript 构建一个具备离线访问、桌面安装和推送通知功能的博客系统。"
-pubDate: "2025-01-01"
+pubDate: "2026-03-06"
 tags: ["PWA", "博客", "前端"]
 ---
 
