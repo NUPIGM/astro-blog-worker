@@ -15,9 +15,11 @@
 
 body {
   font-family: "Ark Pixel", sans-serif;
-  font-size: 24px;
-  background-color: rgb(30, 30, 30);
+  font-size: 20px;
   color: rgb(238, 238, 238);
+  background-image: url("/images/pixel_deep20.webp");
+  background-size: cover;
+  background-position: center bottom;
 }
 header,
 footer,

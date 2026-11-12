@@ -1,0 +1,44 @@
+---
+---
+
+<div class="sticky-wrapper">
+    <!-- 需要动态固定的图片容器 -->
+    <div class="sticky-box" id="stickyBox">
+        <img src="/images/pixel_deep.webp" alt="">
+    </div>
+</div>
+
+<style is:inline>
+.sticky-wrapper {
+    display: flex;
+    align-items: flex-start; /* 必须设置：防止图片容器被主内容等高拉伸导致 sticky 失效 */
+}
+
+.sticky-box {
+    position: sticky;
+    top: 0; /* 初始占位，实际偏移量由 JS 动态接管 */
+}
+
+.sticky-box img {
+    display: block;
+    width: 100%;
+}
+</style>
+
+<script is:inline type="text/javascript">
+const stickyBox = document.getElementById("stickyBox");
+
+function updateStickyTop() {
+    // 核心公式：视口高度 - 图片容器高度
+    // 页面 > 图片：正值，图片底部触及视口底部时固定
+    // 页面 < 图片：负值，图片顶部向上偏移，固定展示下半部分
+    stickyBox.style.top = `${window.innerHeight - stickyBox.offsetHeight}px`;
+}
+
+// 监听窗口缩放与元素尺寸变化（自动兼容图片加载完成、懒加载、动态换图）
+window.addEventListener("resize", updateStickyTop);
+new ResizeObserver(updateStickyTop).observe(stickyBox);
+
+// 初始化执行
+updateStickyTop();
+</script>

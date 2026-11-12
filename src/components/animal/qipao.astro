@@ -1,0 +1,81 @@
+---
+---
+
+<button class="swap" type="button" aria-label="切换画面">
+    <img
+        class="swap__img"
+        draggable="false"
+        src="/images/hero.gif"
+        width="1200"
+        height="675"
+        alt="默认画面"
+    >
+    <img
+        class="swap__img swap__img--top"
+        src="/images/hero1.gif"
+        width="1200"
+        height="675"
+        draggable="false"
+        alt=""
+        aria-hidden="true"
+        fetchpriority="low"
+    >
+</button>
+<style>
+/* 容器：固定比例，防止切换时布局跳动 */
+.swap {
+    position: relative;
+    display: block;
+    width: min(640px, 88vw);
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 16px;
+    cursor: pointer;
+    outline: none;
+    contain: paint;
+}
+.swap:focus-visible {
+    outline: 2px solid #b4652f;
+    outline-offset: 3px;
+}
+
+/* 两张图叠加铺满，都常驻内存 */
+.swap__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 关键三行：只动顶层透明度 */
+.swap__img--top {
+    opacity: 0;
+    transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    backface-visibility: hidden;
+}
+
+/* 只在精确指针设备启用；键盘聚焦并列同一规则 */
+@media (hover: hover) and (pointer: fine) {
+    .swap:hover .swap__img--top,
+    .swap:focus-visible .swap__img--top {
+        opacity: 1;
+    }
+}
+
+/* 触屏兜底：由 JS 打标记 */
+.swap[data-touch="1"] .swap__img--top {
+    opacity: 1;
+}
+
+/* 减弱动效：切换保留，过渡关闭 */
+@media (prefers-reduced-motion: reduce) {
+    .swap__img--top {
+        transition: none;
+    }
+}
+</style>

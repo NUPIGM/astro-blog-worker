@@ -1,21 +1,22 @@
 ---
 const nav = [
-    { name: "Post", href: "/posts/" },
-    { name: "Tag", href: "/tags/" },
-    { name: "About", href: "/about/" }
+    { name: "博文", href: "/posts/" },
+    { name: "标签", href: "/tags/" },
+    { name: "关于", href: "/about/" }
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="fixed inset-x-0 top-0 flex justify-between max-w-5xl mx-auto pt-2">
-    <a class="" href="/" aria-label="Blog home">BLOG</a>
+    <a class="leading-14" href="/" aria-label="Blog home">I‘m a fish ooOoO</a>
     <nav aria-label="Main navigation">
         <ul class="flex gap-4">
             {nav.map((item) => (
                 <li>
                     <a
-                        class=""
+                        id="my-webp"
+                        class="bubble"
                         href={item.href}
                         aria-current={currentPath === item.href ? "page" : undefined}
                     >
@@ -33,4 +34,26 @@ const currentPath = Astro.url.pathname;
 .nav-link[aria-current="page"] {
     border-color: currentColor;
 }
+.bubble {
+    display: inline-block;
+    width: 100px;
+    height: 80px;
+    background-image: url("/images/pixel_bubble_birth.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+    line-height: 60px;
+}
+.bubble:hover {
+    background-image: url("/images/pixel_bubble_break.webp");
+}
 </style>
+<script is:inline type="text/javascript">
+window.addEventListener("pageshow", () => {
+    const boxes = document.querySelectorAll(".bubble");
+    const timestamp = Date.now();
+    boxes.forEach((box, index) => {
+        box.style.backgroundImage = `url('/images/pixel_bubble_birth.webp?t=${timestamp}_${index}')`;
+    });
+});
+</script>

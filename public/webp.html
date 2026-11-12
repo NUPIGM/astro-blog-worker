@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky 图片动态吸底适配方案</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f4f5f7;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* 顶部状态提示栏（仅用于演示，实际使用可删除） */
+    .status-bar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .status-bar button {
+      margin-top: 8px;
+      margin-right: 6px;
+      padding: 4px 10px;
+      border: none;
+      border-radius: 4px;
+      background: #3b82f6;
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .status-bar button:hover {
+      background: #2563eb;
+    }
+
+    /* 核心布局容器 */
+    .layout-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      /* 关键点 1：必须设置为 flex-start，防止侧边栏被右侧内容等高拉伸，否则 sticky 失效 */
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    /* 左侧图片粘性容器 */
+    .sticky-sidebar {
+      width: 340px;
+      flex-shrink: 0;
+      /* 关键点 2：启用粘性定位，top 值将由 JS 实时计算注入 */
+      position: sticky;
+      top: 0px; 
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .sticky-sidebar img {
+      width: 100%;
+      display: block; /* 消除图片底部默认缝隙 */
+    }
+
+    /* 右侧长内容区域 */
+    .main-content {
+      flex: 1;
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .main-content h1 {
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+
+    .main-content p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .placeholder-block {
+      height: 300px;
+      background: #f9fafb;
+      border: 1px dashed #d1d5db;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 演示控制面板 -->
+  <div class="status-bar">
+    <div id="debug-info">正在计算尺寸...</div>
+    <div>
+      <button onclick="switchImage('tall')">切换长图 (高度 > 屏幕)</button>
+      <button onclick="switchImage('short')">切换短图 (高度 < 屏幕)</button>
+    </div>
+  </div>
+
+  <!-- 主体双栏布局 -->
+  <div class="layout-container">
+    
+    <!-- 左侧需要动态固定的图片区域 -->
+    <aside class="sticky-sidebar" id="sidebar">
+      <!-- 默认加载一张较高的占位图（340x1200） -->
+      <img 
+        id="target-img" 
+        src="https://placehold.co/340x1200" 
+        alt="动态固定示例图" 
+      />
+    </aside>
+
+    <!-- 右侧主内容区（撑开页面滚动高度） -->
+    <main class="main-content">
+      <h1>页面滚动与图片自适应固定演示</h1>
+      <p>请上下滚动页面，并尝试点击右上角的按钮切换图片高度，或缩放浏览器窗口大小查看效果。</p>
+      
+      <div class="placeholder-block">内容区块 1（向下滚动）</div>
+      <div class="placeholder-block">内容区块 2（向下滚动）</div>
+      <div class="placeholder-block">内容区块 3（向下滚动）</div>
+      <div class="placeholder-block">内容区块 4（向下滚动）</div>
+      <div class="placeholder-block">内容区块 5（向下滚动）</div>
+      <div class="placeholder-block">内容区块 6（页面底部）</div>
+    </main>
+
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const targetImg = document.getElementById('target-img');
+    const debugInfo = document.getElementById('debug-info');
+
+    /**
+     * 核心计算逻辑：动态更新 sticky 的 top 值
+     */
+    function updateStickyOffset() {
+      const viewportHeight = window.innerHeight;
+      const sidebarHeight = sidebar.offsetHeight;
+
+      // 核心公式：视口高度 - 元素高度
+      // 1. 当视口 > 图片时：值为正数，图片底部触及视口底部时固定
+      // 2. 当视口 < 图片时：值为负数，图片顶部向上偏移超出视口，底部对齐视口底部（固定下半部分）
+      const stickyTop = viewportHeight - sidebarHeight;
+
+      sidebar.style.top = `${stickyTop}px`;
+
+      // 更新右上角调试面板信息
+      const mode = viewportHeight >= sidebarHeight ? '页面 > 图片（触底固定）' : '页面 < 图片（固定下半部分）';
+      debugInfo.innerHTML = `
+        视口高度: ${viewportHeight}px | 图片高度: ${sidebarHeight}px<br>
+        当前模式: <strong>${mode}</strong> (top: ${stickyTop}px)
+      `;
+    }
+
+    // 1. 图片加载完成时触发计算
+    targetImg.addEventListener('load', updateStickyOffset);
+
+    // 2. 浏览器窗口大小改变时触发计算
+    window.addEventListener('resize', updateStickyOffset);
+
+    // 3. 使用 ResizeObserver 监听图片容器自身尺寸变化（如动态替换图片、懒加载等）
+    const resizeObserver = new ResizeObserver(() => {
+      updateStickyOffset();
+    });
+    resizeObserver.observe(sidebar);
+
+    // 4. 如果图片已被浏览器缓存，立即执行一次
+    if (targetImg.complete) {
+      updateStickyOffset();
+    }
+
+    // --- 以下仅用于演示切换长/短图，实际项目中可删除 ---
+    function switchImage(type) {
+      if (type === 'tall') {
+        targetImg.src = 'https://placehold.co/340x1200';
+      } else {
+        targetImg.src = 'https://placehold.co/340x600';
+      }
+    }
+  </script>
+</body>
+</html>
