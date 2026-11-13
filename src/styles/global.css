@@ -18,17 +18,19 @@ body {
   font-size: 20px;
   color: rgb(238, 238, 238);
   min-height: 100vh;
-  background-image: url("/images/pixel_deep20.webp");
+  background-image: url("/images/pixel_deep20_fish.webp");
   background-size: cover;
   background-position: center bottom;
 }
 header,
 footer,
 main {
-  max-width: 1024px;
+  max-width: 1280px;
   margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 main {
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 56px;
+  padding-bottom: 40px;
 }
