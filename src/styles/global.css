@@ -4,6 +4,31 @@
 @import "normalize.css";
 @import "tailwindcss";
 
+@layer components {
+  /* 英雄图片 */
+  .hero-webp {
+    display: inline-block;
+    width: 300px;
+    height: 65px;
+    background-image: url("/images/fish_loops_v2/fish_05.webp");
+    background-repeat: no-repeat;
+    background-size: 130%;
+    background-position: center 40%;
+  }
+  .bubble {
+    display: inline-block;
+    width: 100px;
+    height: 65px;
+    background-image: url("/images/pixel_bubble_birth.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: center;
+    line-height: 60px;
+  }
+  .bubble:hover {
+    background-image: url("/images/pixel_bubble_break.webp");
+  }
+}
 @font-face {
   font-family: "Ark Pixel";
   src: url("/fonts/ark-pixel-font-12px-proportional-ttf/ark-pixel-12px-proportional-zh_hans.ttf.woff2")
@@ -12,25 +37,34 @@
   font-weight: 400;
   font-display: swap;
 }
-
-body {
-  font-family: "Ark Pixel", sans-serif;
-  font-size: 20px;
-  color: rgb(238, 238, 238);
-  min-height: 100vh;
-  background-image: url("/images/pixel_deep20_fish.webp");
-  background-size: cover;
-  background-position: center bottom;
-}
-header,
-footer,
-main {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-main {
-  padding-top: 56px;
-  padding-bottom: 40px;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: "Ark Pixel", sans-serif;
+    font-size: 20px;
+    color: rgb(238, 238, 238);
+    min-height: 100dvh;
+    background-image: url("/images/final_strip.png");
+    background-size: cover;
+    background-position: top;
+  }
+  header,
+  footer,
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  footer {
+    height: 300px;
+    background-image: url("/images/pixel_seabed_scene.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    display: flex;
+    justify-content: center;
+  }
 }

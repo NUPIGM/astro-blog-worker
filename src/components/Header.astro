@@ -8,8 +8,11 @@ const nav = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed inset-x-0 top-0 flex justify-between max-w-5xl mx-auto pt-2">
-    <a class="leading-14" href="/" aria-label="Blog home">I‘m a fish ooOoO</a>
+<header class="flex justify-between mx-auto">
+    <div class="flex items-center">
+        <a class="" href="/" aria-label="Blog home">I‘m a fish oO</a>
+        <i class="hero-webp"></i>
+    </div>
     <nav aria-label="Main navigation">
         <ul class="flex gap-4">
             {nav.map((item) => (
@@ -37,26 +40,6 @@ const currentPath = Astro.url.pathname;
     </nav>
 </header>
 
-<style>
-.nav-link:hover,
-.nav-link:focus-visible,
-.nav-link[aria-current="page"] {
-    border-color: currentColor;
-}
-.bubble {
-    display: inline-block;
-    width: 100px;
-    height: 80px;
-    background-image: url("/images/pixel_bubble_birth.webp");
-    background-repeat: no-repeat;
-    background-size: contain;
-    text-align: center;
-    line-height: 60px;
-}
-.bubble:hover {
-    background-image: url("/images/pixel_bubble_break.webp");
-}
-</style>
 <script is:inline type="text/javascript">
 window.addEventListener("pageshow", () => {
     const boxes = document.querySelectorAll(".bubble");

@@ -28,27 +28,3 @@ const { title, detailedDescription, image, keywords, theme, noindex = false } = 
         <Footer />
     </body>
 </html>
-<script type="module" is:inline>
-function initGridHeight() {
-    const wrapper = document.getElementsByTagName("body")[0];
-    const inner = document.getElementBytagNamen("main")[0];
-    if (!wrapper || !inner) return;
-
-    const unitHeight = Number(wrapper.dataset.unitHeight) || 720;
-
-    const updateHeight = () => {
-        // 获取内部真实高度
-        const contentHeight = inner.getBoundingClientRect().height;
-        // 减去 0.5px 容差，避免亚像素（如 720.05px）导致意外多进一位
-        const multiple = Math.max(1, Math.ceil((contentHeight - 0.5) / unitHeight));
-        wrapper.style.height = `${multiple * unitHeight}px`;
-    };
-    updateHeight(); // 初始化立即执行一次
-}
-
-// 1. 常规页面加载时执行
-initGridHeight();
-
-// 2. 如果项目启用了 Astro 的 <ClientRouter /> (View Transitions)，切换页面后重新绑定
-document.addEventListener("astro:page-load", initGridHeight);
-</script>
