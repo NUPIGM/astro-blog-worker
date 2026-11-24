@@ -1,28 +1,32 @@
 ---
+import Button from "@/components/Button.astro";
 import type { CollectionEntry } from "astro:content";
-import TagPill from "@/components/TagPill.astro";
 
 const { posts } = Astro.props;
+const tags: Array<[string, number]> = [
+  ...posts
+    .flatMap((article: CollectionEntry<"blog">) => article.data.tags ?? [])
+    .reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map()),
+].sort((a, b) => {
+  return b[1] - a[1];
+});
 ---
 
-<main>
-    <h2 class="pt-6 pb-6  font-bold">文章列表</h2>
-    {posts.map((article: CollectionEntry<"blog">) => (
-        <article class="group pb-6 pt-4">
-            <a href={`/posts/${article.id}/`} class="block">
-                <h2 class="mb-1.5  font-medium text-foreground transition-colors group-hover:text-primary">
-                    {article.data.title}
-                </h2>
-            </a>
-            <div class="mb-2 text-xs text-muted-foreground">
-                <span>{article.data.description}</span>
-            </div>
-            <div class="flex flex-wrap items-center gap-2  leading-relaxed text-muted-foreground">
-                <span>{article.data.pubDate}</span>
-                {article.data.tags?.map((tag) => (
-                    <TagPill tag={tag} />
-                ))}
-            </div>
-        </article>
+<main class="p-14">
+  <h2 class="pt-6 pb-6 text-3xl">博文列表</h2>
+  <h3>共{posts.length}篇</h3>
+  <div class="flex flex-wrap gap-2">
+    {tags.map(([tagName, count]) => (
+      <Button url=`/tags/${encodeURIComponent(tagName)}/`>
+        {tagName}({count})
+      </Button>
     ))}
+  </div>
+  {posts.map((article: CollectionEntry<"blog">) => (
+    <article class="group pb-6 pt-4">
+      <span>{article.data.pubDate}</span> - <a class="hover:text-blue-400 hover:underline underline-offset-4" href=`/posts/${article.id}/`>
+        {article.data.title}
+      </a>
+    </article>
+  ))}
 </main>

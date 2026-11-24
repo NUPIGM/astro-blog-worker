@@ -1,30 +1,35 @@
 ---
+import Button from "./Button.astro";
+
 const nav = [
     { name: "博文", href: "/posts/" },
-    { name: "标签", href: "/tags/" },
+    { name: "友链", href: "/guestbook/" },
     { name: "关于", href: "/about/" }
 ];
-
-const currentPath = Astro.url.pathname;
 ---
 
-<header class="flex justify-between mx-auto">
+<header class="flex justify-between mx-auto bg-[#05293D]/45" aria-hidden="true">
     <div class="flex items-center">
-        <a class="" href="/" aria-label="Blog home">I‘m a fish oO</a>
-        <i class="hero-webp"></i>
+        <a href="/" class="group flex flex-col gap-2">
+            <span
+                class="font-['Press_Start_2P',monospace] text-[20px] leading-none text-[#EAFBFF]
+           transition-colors duration-100 ease-[steps(3,end)] group-hover:text-white"
+            >
+                I'm a fish oO
+            </span>
+            <span
+                class=" text-[14px] leading-none text-[#BFE9F5]
+           transition-colors duration-100 ease-[steps(3,end)] group-hover:text-[#EAFBFF]"
+            >
+                ooOoO · 一条鱼的笔记本
+            </span>
+        </a> <i class="hero-webp"></i>
     </div>
-    <nav aria-label="Main navigation">
+    <nav class="flex items-center" aria-label="Main navigation">
         <ul class="flex gap-4">
             {nav.map((item) => (
                 <li>
-                    <a
-                        id="my-webp"
-                        class="bubble"
-                        href={item.href}
-                        aria-current={currentPath === item.href ? "page" : undefined}
-                    >
-                        {item.name}
-                    </a>
+                    <Button url={item.href}>{item.name}</Button>
                 </li>
             ))}
             <li>

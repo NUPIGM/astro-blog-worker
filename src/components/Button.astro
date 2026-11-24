@@ -1,0 +1,17 @@
+---
+const { url, label } = Astro.props;
+---
+
+<a
+    href={url}
+    aria-label={label}
+    class="relative inline-flex items-center rounded-md border-2 border-white/55 bg-white/12
+         px-6 py-2 text-[16px] text-[#EAFBFF]
+         transition-[transform,border-color] duration-100 ease-[steps(3,end)]
+         hover:-translate-y-0.5 hover:border-white/85
+         active:scale-95
+         before:absolute before:top-1 before:left-1 before:h-1.25 before:w-1.25 before:bg-[#EAFBFF]/85 before:content-['']
+         after:absolute after:top-2.5 after:left-2.5 after:h-0.75 after:w-0.75 after:bg-white/50 after:content-['']"
+>
+    <slot />
+</a>

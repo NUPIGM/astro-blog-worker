@@ -6,7 +6,7 @@ import Header from "@/components/Header.astro";
 import Seo from "@/components/Seo.astro";
 
 const { seo } = Astro.props;
-const { title, detailedDescription, image, keywords, theme, noindex = false } = seo || {};
+const { title, detailedDescription, image, keywords, theme, noindex } = seo || {};
 ---
 
 <html lang="zh-CN">
@@ -22,7 +22,23 @@ const { title, detailedDescription, image, keywords, theme, noindex = false } = 
         <ClientRouter />
     </head>
 
-    <body transition:animate={fade({ duration: "0.25s" })}>
+    <body
+        transition:animate={fade({ duration: "0.25s" })}
+        class="min-h-dvh w-full bg-linear-to-b from-[#8FD9E8] via-[#176B99] via-45% to-[#051729]"
+    >
+        <!-- 光柱 2：白 7% → 透明的垂直渐变，装饰层不拦鼠标 -->
+        <div
+            class="pointer-events-none absolute left-150 top-16 h-full w-25
+         bg-linear-to-b from-white/7 to-transparent"
+            aria-hidden="true"
+        ></div>
+        <!-- 光柱 2：白 7% → 透明的垂直渐变，装饰层不拦鼠标 -->
+        <div
+            class="pointer-events-none absolute left-80 top-16 h-full w-50
+         bg-linear-to-b from-white/7 to-transparent"
+            aria-hidden="true"
+        ></div>
+
         <Header />
         <slot />
         <Footer />

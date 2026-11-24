@@ -6,8 +6,13 @@ import PostList from "@/layouts/PostList.astro";
 const posts = (await getCollection("blog")).sort(
     (a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
 );
+const seo = {
+    title: "博文",
+    detailedDescription: "博文列表",
+    keywords: ["Astro", "博客", "个人网站", "泡泡鱼博客", "泡泡鱼个人网站", "泡泡鱼技术分享"]
+};
 ---
 
-<BaseLayout title="博文" description="文章列表">
+<BaseLayout {seo}>
     <PostList posts={posts} />
 </BaseLayout>

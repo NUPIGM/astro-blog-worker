@@ -2,14 +2,13 @@
 import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, svgoOptimizer } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.xn--ci8h.cc.cd/",
-  integrations: [mdx(), sitemap(), svelte()],
+  site: "https://oo.fish/",
+  integrations: [mdx(), sitemap()],
   adapter: cloudflare({
     imageService: "compile"
   }),

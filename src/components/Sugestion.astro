@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
+  )
+  .slice(0, 3);
+---
+
+    {posts.map((post) =>(
+<a
+  href="/post/"
+  class=" relative left-190 my-6 block w-fit rounded-none border-2 border-white/35 bg-white/8 p-4
+         transition-[transform,border-color] duration-100 ease-[steps(3,end)]
+         hover:-translate-y-0.5 hover:border-white/85 active:scale-[0.98]"
+>
+  <span class="block  text-[14px] text-[#EAFBFF]">
+    {post.data.title}
+  </span>
+  <span class="mt-1.5 block text-[11px] text-[#9CD4E4]">
+    {post.data.pubDate}
+  </span>
+</a>
+) )}

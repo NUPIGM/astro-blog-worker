@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { Prose } from "@/components/starwind/prose";
 import { AUTHOR } from "../consts";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -21,9 +20,9 @@ const navItems = [
         </p>
 
         <!-- 正文排版由 Starwind Prose 组件接管（替代 @tailwindcss/typography 的 .prose） -->
-        <Prose class="max-w-none">
+     
             <slot />
-        </Prose>
+      
         <br>
         <br>
         <div
