@@ -8,19 +8,20 @@ const posts = (await getCollection("blog"))
   )
   .slice(0, 3);
 ---
-
+<div class="flex flex-col gap-4">
     {posts.map((post) =>(
 <a
   href=`/posts/${post.id}`
-  class=" relative left-2/4 my-6 block w-fit rounded-none border-2 border-white/35 bg-white/8 p-4
+  class="flex flex-col w-fit rounded-none border-2 border-white/35 bg-white/8 p-4
          transition-[transform,border-color] duration-100 ease-[steps(3,end)]
          hover:-translate-y-0.5 hover:border-white/85 active:scale-[0.98]"
 >
-  <span class="block  text-[14px] text-[#EAFBFF]">
+  <span class=" text-[14px] text-[#EAFBFF]">
     {post.data.title}
   </span>
-  <span class="mt-1.5 block text-[11px] text-[#9CD4E4]">
+  <span class="text-[11px] text-[#9CD4E4]">
     {post.data.pubDate}
   </span>
 </a>
 ) )}
+</div>

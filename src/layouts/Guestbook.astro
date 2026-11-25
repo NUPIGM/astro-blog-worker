@@ -1,0 +1,33 @@
+---
+import Button from "@/components/Button.astro";
+import Subtitle from "@/components/Subtitle.astro";
+import { friends, guestbook } from "@/content/guestbook.json";
+
+const title = {
+    cn: "友链",
+    en: "GUESTBOOK"
+};
+const subtitle = "友人账";
+---
+
+<main class="p-14">
+    <Subtitle {title} {subtitle} />
+    <div class="flex flex-col md:flex-row gap-4">
+        <div class="mt-10 w-xl space-y-4">
+            {guestbook.map((message) => (
+                <article class="border-b border-gray-200 pb-4">
+                    <p class="text-shadow-gray-200">{message.msg}</p>
+                    <div class="mt-2 flex items-center gap-2 text-sm text-gray-200">
+                        <span>{message.author}</span>
+                        <span aria-hidden="true">·</span>
+                        <time datetime={message.date}>{message.date}</time>
+                    </div>
+                </article>
+            ))}
+        </div>
+        <div class="flex items-start gap-4 ml-10 max-w-50% ">
+            {friends.map((friend) => (<Button url={friend.url}><img src={friend.avatar} class="size-6 rounded-full" alt="友链头像">&nbsp;{friend.name}</Button>))}
+            <span title="没做表单可以先发邮箱"><Button url="mailto:nupigm@outlook.com">添加友链</Button></span>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,25 @@
+---
+const { title, subtitle } = Astro.props;
+---
+
+<div class="flex flex-col gap-3.5">
+    <!-- 标题行：珊瑚方块锚点 + 主次两级 -->
+    <div class="flex items-center gap-3">
+        <span class="h-2 w-2 bg-[#FF6B5B]" aria-hidden="true"></span>
+        <h1
+            class="font-['Fusion_Pixel_12px_Proportional_SC',monospace] text-[32px] leading-none text-white"
+        >
+            {title.cn} <span class="text-[#9CD4E4]">{title.en}</span>
+        </h1>
+    </div>
+
+    <!-- 副题：深色小字 → 两枚气泡 chip（与列表页筛选 chip 同语言） -->
+    <div class="flex flex-wrap gap-3">
+        <span
+            class="inline-flex items-center rounded-md border-2 border-white/30 bg-white/10 px-4 py-1.5
+                 font-['Fusion_Pixel_12px_Proportional_SC',monospace] text-[13px] text-[#BFE9F5]"
+        >
+            {subtitle}
+        </span>
+    </div>
+</div>

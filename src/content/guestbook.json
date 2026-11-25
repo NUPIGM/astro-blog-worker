@@ -1,0 +1,32 @@
+{
+  "friends": [
+    {
+      "name": "🫧🫧🐠",
+      "bio": "有一只小鱼前来买瓜",
+      "url": "https://oo.fish/",
+      "avatar": "https://oo.fish/favicon.ico"
+    },
+    {
+      "name": "Liseezn'blog",
+      "avatar": "https://littleskin.cn/avatar/636546?size=36",
+      "url": "https://blog.liseezn.top"
+    }
+  ],
+  "guestbook": [
+    {
+      "author": "阿杰",
+      "msg": "路过打卡！已经收藏到浏览器书签了，希望以后能看到更多有趣的文章和分享。",
+      "date": "2026-5-2"
+    },
+    {
+      "author": "Echo",
+      "msg": "很喜欢这种简约的个人网站，比起千篇一律的平台，更喜欢这种有个人特色的小站。",
+      "date": "2026-1-22"
+    },
+    {
+      "author": "小林",
+      "msg": "无意间发现了这个网站，设计很简洁，内容也很有意思，特意过来留个言，祝网站越做越好！",
+      "date": "2025-11-20"
+    }
+  ]
+}
