@@ -8,7 +8,7 @@ const nav = [
 ];
 ---
 
-<header class="flex justify-between mx-auto bg-[#05293D]/45" aria-hidden="true">
+<header class="relative flex justify-between items-center mx-auto bg-[#05293D]/45">
     <div class="flex items-center">
         <a href="/" class="group flex flex-col gap-2">
             <span
@@ -25,8 +25,34 @@ const nav = [
             </span>
         </a> <i class="hero-webp"></i>
     </div>
-    <nav class="flex items-center" aria-label="Main navigation">
-        <ul class="flex gap-4">
+    <button
+        id="menu-toggle"
+        type="button"
+        class="md:hidden"
+        aria-label="打开导航菜单"
+        aria-expanded="false"
+        aria-controls="main-navigation"
+    >
+        ☰
+    </button>
+    <button
+        id="menu-backdrop"
+        type="button"
+        class="fixed inset-0 z-40 hidden bg-black/50 md:hidden"
+        aria-label="关闭导航菜单"
+        tabindex="-1"
+    ></button>
+    <nav
+        id="main-navigation"
+        class="fixed inset-y-0 right-0 z-50 w-72 translate-x-full bg-[#05293D] p-6 transition-transform duration-300 md:static md:z-auto md:h-auto md:w-auto md:translate-x-0 md:bg-transparent md:p-0"
+        aria-label="Main navigation"
+        aria-hidden="true"
+        inert
+    >
+        <button id="menu-close" type="button" class="mb-6 md:hidden" aria-label="关闭导航菜单">
+            ✕
+        </button>
+        <ul class="flex flex-col gap-4 md:flex-row">
             {nav.map((item) => (
                 <li>
                     <Button url={item.href}>{item.name}</Button>
@@ -45,12 +71,41 @@ const nav = [
     </nav>
 </header>
 
-<script is:inline type="text/javascript">
-window.addEventListener("pageshow", () => {
-    const boxes = document.querySelectorAll(".bubble");
-    const timestamp = Date.now();
-    boxes.forEach((box, index) => {
-        box.style.backgroundImage = `url('/images/pixel_bubble_birth.webp?t=${timestamp}_${index}')`;
-    });
+<script>
+const mobileViewport = window.matchMedia("(max-width: 767px)");
+
+const setMenuOpen = (open) => {
+    const menuToggle = document.getElementById("menu-toggle");
+    const menuBackdrop = document.getElementById("menu-backdrop");
+    const navigation = document.getElementById("main-navigation");
+
+    if (!menuToggle || !menuBackdrop || !navigation) return;
+
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute("aria-label", open ? "关闭导航菜单" : "打开导航菜单");
+    navigation.classList.toggle("translate-x-full", !open && mobileViewport.matches);
+    navigation.classList.toggle("translate-x-0", open && mobileViewport.matches);
+    navigation.setAttribute("aria-hidden", String(!open && mobileViewport.matches));
+    navigation.toggleAttribute("inert", !open && mobileViewport.matches);
+    menuBackdrop.classList.toggle("hidden", !open);
+};
+
+const initializeMenu = () => setMenuOpen(false);
+
+document.addEventListener("astro:page-load", initializeMenu);
+document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    if (event.target.closest("#menu-toggle")) {
+        const menuToggle = document.getElementById("menu-toggle");
+        setMenuOpen(menuToggle?.getAttribute("aria-expanded") !== "true");
+    } else if (event.target.closest("#menu-close, #menu-backdrop")) {
+        setMenuOpen(false);
+    }
 });
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuOpen(false);
+});
+mobileViewport.addEventListener("change", initializeMenu);
+initializeMenu();
 </script>

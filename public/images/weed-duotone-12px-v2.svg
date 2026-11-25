@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="108" viewBox="0 0 24 108" shape-rendering="crispEdges">
+  <!-- oo.fish 海草 · 双色锯齿 · 12px 网格 · 三节加长版（108px）
+       亮暗交替：#1E7358（受光）/ #17604A（背光），锯齿左右错位 -->
+  <rect x="0" y="0" width="12" height="36" fill="#1E7358"/>
+  <rect x="12" y="36" width="12" height="36" fill="#17604A"/>
+  <rect x="0" y="72" width="12" height="36" fill="#1E7358"/>
+</svg>

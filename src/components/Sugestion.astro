@@ -11,8 +11,8 @@ const posts = (await getCollection("blog"))
 
     {posts.map((post) =>(
 <a
-  href="/post/"
-  class=" relative left-190 my-6 block w-fit rounded-none border-2 border-white/35 bg-white/8 p-4
+  href=`/posts/${post.id}`
+  class=" relative left-2/4 my-6 block w-fit rounded-none border-2 border-white/35 bg-white/8 p-4
          transition-[transform,border-color] duration-100 ease-[steps(3,end)]
          hover:-translate-y-0.5 hover:border-white/85 active:scale-[0.98]"
 >

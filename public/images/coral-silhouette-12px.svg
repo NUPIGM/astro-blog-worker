@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="52" viewBox="0 0 36 52" shape-rendering="crispEdges">
+  <!-- oo.fish 珊瑚 · 三柱剪影 · 12px 网格
+       中柱 12×52 #7A3B52（主），左柱 12×28 #5E2D40（暗），右柱 12×24 #7A3B52 -->
+  <rect x="12" y="0" width="12" height="52" fill="#7A3B52"/>
+  <rect x="0" y="24" width="12" height="28" fill="#5E2D40"/>
+  <rect x="24" y="28" width="12" height="24" fill="#7A3B52"/>
+</svg>
