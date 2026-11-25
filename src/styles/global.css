@@ -2,6 +2,7 @@
   全局样式入口。
   */
 @import "tailwindcss";
+@import "./loading.css";
 
 @layer components {
   /* 英雄图片 */
@@ -37,6 +38,9 @@
   font-display: swap;
 }
 @layer base {
+  :root{
+    --body-padding: clamp(10px, 4dvw, 40px);
+  }
   html {
     scroll-behavior: smooth;
   }
@@ -50,7 +54,7 @@
   main {
     max-width: 1280px;
     margin: 0 auto;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: var(--body-padding) ;
+    padding-right: var(--body-padding);
   }
 }

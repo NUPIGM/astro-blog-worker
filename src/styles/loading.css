@@ -1,0 +1,26 @@
+#page-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 8px;
+  background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 55%, #a855f7 100%);
+  z-index: 999999;
+  opacity: 0;
+  transition:
+    width 0.3s ease,
+    opacity 0.2s ease;
+  pointer-events: none;
+}
+
+#page-progress.active {
+  opacity: 1;
+}
+
+#page-progress.finish {
+  width: 100%;
+  opacity: 0;
+  transition:
+    width 0.2s ease,
+    opacity 0.3s ease 0.2s;
+}
